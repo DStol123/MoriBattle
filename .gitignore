@@ -9,11 +9,11 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-/森バトル/Temp/
-/森バトル/Library/
-/森バトル/Logs/
-/森バトル/UserSettings/
-/森バトル/.vscode/
+森バトル/Temp/
+森バトル/Library/
+森バトル/Logs/
+森バトル/UserSettings/
+森バトル/.vscode/
 *.csproj
 *.sln
 
