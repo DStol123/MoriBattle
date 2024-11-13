@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+
+//This script handles everything one can do to change the map. Including changing the texture and height of a cell.
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 
 public class HexMapEditor : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class HexMapEditor : MonoBehaviour
         }
     }
 
+    //Edits cell selection according to where the mouse clicks.
     void HandleInput()
     {
         Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,11 +36,13 @@ public class HexMapEditor : MonoBehaviour
     }
 
     int activeElevation;
+    //Changes the height of a cell to the input value.
     public void SetElevation(float elevation)
     {
         activeElevation = (int)elevation;
     }
 
+    //Changes the cell's color and elevation to selected values.
     void EditCell(HexCell cell)
     {
         cell.color = activeColor;
@@ -46,6 +50,7 @@ public class HexMapEditor : MonoBehaviour
         hexGrid.Refresh();
     }
 
+    //Changes active color brush to the input value.
     public void SelectColor (int index)
     {
         activeColor = colors[index];
