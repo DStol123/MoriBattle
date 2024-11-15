@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+
+//This script deals with the coordinates of each cell.
 using UnityEngine;
 
 [System.Serializable]

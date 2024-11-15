@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class HexGrid : MonoBehaviour
 {
-    public int width = 6;
-    public int height = 6;
+    public int width;
+    public int height;
 
     public HexCell cellPrefab;
 
@@ -20,8 +20,11 @@ public class HexGrid : MonoBehaviour
 
     public Color defaultColor = Color.white;
 
+    public Texture2D noiseSource;
+
     void Awake()
     {
+        HexMetrics.noiseSource = noiseSource;
         gridCanvas = GetComponentInChildren<Canvas>();
         hexMesh = GetComponentInChildren<HexMesh>();
         cells = new HexCell[height * width];
@@ -33,6 +36,11 @@ public class HexGrid : MonoBehaviour
                 CreateCell(x, z, i++);
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        HexMetrics.noiseSource = noiseSource;
     }
 
     void Start()
@@ -83,10 +91,12 @@ public class HexGrid : MonoBehaviour
         label.text = cell.coordinates.ToStringOnSeparateLines();
 
         cell.uiRect = label.rectTransform;
+
+        cell.Elevation = 0;
     }
 
         
-
+    //Returns a specific cell based on the the input coordinates.
     public HexCell GetCell(Vector3 position)
     {
         position = transform.InverseTransformPoint(position);
