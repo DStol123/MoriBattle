@@ -8,6 +8,37 @@ public class HexCell : MonoBehaviour
 
     public Color color;
 
+    int elevation;
+
+    public RectTransform uiRect;
+
+    public int Elevation
+    {
+        get
+        {
+            return elevation;
+        }
+        set
+        {
+            elevation = value;
+            Vector3 position = transform.localPosition;
+            position.y = value * HexMetrics.elevationStep;
+            position.y += (
+                HexMetrics.SampleNoise(position).y * 2f - 1f) *
+                HexMetrics.elevationPerturbStrength;
+            transform.localPosition = position;
+
+            Vector3 uiPosition = uiRect.localPosition;
+            uiPosition.z = -position.y;
+            uiRect.localPosition = uiPosition;
+        }
+    }
+
+    public Vector3 Position
+    {
+        get { return transform.localPosition; }
+    }
+
     [SerializeField]
     HexCell[] neighbors;
 

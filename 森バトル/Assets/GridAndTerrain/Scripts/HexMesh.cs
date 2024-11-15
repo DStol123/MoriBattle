@@ -9,6 +9,8 @@ public class HexMesh : MonoBehaviour
     List<int> triangles;
     MeshCollider meshCollider;
     List<Color> colors;
+    public const float elevationStep = 5f;
+
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = hexMesh = new Mesh();
@@ -22,10 +24,10 @@ public class HexMesh : MonoBehaviour
     void AddQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
     {
         int vertexIndex = vertices.Count;
-        vertices.Add(v1);
-        vertices.Add(v2);
-        vertices.Add(v3);
-        vertices.Add(v4);
+        vertices.Add(Perturb(v1));
+        vertices.Add(Perturb(v2));
+        vertices.Add(Perturb(v3));
+        vertices.Add(Perturb(v4));
         triangles.Add(vertexIndex);
         triangles.Add(vertexIndex + 2);
         triangles.Add(vertexIndex + 1);
@@ -53,9 +55,9 @@ public class HexMesh : MonoBehaviour
     void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3)
     {
         int vertexIndex = vertices.Count;
-        vertices.Add(v1);
-        vertices.Add(v2);
-        vertices.Add(v3);
+        vertices.Add(Perturb(v1));
+        vertices.Add(Perturb(v2));
+        vertices.Add(Perturb(v3));
         triangles.Add(vertexIndex);
         triangles.Add(vertexIndex + 1);
         triangles.Add(vertexIndex + 2);
@@ -102,38 +104,50 @@ public class HexMesh : MonoBehaviour
 
     void Triangulate(HexDirection direction, HexCell cell)
     {
-        Vector3 center = cell.transform.localPosition;
+        Vector3 center = cell.Position;
         Vector3 v1 = center + HexMetrics.GetFirstSolidCorner(direction);
         Vector3 v2 = center + HexMetrics.GetSecondSolidCorner(direction);
 
         AddTriangle(center, v1, v2);
         AddTriangleColor(cell.color);
-
+        if(direction <= HexDirection.SE)
+        {
+            TriangulateConnection(direction, cell, v1, v2);
+        }
+    }
+    void TriangulateConnection(
+        HexDirection direction, HexCell cell, Vector3 v1, Vector3 v2)
+    {
+        HexCell neighbor = cell.GetNeighbor(direction);
+        if(neighbor == null)
+        {
+            return;
+        }
         Vector3 bridge = HexMetrics.GetBridge(direction);
         Vector3 v3 = v1 + bridge;
         Vector3 v4 = v2 + bridge;
+        v3.y = v4.y = neighbor.Position.y;
 
         AddQuad(v1, v2, v3, v4);
+        AddQuadColor(cell.color, neighbor.color);
 
-        HexCell prevNeighbor = cell.GetNeighbor(direction.Previous()) ?? cell;
-        HexCell neighbor = cell.GetNeighbor(direction) ?? cell;
-        HexCell nextNeighbor = cell.GetNeighbor(direction.Next()) ?? cell;
-        Color edgeColor = (cell.color + neighbor.color) * 0.5f;
-        Color bridgeColor = (cell.color + neighbor.color) * 0.5f;
-        AddQuadColor(cell.color, bridgeColor);
-
-        AddTriangle(v1, center + HexMetrics.GetFirstCorner(direction), v3);
-        AddTriangleColor(
-            cell.color,
-            (cell.color + prevNeighbor.color + neighbor.color) / 3f,
-            bridgeColor
-            );
-        AddTriangle(v2, v4, center + HexMetrics.GetSecondCorner(direction));
-        AddTriangleColor(
-            cell.color,
-            bridgeColor,
-            (cell.color + neighbor.color + nextNeighbor.color) / 3f
-            );
+        HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
+        if(direction <= HexDirection.E && nextNeighbor != null)
+        {
+            Vector3 v5 = v2 + HexMetrics.GetBridge(direction.Next());
+            v5.y = nextNeighbor.Position.y;
+            AddTriangle(v2, v4, v5);
+            AddTriangleColor(cell.color, neighbor.color, nextNeighbor.color);
         }
     }
+
+    //Adds Perlin Noise to a position
+    Vector3 Perturb (Vector3 position)
+    {
+        Vector4 sample = HexMetrics.SampleNoise(position);
+        position.x += (sample.x * 2f - 1f) * HexMetrics.cellPerturbStrengh;
+        position.z += (sample.z * 2f - 1f) * HexMetrics.cellPerturbStrengh;
+        return position;
+    }
+}
 
