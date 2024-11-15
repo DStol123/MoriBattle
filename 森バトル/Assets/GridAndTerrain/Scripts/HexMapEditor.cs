@@ -8,6 +8,7 @@ public class HexMapEditor : MonoBehaviour
     public Color[] colors;
     public HexGrid hexGrid;
     private Color activeColor;
+    private int lgjasl;
 
     void Awake()
     {
