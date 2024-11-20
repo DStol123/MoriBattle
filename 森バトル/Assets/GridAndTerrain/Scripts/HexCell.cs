@@ -6,9 +6,36 @@ public class HexCell : MonoBehaviour
 {
     public HexCoordinates coordinates;
 
-    public Color color;
+    public HexGridChunk chunk;
 
-    int elevation;
+    Color color;
+
+    [SerializeField]
+    HexCell[] neighbors;
+
+    public Color Color
+    {
+        get
+        {
+            return color;
+        }
+        set
+        {
+            if(color == value)
+            {
+                return;
+            }
+            color = value;
+            Refresh();
+        }
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("cellPrefab has been destroyed!");
+    }
+
+    int elevation = int.MinValue;
 
     public RectTransform uiRect;
 
@@ -20,6 +47,10 @@ public class HexCell : MonoBehaviour
         }
         set
         {
+            if(elevation == value)
+            {
+                return;
+            }
             elevation = value;
             Vector3 position = transform.localPosition;
             position.y = value * HexMetrics.elevationStep;
@@ -31,6 +62,8 @@ public class HexCell : MonoBehaviour
             Vector3 uiPosition = uiRect.localPosition;
             uiPosition.z = -position.y;
             uiRect.localPosition = uiPosition;
+
+            Refresh();
         }
     }
 
@@ -39,8 +72,7 @@ public class HexCell : MonoBehaviour
         get { return transform.localPosition; }
     }
 
-    [SerializeField]
-    HexCell[] neighbors;
+    
 
     public HexCell GetNeighbor(HexDirection direction)
     {
@@ -50,5 +82,13 @@ public class HexCell : MonoBehaviour
     {
         neighbors[(int)direction] = cell;
         cell.neighbors[(int)direction.Opposite()] = this;
+    }
+
+    void Refresh()
+    {
+        if(chunk)
+        {
+            chunk.Refresh();
+        }
     }
 }

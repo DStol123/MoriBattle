@@ -45,9 +45,8 @@ public class HexMapEditor : MonoBehaviour
     //Changes the cell's color and elevation to selected values.
     void EditCell(HexCell cell)
     {
-        cell.color = activeColor;
+        cell.Color = activeColor;
         cell.Elevation = activeElevation;
-        hexGrid.Refresh();
     }
 
     //Changes active color brush to the input value.

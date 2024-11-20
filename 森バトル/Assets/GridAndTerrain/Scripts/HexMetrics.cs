@@ -22,6 +22,10 @@ public class HexMetrics
     public const float elevationPerturbStrength = 50f;
     public const float noiseScale = 0.0008f;
 
+    //Chunk Variables
+    public const int chunkSizeX = 5, chunkSizeZ = 5;
+    
+
     //List of relative coordinates for the corners of each hexagon.
     public static Vector3[] corners =
     {
