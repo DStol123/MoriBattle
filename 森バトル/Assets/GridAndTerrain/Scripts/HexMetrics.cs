@@ -19,7 +19,7 @@ public class HexMetrics
     //Perlin Noise
     public static Texture2D noiseSource;
     public const float cellPerturbStrengh = 5f;
-    public const float elevationPerturbStrength = 50f;
+    public const float elevationPerturbStrength = 20f;
     public const float noiseScale = 0.0008f;
 
     //Chunk Variables

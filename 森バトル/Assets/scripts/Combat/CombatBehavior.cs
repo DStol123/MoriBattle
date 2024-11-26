@@ -32,6 +32,7 @@ public class CombatBehavior : MonoBehaviour
         }
     }
 
+
     private HexCell ChangeCell()
     {
         Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
