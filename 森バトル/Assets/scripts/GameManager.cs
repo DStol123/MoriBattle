@@ -1,8 +1,13 @@
 using UnityEngine;
 
-public class TurnManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     private Player[] players;
+
+    public Player[] Players
+    {
+        get { return players; }
+    }
 
     private Player activePlayer;
 
