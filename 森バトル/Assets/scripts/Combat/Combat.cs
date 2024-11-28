@@ -8,6 +8,13 @@ public class Combat
     private float currentMovementPoints;
     [SerializeField]
     private Player owner;
+    private bool isSelected;
+
+    public bool IsSelected
+    {
+        get { return isSelected; }
+        set { isSelected = value; }
+    }
 
     public Player Owner
     {
@@ -20,7 +27,7 @@ public class Combat
     public int MaxHp
     {
         get => maxHp; // setting maxHp with get comma
-        set => maxHp = Mathf.Max(1, value); // set as not to reach minus
+        set => maxHp = Mathf.Max(1, value); // set as not to reach zero
     }
 
     public int CurrentHp
@@ -79,5 +86,10 @@ public class Combat
     public void Heal(int amount)
     {
         CurrentHp += amount;
+    }
+
+    public void Attack(int damage, Combat unit)
+    {
+        unit.TakeDamage(damage);
     }
 }

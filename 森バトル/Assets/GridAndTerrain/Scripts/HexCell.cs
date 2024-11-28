@@ -8,6 +8,19 @@ public class HexCell : MonoBehaviour
 
     public HexGridChunk chunk;
 
+    public GameManager gameManager;
+
+    public CombatBehavior occupyingArmy;
+    public ResourceBehavior occupyingResource;
+    public ResourceBehavior occupyingForest;
+
+    public Color stone;
+    public Color grass;
+    public Color dirt;
+
+    public HexMapEditor hexMapEditor;
+    //public BuildingBehavior occupiedByBuilding;
+
     Color color;
 
     [SerializeField]
@@ -28,6 +41,25 @@ public class HexCell : MonoBehaviour
             color = value;
             Refresh();
         }
+    }
+
+    private void Start()
+    {
+        color = grass;
+        float dirtAdder = Random.Range(0f, 1f);
+        if (dirtAdder < gameManager.DirtDensity)
+        {
+            color = dirt;
+        }
+        else
+        {
+            float stoneAdder = Random.Range(0f, 1f);
+            if (stoneAdder < gameManager.StoneDensity || occupyingResource == gameManager.ironPrefab || occupyingResource == gameManager.copperPrefab)
+            {
+                color = stone;
+            }
+        }
+        Refresh();
     }
 
     void OnDestroy()

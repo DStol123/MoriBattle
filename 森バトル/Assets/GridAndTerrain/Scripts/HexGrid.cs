@@ -23,6 +23,8 @@ public class HexGrid : MonoBehaviour
 
     public Texture2D noiseSource;
 
+    public GameManager gameManager;
+
     void Awake()
     {
         Debug.Log(cellPrefab != null ? "cellPrefab is assigned!" : "cellPrefab is null!");
@@ -115,6 +117,39 @@ public class HexGrid : MonoBehaviour
         cell.Elevation = 0;
 
         AddCellToChunk(x, z, cell);
+
+
+
+        float ironAdder = Random.Range(0f, 1f);
+        float copperAdder = Random.Range(0f, 1f);
+        float forestAdder = Random.Range(0f, 1f);
+        float rockAdder = Random.Range(0f, 1f);
+
+        if(ironAdder < gameManager.IronDensity && cell.occupyingResource == null)
+        {
+            ResourceBehavior iron = Instantiate(gameManager.ironPrefab);
+            cell.occupyingResource = gameManager.ironPrefab;
+            iron.cell = cell;
+        }
+        if(copperAdder < gameManager.CopperDensity && cell.occupyingResource == null)
+        {
+            ResourceBehavior copper = Instantiate(gameManager.copperPrefab);
+            cell.occupyingResource = gameManager.copperPrefab;
+            copper.cell = cell;
+        }
+        if(rockAdder < gameManager.RockDensity && cell.occupyingResource == null)
+        {
+            ResourceBehavior stone = Instantiate(gameManager.stonePrefab);
+            cell.occupyingResource = gameManager.stonePrefab;
+            stone.cell = cell;
+        }
+        if (forestAdder < gameManager.ForestDensity && cell.occupyingForest == null && cell.occupyingResource == null)
+        {
+            ResourceBehavior forest = Instantiate(gameManager.forestPrefab);
+            cell.occupyingForest = gameManager.forestPrefab;
+            forest.cell = cell;
+        }
+
     }
 
     void AddCellToChunk(int x, int z, HexCell cell)

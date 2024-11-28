@@ -8,12 +8,13 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField]
     private static float startingMovementPoints;
 
-    private Combat Combat = new Combat(startingHp, startingMovementPoints); //Max Health of 100 and 3 movement points
+    public Combat Combat = new Combat(startingHp, startingMovementPoints);
     [SerializeField]
     private float armyHeight; //This will be used to keep the model above the ground
 
 
     public HexCell currentCell;
+    private HexCell destinationCell;
     void Start()
     {
         MoveToCell();
@@ -54,11 +55,17 @@ public class CombatBehavior : MonoBehaviour
 
     private void SelectDestination(Vector3 position)
     {
-        currentCell = Combat.hexGrid.GetCell(position);
+        destinationCell = Combat.hexGrid.GetCell(position);
     }
 
     private void MoveToCell(HexCell cell)
     {
         transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
+    }
+
+    public HexCell DestinationCell
+    {
+        get { return destinationCell; }
+        set { destinationCell = value; }
     }
 }
