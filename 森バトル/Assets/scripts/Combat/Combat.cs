@@ -6,6 +6,14 @@ public class Combat
     private int currentHp;
     private float maxMovementPoints;
     private float currentMovementPoints;
+    [SerializeField]
+    private Player owner;
+
+    public Player Owner
+    {
+        get { return owner; }
+        set { owner = value; }
+    }
 
     public static HexGrid hexGrid;
 
