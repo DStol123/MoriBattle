@@ -10,7 +10,7 @@ public class HexMetrics
     public const float innerRadius = outerRadius * 0.866025404f;
 
     //These constants determine the strength of the color shading in each cell.
-    public const float solidFactor = 0.75f;
+    public const float solidFactor = 0.70f;
     public const float blendFactor = 1f - solidFactor;
 
     //This constant determines how high each level of elevation is in the scene.
@@ -18,9 +18,13 @@ public class HexMetrics
 
     //Perlin Noise
     public static Texture2D noiseSource;
-    public const float cellPerturbStrengh = 5f;
-    public const float elevationPerturbStrength = 50f;
+    public const float cellPerturbStrengh = 2f;
+    public const float elevationPerturbStrength = 10f;
     public const float noiseScale = 0.0008f;
+
+    //Chunk Variables
+    public const int chunkSizeX = 5, chunkSizeZ = 5;
+    
 
     //List of relative coordinates for the corners of each hexagon.
     public static Vector3[] corners =

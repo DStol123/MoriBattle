@@ -109,7 +109,7 @@ public class HexMesh : MonoBehaviour
         Vector3 v2 = center + HexMetrics.GetSecondSolidCorner(direction);
 
         AddTriangle(center, v1, v2);
-        AddTriangleColor(cell.color);
+        AddTriangleColor(cell.Color);
         if(direction <= HexDirection.SE)
         {
             TriangulateConnection(direction, cell, v1, v2);
@@ -129,7 +129,7 @@ public class HexMesh : MonoBehaviour
         v3.y = v4.y = neighbor.Position.y;
 
         AddQuad(v1, v2, v3, v4);
-        AddQuadColor(cell.color, neighbor.color);
+        AddQuadColor(cell.Color, neighbor.Color);
 
         HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
         if(direction <= HexDirection.E && nextNeighbor != null)
@@ -137,7 +137,7 @@ public class HexMesh : MonoBehaviour
             Vector3 v5 = v2 + HexMetrics.GetBridge(direction.Next());
             v5.y = nextNeighbor.Position.y;
             AddTriangle(v2, v4, v5);
-            AddTriangleColor(cell.color, neighbor.color, nextNeighbor.color);
+            AddTriangleColor(cell.Color, neighbor.Color, nextNeighbor.Color);
         }
     }
 

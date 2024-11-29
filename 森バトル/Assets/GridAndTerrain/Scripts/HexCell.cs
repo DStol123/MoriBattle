@@ -6,9 +6,68 @@ public class HexCell : MonoBehaviour
 {
     public HexCoordinates coordinates;
 
-    public Color color;
+    public HexGridChunk chunk;
 
-    int elevation;
+    public GameManager gameManager;
+
+    public CombatBehavior occupyingArmy;
+    public ResourceBehavior occupyingResource;
+    public ResourceBehavior occupyingForest;
+
+    public Color stone;
+    public Color grass;
+    public Color dirt;
+
+    public HexMapEditor hexMapEditor;
+    //public BuildingBehavior occupiedByBuilding;
+
+    Color color;
+
+    [SerializeField]
+    HexCell[] neighbors;
+
+    public Color Color
+    {
+        get
+        {
+            return color;
+        }
+        set
+        {
+            if(color == value)
+            {
+                return;
+            }
+            color = value;
+            Refresh();
+        }
+    }
+
+    private void Start()
+    {
+        color = grass;
+        float dirtAdder = Random.Range(0f, 1f);
+        if (dirtAdder < gameManager.DirtDensity)
+        {
+            color = dirt;
+        }
+        else
+        {
+            float stoneAdder = Random.Range(0f, 1f);
+            if (stoneAdder < gameManager.StoneDensity || occupyingResource == gameManager.ironPrefab || occupyingResource == gameManager.copperPrefab)
+            {
+                color = stone;
+            }
+        }
+        Refresh();
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("cellPrefab has been destroyed!");
+    }
+
+    int elevation = int.MinValue;
 
     public RectTransform uiRect;
 
@@ -20,6 +79,10 @@ public class HexCell : MonoBehaviour
         }
         set
         {
+            if(elevation == value)
+            {
+                return;
+            }
             elevation = value;
             Vector3 position = transform.localPosition;
             position.y = value * HexMetrics.elevationStep;
@@ -31,6 +94,8 @@ public class HexCell : MonoBehaviour
             Vector3 uiPosition = uiRect.localPosition;
             uiPosition.z = -position.y;
             uiRect.localPosition = uiPosition;
+
+            Refresh();
         }
     }
 
@@ -39,8 +104,7 @@ public class HexCell : MonoBehaviour
         get { return transform.localPosition; }
     }
 
-    [SerializeField]
-    HexCell[] neighbors;
+    
 
     public HexCell GetNeighbor(HexDirection direction)
     {
@@ -50,5 +114,13 @@ public class HexCell : MonoBehaviour
     {
         neighbors[(int)direction] = cell;
         cell.neighbors[(int)direction.Opposite()] = this;
+    }
+
+    void Refresh()
+    {
+        if(chunk)
+        {
+            chunk.Refresh();
+        }
     }
 }
