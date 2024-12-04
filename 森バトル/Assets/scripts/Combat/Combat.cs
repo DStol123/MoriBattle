@@ -8,14 +8,7 @@ public class Combat
     private float currentMovementPoints;
     [SerializeField]
     private Player owner;
-    private bool isSelected;
-
-    public bool IsSelected
-    {
-        get { return isSelected; }
-        set { isSelected = value; }
-    }
-
+  
     public Player Owner
     {
         get { return owner; }
@@ -49,12 +42,13 @@ public class Combat
     }
 
     // Constructor
-    public Combat(int hp, float movementPoints)
+    public Combat(int hp, float movementPoints, Player owner)
     {
         MaxHp = hp;
         CurrentHp = hp;
         MaxMovementPoints = movementPoints;
         CurrentMovementPoints = movementPoints;
+        this.owner = owner;
     }
 
     // TakingDamage

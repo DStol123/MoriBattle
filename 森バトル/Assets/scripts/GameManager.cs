@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private Player[] players;
+    private PlayerBehavior[] players;
 
     [SerializeField]
     private float ironDensity;
@@ -30,17 +30,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        players = new Player[playerCount];
+        players = new PlayerBehavior[playerCount];
     }
 
-    public Player[] Players
+    public PlayerBehavior[] Players
     {
         get { return players; }
     }
 
-    private Player activePlayer;
+    private PlayerBehavior activePlayer;
 
-    public Player ActivePlayer
+    public PlayerBehavior ActivePlayer
     {
         get{ return activePlayer; }
         set{ activePlayer = value; }
@@ -51,13 +51,19 @@ public class GameManager : MonoBehaviour
     //Passes the turn to the next player in line
         if(activePlayer == players[players.Length - 1])
         {
+            activePlayer.IsTurn = false;
             activePlayer = players[0];
+            activePlayer.IsTurn = true;
         }
         else
         {
             for(int i = 0; i > players.Length; i++)
             {
-                if (players[i] == activePlayer) { activePlayer = players[i + 1]; break; }
+                if (players[i] == activePlayer) {
+                    activePlayer.IsTurn = false;
+                    activePlayer = players[i + 1];
+                    activePlayer.IsTurn = true;
+                    break; }
             }
         }
     }

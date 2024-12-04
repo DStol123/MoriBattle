@@ -3,7 +3,7 @@
 public class ResourceBehavior : MonoBehaviour
 {
     [SerializeField]
-    public Player owner; //Which player controls this resource
+    public PlayerBehavior owner; //Which player controls this resource
     public Resource resourceType;
     public HexCell cell; //Which cell/tile is this resource sitting on
     public float height; //Adjusts placement so the model isn't buried

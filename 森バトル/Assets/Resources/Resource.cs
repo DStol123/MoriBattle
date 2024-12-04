@@ -6,11 +6,11 @@ public class Resource
 
     private string name;
     private string description;
-    private Player owner;
+    private PlayerBehavior owner;
 
     private float volumePerTurn;
 
-    public Resource(string name, string description, Player owner, float volumePerTurn)
+    public Resource(string name, string description, PlayerBehavior owner, float volumePerTurn)
     {
         this.name = name;
         this.description = description;
@@ -18,7 +18,7 @@ public class Resource
         this.volumePerTurn = volumePerTurn;
     }
 
-    public Player Owner
+    public PlayerBehavior Owner
     {
         get { return owner; }
         set
@@ -62,5 +62,4 @@ public class Resource
             }
         }
     }
-
 }

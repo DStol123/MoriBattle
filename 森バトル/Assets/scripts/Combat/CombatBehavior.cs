@@ -7,14 +7,24 @@ public class CombatBehavior : MonoBehaviour
     private static int startingHp;
     [SerializeField]
     private static float startingMovementPoints;
+    [SerializeField]
+    private Player owner;
 
-    public Combat Combat = new Combat(startingHp, startingMovementPoints);
+    public Combat Combat;
     [SerializeField]
     private float armyHeight; //This will be used to keep the model above the ground
 
 
     public HexCell currentCell;
     private HexCell destinationCell;
+
+    private bool isSelected = false;
+
+    public bool IsSelected
+    {
+        get { return isSelected; }
+        set { isSelected = value; }
+    }
     void Start()
     {
         MoveToCell();
@@ -23,7 +33,7 @@ public class CombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
+        if(Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject() && isSelected)
         {
             if(ChangeCell() != null)
             {
@@ -61,6 +71,14 @@ public class CombatBehavior : MonoBehaviour
     private void MoveToCell(HexCell cell)
     {
         transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
+    }
+
+    private void Attack(CombatBehavior target, int damage)
+    {
+        if(target.Combat.Owner != this.Combat.Owner)
+        {
+            target.Combat.TakeDamage(damage);
+        }
     }
 
     public HexCell DestinationCell

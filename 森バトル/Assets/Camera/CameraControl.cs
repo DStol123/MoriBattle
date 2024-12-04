@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public float moveSpeed = 170f;    // カメラの左右・前後移動スピード
-    public float elevationSpeed = 200f;  // 上下移動スピードを増やす
-    public float maxY = 708f;        // カメラのY軸の最大高さ
-    public float minY = 200f;         // カメラのY軸の最小高さ（ズーム制限）
-    public float minX = -77f;        // X軸の最小制限
-    public float maxX = 87f;         // X軸の最大制限
-    public float maxZ = 40f;         // Z軸の最大制限
-    public float minZ = -89f;        // Z軸の最小制限 (-89に設定)
+    public float moveSpeed;    // カメラの左右・前後移動スピード
+    public float elevationSpeed;  // 上下移動スピードを増やす
+    public float maxY;        // カメラのY軸の最大高さ
+    public float minY;         // カメラのY軸の最小高さ（ズーム制限）
+    public float minX;        // X軸の最小制限
+    public float maxX;         // X軸の最大制限
+    public float maxZ;         // Z軸の最大制限
+    public float minZ;        // Z軸の最小制限 (-89に設定)
 
     private Camera cam;
 
