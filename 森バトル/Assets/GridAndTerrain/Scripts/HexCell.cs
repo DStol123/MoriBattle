@@ -123,4 +123,9 @@ public class HexCell : MonoBehaviour
             chunk.Refresh();
         }
     }
+
+    public HexCell[] Neighbors
+    {
+        get { return neighbors; }
+    }
 }

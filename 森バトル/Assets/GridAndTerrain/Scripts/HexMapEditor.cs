@@ -8,6 +8,7 @@ public class HexMapEditor : MonoBehaviour
 {
     public Color[] colors;
     public HexGrid hexGrid;
+    [SerializeField]private bool touchEnabled;
     private Color activeColor;
 
     void Awake()
@@ -18,7 +19,7 @@ public class HexMapEditor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject() && touchEnabled)
         {
             HandleInput();
         }

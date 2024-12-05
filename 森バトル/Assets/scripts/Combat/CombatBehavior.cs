@@ -11,12 +11,14 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private float currentMovementPoints;
     [SerializeField] private PlayerBehavior owner;
     [SerializeField] private float armyHeight; //This will be used to keep the model above the ground
+    [SerializeField] private float forwardOffset;
+    [SerializeField] private float lateralOffset;//This will be used to keep the model in the center of its cell
 
 
     public HexCell currentCell;
     private HexCell destinationCell;
 
-    private bool isSelected = false;
+    [SerializeField]private bool isSelected = true;
 
     public static HexGrid hexGrid;
 
@@ -27,17 +29,25 @@ public class CombatBehavior : MonoBehaviour
     }
     void Start()
     {
-        MoveToCell();
+        if(currentCell != null)
+        {
+            MoveToCell();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject() && isSelected)
+        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isSelected)
         {
             if(ChangeCell() != null)
             {
-                currentCell = ChangeCell();
+                HexCell cell2 = ChangeCell();
+                if(currentCell != null)
+                {
+                    RotateArmy(cell2);
+                }
+                currentCell = cell2;
                 MoveToCell();
             }
         }
@@ -46,21 +56,39 @@ public class CombatBehavior : MonoBehaviour
 
     private HexCell ChangeCell()
     {
+        HexCell newCell = null;
         Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(inputRay, out hit))
         {
-            return CombatBehavior.hexGrid.GetCell(hit.point);
+            if(currentCell == null)
+            {
+                newCell = CombatBehavior.hexGrid.GetCell(hit.point);
+            }
+            else
+            {
+                for (int i = 0; i < currentCell.Neighbors.Length; i++)
+                {
+                    if (CombatBehavior.hexGrid.GetCell(hit.point) == currentCell.Neighbors[i])
+                    {
+                        newCell = CombatBehavior.hexGrid.GetCell(hit.point);
+                        break;
+                    }
+                }
+            }
+            
         }
-        else
+        if(newCell == null)
         {
-            return null;
+            Debug.Log("Not a neighbor.");
         }
+        return newCell;
     }
 
     private void MoveToCell()
     {
         transform.position = new Vector3(currentCell.Position.x, currentCell.Position.y + armyHeight, currentCell.Position.z);
+        transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
     }
 
     private void SelectDestination(Vector3 position)
@@ -71,6 +99,7 @@ public class CombatBehavior : MonoBehaviour
     private void MoveToCell(HexCell cell)
     {
         transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
+        transform.position += transform.forward * forwardOffset + transform.right * lateralOffset; ;
     }
 
     private void Attack(CombatBehavior target, int damage)
@@ -79,6 +108,16 @@ public class CombatBehavior : MonoBehaviour
         {
             target.TakeDamage(damage);
         }
+    }
+
+    public void RotateArmy(HexCell hexCell)
+    {
+        int sides = 0;
+        for(int i = 0; i < currentCell.Neighbors.Length; i++)
+        {
+            if (hexCell == currentCell.Neighbors[i]) { sides = i - 1; break; }
+        }
+        transform.rotation = Quaternion.Euler(new Vector3(0f, sides * 60f - 90f, 0f));
     }
 
     public void TakeDamage(int amount)
