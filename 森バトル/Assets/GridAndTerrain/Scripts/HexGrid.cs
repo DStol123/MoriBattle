@@ -37,7 +37,7 @@ public class HexGrid : MonoBehaviour
 
         CreateChunks();
         CreateCells();
-        Combat.hexGrid = this;
+        CombatBehavior.hexGrid = this;
     }
 
 
