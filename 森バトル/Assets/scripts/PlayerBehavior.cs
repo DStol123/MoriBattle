@@ -2,21 +2,34 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    public Player player;
     private bool isTurn;
     private Resource[] resourceTypes;
     private float[] resourcePools;
     private bool isAlive;
+    private Color color;
+    private string userName;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public Color Color
+    {
+        get { return color; }
+        set { color = value; }
+    }
+
+    public string Username
+    {
+        get { return userName; }
+        set { userName = value; }
     }
 
     public bool IsTurn
@@ -40,5 +53,10 @@ public class PlayerBehavior : MonoBehaviour
     {
         get { return isAlive; }
         set { isAlive = value; }
+    }
+
+    public void SelectArmy(CombatBehavior army)
+    {
+
     }
 }

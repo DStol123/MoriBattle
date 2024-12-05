@@ -7,9 +7,9 @@ public class Combat
     private float maxMovementPoints;
     private float currentMovementPoints;
     [SerializeField]
-    private Player owner;
+    private PlayerBehavior owner;
   
-    public Player Owner
+    public PlayerBehavior Owner
     {
         get { return owner; }
         set { owner = value; }
@@ -42,7 +42,7 @@ public class Combat
     }
 
     // Constructor
-    public Combat(int hp, float movementPoints, Player owner)
+    public Combat(int hp, float movementPoints, PlayerBehavior owner)
     {
         MaxHp = hp;
         CurrentHp = hp;

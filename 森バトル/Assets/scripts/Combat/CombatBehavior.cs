@@ -8,7 +8,7 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField]
     private static float startingMovementPoints;
     [SerializeField]
-    private Player owner;
+    private PlayerBehavior owner;
 
     public Combat Combat;
     [SerializeField]
