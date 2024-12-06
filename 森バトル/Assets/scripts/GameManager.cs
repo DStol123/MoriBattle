@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     private float stoneDensity; //For painting the map
     [SerializeField]
     private float rockDensity; //For distributing resources
+    [SerializeField]
+    private float forestMovementPenalty;
+    [SerializeField]
+    private float heightMovementPenalty;
 
     public ResourceBehavior ironPrefab;
     public ResourceBehavior copperPrefab;
@@ -107,5 +111,13 @@ public class GameManager : MonoBehaviour
     {
         get { return rockDensity; }
         set { rockDensity = value; }
+    }
+    public float ForestMovementPenalty
+    {
+        get { return forestMovementPenalty; }
+    }
+    public float HeightMovementPenalty
+    {
+        get {return heightMovementPenalty; }
     }
 }

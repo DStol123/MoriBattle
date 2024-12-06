@@ -3,9 +3,10 @@ using UnityEngine.EventSystems;
 
 public class CombatBehavior : MonoBehaviour
 {
-    [SerializeField] private int startingHp;
-    [SerializeField] private int maxHp;
-    [SerializeField] private int currentHp;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private float startingHp;
+    [SerializeField] private float maxHp;
+    [SerializeField] private float currentHp;
     [SerializeField] private float maxMovementPoints;
     [SerializeField] private float startingMovementPoints;
     [SerializeField] private float currentMovementPoints;
@@ -13,6 +14,10 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private float armyHeight; //This will be used to keep the model above the ground
     [SerializeField] private float forwardOffset;
     [SerializeField] private float lateralOffset;//This will be used to keep the model in the center of its cell
+    [SerializeField] private float forestAttackPenalty;
+    [SerializeField] private float heightAttackPenalty;
+    [SerializeField] private float forestDefenceBoost;
+    [SerializeField] private float heightDefenceBoost;
 
 
     public HexCell currentCell;
@@ -47,8 +52,7 @@ public class CombatBehavior : MonoBehaviour
                 {
                     RotateArmy(cell2);
                 }
-                currentCell = cell2;
-                MoveToCell();
+                MoveToCell(cell2);
             }
         }
     }
@@ -85,6 +89,20 @@ public class CombatBehavior : MonoBehaviour
         return newCell;
     }
 
+    private float calculatePointCost(HexCell nextCell)
+    {
+        float pointCost = 1f;
+        if(nextCell.occupyingArmy!=null)
+        {
+            pointCost *= gameManager.ForestMovementPenalty;
+        }
+        if(nextCell.Elevation - currentCell.Elevation >= 0.2f)
+        {
+            pointCost *= gameManager.HeightMovementPenalty;
+        }
+        return pointCost;
+    }
+
     private void MoveToCell()
     {
         transform.position = new Vector3(currentCell.Position.x, currentCell.Position.y + armyHeight, currentCell.Position.z);
@@ -99,7 +117,9 @@ public class CombatBehavior : MonoBehaviour
     private void MoveToCell(HexCell cell)
     {
         transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
-        transform.position += transform.forward * forwardOffset + transform.right * lateralOffset; ;
+        transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
+        UseMovementPoints(calculatePointCost(cell));
+        currentCell = cell;
     }
 
     private void Attack(CombatBehavior target, int damage)
@@ -120,7 +140,18 @@ public class CombatBehavior : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0f, sides * 60f - 90f, 0f));
     }
 
-    public void TakeDamage(int amount)
+    public float CalculateDamage(CombatBehavior target, float baseDamage)
+    {
+        if(target.currentCell.occupyingForest != null)
+        {
+            baseDamage /= target.forestDefenceBoost * forestAttackPenalty;
+        }
+        baseDamage *= (1 + (target.currentCell.Elevation - currentCell.Elevation))
+            / (target.heightDefenceBoost * heightAttackPenalty);
+        return baseDamage;
+    }
+
+    public void TakeDamage(float amount)
     {
         CurrentHp -= amount; // Decrease CurrentHp
         if (CurrentHp <= 0)
@@ -143,14 +174,14 @@ public class CombatBehavior : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         CurrentHp += amount;
     }
 
-    public void Attack(int damage, CombatBehavior unit)
+    public void Attack(float damage, CombatBehavior unit)
     {
-        unit.TakeDamage(damage);
+        unit.TakeDamage(CalculateDamage(unit, damage));
     }
 
     public HexCell DestinationCell
@@ -165,13 +196,13 @@ public class CombatBehavior : MonoBehaviour
         set { owner = value; }
     }
 
-    public int MaxHp
+    public float MaxHp
     {
         get => maxHp; // setting maxHp with get comma
         set => maxHp = Mathf.Max(1, value); // set as not to reach zero
     }
 
-    public int CurrentHp
+    public float CurrentHp
     {
         get => currentHp;
         set => currentHp = Mathf.Clamp(value, 0, MaxHp); // from 0 to MaxHp
