@@ -93,7 +93,7 @@ public class CombatBehavior : MonoBehaviour
     private float calculatePointCost(HexCell nextCell)
     {
         float pointCost = 1f;
-        if(nextCell.occupyingArmy!=null)
+        if(nextCell.occupyingForest!=null)
         {
             pointCost *= gameManager.ForestMovementPenalty;
         }
@@ -119,7 +119,10 @@ public class CombatBehavior : MonoBehaviour
     {
         transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
         transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
-        UseMovementPoints(calculatePointCost(cell));
+        if(currentCell != null)
+        {
+            UseMovementPoints(calculatePointCost(cell));
+        }
         currentCell = cell;
     }
 

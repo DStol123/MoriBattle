@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public float moveSpeed = 170f;    // Horizontal Moving Speed of Camera
-    public float rotationSpeed = 100f;  // Vertical Moving Speed of Camera
-    public float zoomSpeed = 200f; // Mouse Wheel Speed
-    public float maxY = 708f;        // Camera Coordinate  Ymax
-    public float minY = 200f;         // Camera Coordinate Ymin
-    public float minX = -77f;        // Xmin
-    public float maxX = 87f;         // Xmax
-    public float maxZ = 40f;         // Zmax
-    public float minZ = -89f;        // Zmin
-    public float minZoomDistance = 20f;
-    public float maxZoomDistance = 500f;
+    public float moveSpeed;    // Horizontal Moving Speed of Camera
+    public float rotationSpeed;  // Vertical Moving Speed of Camera
+    public float zoomSpeed; // Mouse Wheel Speed
+    public float maxY;        // Camera Coordinate  Ymax
+    public float minY;         // Camera Coordinate Ymin
+    public float minX;        // Xmin
+    public float maxX;         // Xmax
+    public float maxZ;         // Zmax
+    public float minZ;        // Zmin
+    public float minZoomDistance;
+    public float maxZoomDistance;
 
     private Camera cam;
     private GameObject target; // Empty Object
@@ -42,6 +42,8 @@ public class CameraControl : MonoBehaviour
         ApplyPositionLimits(target.transform);
         ApplyPositionLimits(this.transform);// Limiting of Camera
         FollowTarget();
+        
+        targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
     }
 
     // WASD key
@@ -68,7 +70,7 @@ public class CameraControl : MonoBehaviour
         {
             moveDirection += this.transform.right;
         }
-        target.transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        target.transform.position += moveDirection * moveSpeed;
         if (moveDirection == Vector3.zero)
         {
             return false;
@@ -79,26 +81,25 @@ public class CameraControl : MonoBehaviour
     // Camera will look around the empty target
     void CameraRotation()
     {
-        if (Input.GetMouseButton(1) && !TargetMovement()) // While putting right bottom
+        if (Input.GetMouseButton(1) && !TargetMovement()) // While putting right button
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
             
-            cam.transform.RotateAround(target.transform.position, Vector3.up, mouseX * rotationSpeed * Time.deltaTime);
+            cam.transform.RotateAround(target.transform.position, Vector3.up, mouseX * rotationSpeed);
             
-            cam.transform.RotateAround(target.transform.position, cam.transform.right, -mouseY * rotationSpeed * Time.deltaTime);
-            
+            cam.transform.RotateAround(target.transform.position, cam.transform.right, -mouseY * rotationSpeed);
+
             targetOffset = cam.transform.position - target.transform.position;
         }
     }
     void CameraZoom()
     {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        float scroll = -Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) > 0.01f) // While moving mouse wheel
         {
-            targetOffset += targetOffset.normalized * scroll * zoomSpeed * Time.deltaTime;
+            targetOffset += targetOffset.normalized * scroll * zoomSpeed;
 
-            targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
             if (targetOffset.magnitude < minZoomDistance)
             {
                 targetOffset = targetOffset.normalized * minZoomDistance;

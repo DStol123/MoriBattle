@@ -1206,7 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055e908c893336641aafac3fcd96cc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 481939009}
   startingHp: 100
   maxHp: 100
   currentHp: 100
@@ -1223,7 +1223,7 @@ MonoBehaviour:
   heightDefenceBoost: 0
   morale: 0
   currentCell: {fileID: 0}
-  isSelected: 0
+  isSelected: 1
 --- !u!1 &813377043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,9 +1619,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adcada54c5c954f54ab25e076846d321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 170
-  rotationSpeed: 100
-  zoomSpeed: 200
+  moveSpeed: 1
+  rotationSpeed: 1
+  zoomSpeed: 1
   maxY: 200
   minY: 10
   minX: -77
