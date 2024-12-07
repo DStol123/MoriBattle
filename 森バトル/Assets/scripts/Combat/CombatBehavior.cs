@@ -18,6 +18,7 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private float heightAttackPenalty;
     [SerializeField] private float forestDefenceBoost;
     [SerializeField] private float heightDefenceBoost;
+    [SerializeField] private float morale;
 
 
     public HexCell currentCell;

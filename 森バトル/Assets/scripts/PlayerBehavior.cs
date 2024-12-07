@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
@@ -8,6 +9,7 @@ public class PlayerBehavior : MonoBehaviour
     private bool isAlive;
     private Color color;
     private string userName;
+    private List<CombatBehavior> units;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

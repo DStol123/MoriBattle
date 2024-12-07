@@ -581,6 +581,8 @@ MonoBehaviour:
   dirtDensity: 0.3
   stoneDensity: 0.1
   rockDensity: 0.08
+  forestMovementPenalty: 0
+  heightMovementPenalty: 0
   ironPrefab: {fileID: 8944455798993363734, guid: a9482bb20432e2f4a9782facfb6124b3, type: 3}
   copperPrefab: {fileID: 5458606483173116138, guid: 562a0f9389e1d5b4aba51e8f202f33c5, type: 3}
   forestPrefab: {fileID: 1909263327706896495, guid: b0377576310543a44bdddb354285dfac, type: 3}
@@ -1204,6 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055e908c893336641aafac3fcd96cc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   startingHp: 100
   maxHp: 100
   currentHp: 100
@@ -1214,6 +1217,11 @@ MonoBehaviour:
   armyHeight: 3.86
   forwardOffset: -0.1
   lateralOffset: 2.3
+  forestAttackPenalty: 0
+  heightAttackPenalty: 0
+  forestDefenceBoost: 0
+  heightDefenceBoost: 0
+  morale: 0
   currentCell: {fileID: 0}
   isSelected: 0
 --- !u!1 &813377043
@@ -1608,17 +1616,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b5c5eb70e10644a68a26aeb7b88f5f8, type: 3}
+  m_Script: {fileID: 11500000, guid: adcada54c5c954f54ab25e076846d321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 170
-  elevationSpeed: 200
-  maxY: 708
+  rotationSpeed: 100
+  zoomSpeed: 200
+  maxY: 200
   minY: 10
   minX: -77
-  maxX: 275
-  maxZ: 275
+  maxX: 1000
+  maxZ: 1000
   minZ: -89
+  minZoomDistance: 20
+  maxZoomDistance: 500
 --- !u!1 &978421231
 GameObject:
   m_ObjectHideFlags: 0

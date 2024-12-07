@@ -2,116 +2,126 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public float moveSpeed;    // カメラの左右・前後移動スピード
-    public float elevationSpeed;  // 上下移動スピードを増やす
-    public float maxY;        // カメラのY軸の最大高さ
-    public float minY;         // カメラのY軸の最小高さ（ズーム制限）
-    public float minX;        // X軸の最小制限
-    public float maxX;         // X軸の最大制限
-    public float maxZ;         // Z軸の最大制限
-    public float minZ;        // Z軸の最小制限 (-89に設定)
+    public float moveSpeed = 170f;    // Horizontal Moving Speed of Camera
+    public float rotationSpeed = 100f;  // Vertical Moving Speed of Camera
+    public float zoomSpeed = 200f; // Mouse Wheel Speed
+    public float maxY = 708f;        // Camera Coordinate  Ymax
+    public float minY = 200f;         // Camera Coordinate Ymin
+    public float minX = -77f;        // Xmin
+    public float maxX = 87f;         // Xmax
+    public float maxZ = 40f;         // Zmax
+    public float minZ = -89f;        // Zmin
+    public float minZoomDistance = 20f;
+    public float maxZoomDistance = 500f;
 
     private Camera cam;
+    private GameObject target; // Empty Object
+    private Vector3 targetOffset;
 
     void Start()
     {
         cam = GetComponent<Camera>();
+
+        //　Making target Object
+        target = new GameObject("CameraTarget");
+        target.transform.position = Vector3.zero; // starting position
+        
+        targetOffset = cam.transform.position - target.transform.position;
+
     }
 
     void Update()
-    {
-        HandleMovement();
-        HandleElevation();
-        ApplyPositionLimits(); // カメラの位置制限を適用
+    { 
+        TargetMovement();
+        CameraRotation();
+        CameraZoom();
+        if (target.transform.position.y != 0f)
+        {
+            target.transform.position = new Vector3(target.transform.position.x, 0f, target.transform.position.z);
+        }
+        ApplyPositionLimits(target.transform);
+        ApplyPositionLimits(this.transform);// Limiting of Camera
+        FollowTarget();
     }
 
-    // WASDで前後左右に移動
-    void HandleMovement()
+    // WASD key
+    bool TargetMovement()
     {
         Vector3 moveDirection = Vector3.zero;
 
-        // W/SキーでZ軸の前後移動
+        // W/S key
         if (Input.GetKey(KeyCode.W))
         {
-            moveDirection += Vector3.forward; // Z軸正方向に前進
+            moveDirection += this.transform.forward;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            moveDirection -= Vector3.forward; // Z軸負方向に後退
+            moveDirection -= this.transform.forward;
         }
 
-        // A/DキーでX軸の左右移動
+        // A/D key
         if (Input.GetKey(KeyCode.A))
         {
-            moveDirection -= Vector3.right; // X軸負方向に移動（左）
+            moveDirection -= this.transform.right;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            moveDirection += Vector3.right; // X軸正方向に移動（右）
+            moveDirection += this.transform.right;
         }
-
-        // カメラを移動
-        cam.transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        target.transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        if (moveDirection == Vector3.zero)
+        {
+            return false;
+        }
+        else { return true; }
     }
 
-    // Qで下に移動、Eで上に移動
-    void HandleElevation()
+    // Camera will look around the empty target
+    void CameraRotation()
     {
-        Vector3 elevationDirection = Vector3.zero;
-
-        // Eキーで上に移動
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetMouseButton(1) && !TargetMovement()) // While putting right bottom
         {
-            elevationDirection += Vector3.up; // 上昇
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+            
+            cam.transform.RotateAround(target.transform.position, Vector3.up, mouseX * rotationSpeed * Time.deltaTime);
+            
+            cam.transform.RotateAround(target.transform.position, cam.transform.right, -mouseY * rotationSpeed * Time.deltaTime);
+            
+            targetOffset = cam.transform.position - target.transform.position;
         }
-
-        // Qキーで下に移動
-        if (Input.GetKey(KeyCode.Q))
+    }
+    void CameraZoom()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (Mathf.Abs(scroll) > 0.01f) // While moving mouse wheel
         {
-            elevationDirection -= Vector3.up; // 下降
-        }
+            targetOffset += targetOffset.normalized * scroll * zoomSpeed * Time.deltaTime;
 
-        // カメラの上下移動
-        cam.transform.position += elevationDirection * elevationSpeed * Time.deltaTime;
+            targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
+            if (targetOffset.magnitude < minZoomDistance)
+            {
+                targetOffset = targetOffset.normalized * minZoomDistance;
+            }
+        }
     }
 
-    // カメラの位置制限
-    void ApplyPositionLimits()
+    // Target Empty Object
+    void FollowTarget()
     {
-        // カメラの現在位置を取得
-        Vector3 position = cam.transform.position;
+        cam.transform.position = target.transform.position + targetOffset;
+        cam.transform.LookAt(target.transform);
+    }
 
-        // Y軸の制限（990以上、10以下にならない）
-        if (position.y > maxY)
-        {
-            position.y = maxY;
-        }
-        else if (position.y < minY)
-        {
-            position.y = minY;  // 下にズームしすぎないように最低値を10に制限
-        }
+    // target position
+    void ApplyPositionLimits(Transform targetTransform)
+    {
+        Vector3 position = targetTransform.position;
 
-        // X軸の制限（-77以下にならない、87以上にならない）
-        if (position.x < minX)
-        {
-            position.x = minX;
-        }
-        else if (position.x > maxX)
-        {
-            position.x = maxX;
-        }
+        position.y = Mathf.Clamp(position.y, minY, maxY);
+        position.x = Mathf.Clamp(position.x, minX, maxX);
+        position.z = Mathf.Clamp(position.z, minZ, maxZ);
 
-        // Z軸の制限（-89以下にならない、40以上にならない）
-        if (position.z < minZ)
-        {
-            position.z = minZ;
-        }
-        else if (position.z > maxZ)
-        {
-            position.z = maxZ;
-        }
-
-        // カメラの位置を更新
-        cam.transform.position = position;
+        targetTransform.position = position;
     }
 }
