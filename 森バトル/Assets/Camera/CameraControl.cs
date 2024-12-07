@@ -31,9 +31,9 @@ public class CameraControl : MonoBehaviour
     }
 
     void Update()
-    { 
-        TargetMovement();
+    {
         CameraRotation();
+        TargetMovement();
         CameraZoom();
         if (target.transform.position.y != 0f)
         {
@@ -81,7 +81,7 @@ public class CameraControl : MonoBehaviour
     // Camera will look around the empty target
     void CameraRotation()
     {
-        if (Input.GetMouseButton(1) && !TargetMovement()) // While putting right button
+        if (Input.GetMouseButton(1)) // While putting right button
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
