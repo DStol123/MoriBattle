@@ -1619,7 +1619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adcada54c5c954f54ab25e076846d321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  stabilizer: {fileID: 1483205769}
+  moveSpeed: 0.1
   rotationSpeed: 1
   zoomSpeed: 30
   maxY: 200
@@ -1630,6 +1631,8 @@ MonoBehaviour:
   minZ: -89
   minZoomDistance: 20
   maxZoomDistance: 500
+  boostMultiplier: 3
+  zoomSpeedFactor: 0.1
 --- !u!1 &978421231
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,6 +2013,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bf58ab2bdacbce4488fca9af58e6449, type: 3}
+--- !u!1 &1483205769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1483205770}
+  m_Layer: 0
+  m_Name: Stabilizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1483205770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483205769}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.70289576, y: -0.09117051, z: -0.09073845, w: 0.6995657}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 104.78299, y: 88.934, z: 88.969}
 --- !u!1 &1485087752 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 992631711121525104, guid: 178a51af93ef35b479e5b23fedaf2867, type: 3}
@@ -3170,6 +3204,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 963194228}
+  - {fileID: 1483205770}
   - {fileID: 705507995}
   - {fileID: 154126094}
   - {fileID: 1660400810}

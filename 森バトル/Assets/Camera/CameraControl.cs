@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public float moveSpeed;    // Horizontal Moving Speed of Camera
-    public float rotationSpeed;  // Vertical Moving Speed of Camera
-    public float zoomSpeed; // Mouse Wheel Speed
-    public float maxY;        // Camera Coordinate  Ymax
-    public float minY;         // Camera Coordinate Ymin
-    public float minX;        // Xmin
-    public float maxX;         // Xmax
-    public float maxZ;         // Zmax
-    public float minZ;        // Zmin
-    public float minZoomDistance;
-    public float maxZoomDistance;
+    [SerializeField] private GameObject stabilizer;
+    [SerializeField] private float moveSpeed;    // Horizontal Moving Speed of Camera
+    [SerializeField] private float rotationSpeed;  // Vertical Moving Speed of Camera
+    [SerializeField] private float zoomSpeed; // Mouse Wheel Speed
+    [SerializeField] private float maxY;        // Camera Coordinate  Ymax
+    [SerializeField] private float minY;         // Camera Coordinate Ymin
+    [SerializeField] private float minX;        // Xmin
+    [SerializeField] private float maxX;         // Xmax
+    [SerializeField] private float maxZ;         // Zmax
+    [SerializeField] private float minZ;        // Zmin
+    [SerializeField] private float minZoomDistance;
+    [SerializeField] private float maxZoomDistance;
+    private float boostFactor;
+    [SerializeField] private float boostMultiplier;
+    [SerializeField] private float zoomSpeedFactor; //For speeding up the camera move speed when zoomed out.
 
     private Camera cam;
     private GameObject target; // Empty Object
@@ -32,6 +36,8 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
+        StabilizeCamera();
+        GetBoost();
         CameraRotation();
         TargetMovement();
         CameraZoom();
@@ -46,6 +52,21 @@ public class CameraControl : MonoBehaviour
         targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
     }
 
+    private void StabilizeCamera()
+    {
+        stabilizer.transform.position = this.transform.position;
+        stabilizer.transform.rotation = Quaternion.Euler(new Vector3(0f, this.transform.rotation.eulerAngles.y, 0f));
+    }
+
+    private void GetBoost()
+    {
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            boostFactor = 1f;
+        }
+        else { boostFactor = boostMultiplier; }
+    }
+
     // WASD key
     bool TargetMovement()
     {
@@ -54,23 +75,23 @@ public class CameraControl : MonoBehaviour
         // W/S key
         if (Input.GetKey(KeyCode.W))
         {
-            moveDirection += this.transform.forward;
+            moveDirection += stabilizer.transform.forward;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            moveDirection -= this.transform.forward;
+            moveDirection -= stabilizer.transform.forward;
         }
 
         // A/D key
         if (Input.GetKey(KeyCode.A))
         {
-            moveDirection -= this.transform.right;
+            moveDirection -= stabilizer.transform.right;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            moveDirection += this.transform.right;
+            moveDirection += stabilizer.transform.right;
         }
-        target.transform.position += moveDirection * moveSpeed;
+        target.transform.position += moveDirection * moveSpeed * boostFactor * targetOffset.magnitude * zoomSpeedFactor;
         if (moveDirection == Vector3.zero)
         {
             return false;
