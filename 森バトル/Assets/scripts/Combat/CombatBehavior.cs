@@ -49,10 +49,6 @@ public class CombatBehavior : MonoBehaviour
             if(ChangeCell() != null)
             {
                 HexCell cell2 = ChangeCell();
-                if(currentCell != null)
-                {
-                    RotateArmy(cell2);
-                }
                 MoveToCell(cell2);
             }
         }
@@ -64,7 +60,7 @@ public class CombatBehavior : MonoBehaviour
         HexCell newCell = null;
         Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(inputRay, out hit))
+        if(Physics.Raycast(inputRay, out hit) && hit.collider.GetComponent<CombatBehavior>() == null)
         {
             if(currentCell == null)
             {
@@ -97,9 +93,9 @@ public class CombatBehavior : MonoBehaviour
         {
             pointCost *= gameManager.ForestMovementPenalty;
         }
-        if(nextCell.Elevation - currentCell.Elevation >= 0.2f)
+        if(nextCell.Elevation - currentCell.Elevation >= 0.05f)
         {
-            pointCost *= gameManager.HeightMovementPenalty;
+            pointCost *= gameManager.HeightMovementPenalty * (1f + nextCell.Elevation - currentCell.Elevation);
         }
         return pointCost;
     }
@@ -117,13 +113,19 @@ public class CombatBehavior : MonoBehaviour
 
     private void MoveToCell(HexCell cell)
     {
-        transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
-        transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
-        if(currentCell != null)
+        if (currentCell == null || calculatePointCost(cell) <= currentMovementPoints)
         {
-            UseMovementPoints(calculatePointCost(cell));
+            if (currentCell != null)
+            {
+                float moveCost = calculatePointCost(cell);
+                RotateArmy(cell);
+                Debug.Log(moveCost);
+                UseMovementPoints(moveCost);
+            }
+            transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
+            transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
+            currentCell = cell;
         }
-        currentCell = cell;
     }
 
     private void Attack(CombatBehavior target, int damage)
@@ -141,7 +143,7 @@ public class CombatBehavior : MonoBehaviour
         {
             if (hexCell == currentCell.Neighbors[i]) { sides = i - 1; break; }
         }
-        transform.rotation = Quaternion.Euler(new Vector3(0f, sides * 60f - 90f, 0f));
+        transform.rotation = Quaternion.Euler(new Vector3(0f, sides * 60f + 90f, 0f));
     }
 
     public float CalculateDamage(CombatBehavior target, float baseDamage)

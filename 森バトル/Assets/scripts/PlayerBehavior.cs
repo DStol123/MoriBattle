@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class PlayerBehavior : MonoBehaviour
     private bool isAlive;
     private Color color;
     private string userName;
-    private List<CombatBehavior> units;
+    private CombatBehavior selectedArmy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,7 +21,40 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleInput();
+    }
 
+    public void SelectArmy(CombatBehavior army)
+    {
+        if(army.Owner == this)
+        {
+            if(selectedArmy != null)
+            {
+                selectedArmy.IsSelected = false;
+            }
+            selectedArmy = army;
+            selectedArmy.IsSelected = true;
+        }
+    }
+
+    public void HandleInput()
+    {
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("Ray cast");
+            Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(inputRay, out hit))
+            {
+                Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+                Debug.Log("CombatBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
+                if (hit.collider.GetComponent<CombatBehavior>() != null)
+                {
+                    SelectArmy(hit.collider.GameObject().GetComponent<CombatBehavior>());
+                }
+            }
+        }
     }
 
     public Color Color
@@ -57,8 +92,4 @@ public class PlayerBehavior : MonoBehaviour
         set { isAlive = value; }
     }
 
-    public void SelectArmy(CombatBehavior army)
-    {
-
-    }
 }
