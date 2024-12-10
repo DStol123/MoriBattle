@@ -36,7 +36,6 @@ public class CombatBehavior : MonoBehaviour
     void Start()
     {
         currentCell = InitialCell();
-        currentCell.occupyingArmy = this;
         MoveToCell();
         owner.playerCamera.Target.transform.position = transform.position;
         owner.playerCamera.FollowTarget();
@@ -122,6 +121,7 @@ public class CombatBehavior : MonoBehaviour
     {
         transform.position = new Vector3(currentCell.Position.x, currentCell.Position.y + armyHeight, currentCell.Position.z);
         transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
+        currentCell.occupyingArmy = this;
     }
 
     private void SelectDestination(Vector3 position)
@@ -135,6 +135,7 @@ public class CombatBehavior : MonoBehaviour
         {
             if (currentCell != null)
             {
+                currentCell.occupyingArmy = null;
                 float moveCost = calculatePointCost(cell);
                 RotateArmy(cell);
                 Debug.Log(moveCost);
@@ -143,6 +144,7 @@ public class CombatBehavior : MonoBehaviour
             transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
             transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
             currentCell = cell;
+            cell.occupyingArmy = this;
         }
     }
 
