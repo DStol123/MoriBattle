@@ -22,16 +22,11 @@ public class CameraControl : MonoBehaviour
     private GameObject target; // Empty Object
     private Vector3 targetOffset;
 
-    void Start()
+    private void Awake()
     {
+        target = new GameObject("CameraTarget");//　Making target Object
         cam = GetComponent<Camera>();
-
-        //　Making target Object
-        target = new GameObject("CameraTarget");
-        target.transform.position = Vector3.zero; // starting position
-        
         targetOffset = cam.transform.position - target.transform.position;
-
     }
 
     void Update()
@@ -129,7 +124,7 @@ public class CameraControl : MonoBehaviour
     }
 
     // Target Empty Object
-    void FollowTarget()
+    public void FollowTarget()
     {
         cam.transform.position = target.transform.position + targetOffset;
         cam.transform.LookAt(target.transform);
@@ -145,5 +140,10 @@ public class CameraControl : MonoBehaviour
         position.z = Mathf.Clamp(position.z, minZ, maxZ);
 
         targetTransform.position = position;
+    }
+
+    public GameObject Target
+    {
+        get { return target; }
     }
 }

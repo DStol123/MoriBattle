@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class HexGrid : MonoBehaviour
 {
-    [SerializeField]
-    int cellCountX, cellCountZ;
+    public int cellCountX, cellCountZ;
 
     public int chunkCountX = 5, chunkCountZ = 3;
 

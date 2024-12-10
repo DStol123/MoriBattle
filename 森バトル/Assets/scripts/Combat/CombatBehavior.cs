@@ -35,10 +35,11 @@ public class CombatBehavior : MonoBehaviour
     }
     void Start()
     {
-        if(currentCell != null)
-        {
-            MoveToCell();
-        }
+        currentCell = InitialCell();
+        currentCell.occupyingArmy = this;
+        MoveToCell();
+        owner.playerCamera.Target.transform.position = transform.position;
+        owner.playerCamera.FollowTarget();
     }
 
     // Update is called once per frame
@@ -54,6 +55,23 @@ public class CombatBehavior : MonoBehaviour
         }
     }
 
+    private HexCell InitialCell()
+    {
+        Vector3 initialPosition = new Vector3(HexMetrics.outerRadius * hexGrid.cellCountX / 10f , 0f, HexMetrics.outerRadius * hexGrid.cellCountZ / 2f);
+        HexCell initialCell = hexGrid.GetCell(initialPosition);
+        if(initialCell.occupyingArmy != null)
+        {
+            for(int i = 0; i < initialCell.Neighbors.Length; i++)
+            {
+                if (initialCell.Neighbors[i].occupyingArmy == null)
+                {
+                    initialCell = initialCell.Neighbors[i];
+                    break;
+                }
+            }
+        }
+        return initialCell;
+    }
 
     private HexCell ChangeCell()
     {
@@ -64,15 +82,15 @@ public class CombatBehavior : MonoBehaviour
         {
             if(currentCell == null)
             {
-                newCell = CombatBehavior.hexGrid.GetCell(hit.point);
+                newCell = hexGrid.GetCell(hit.point);
             }
             else
             {
                 for (int i = 0; i < currentCell.Neighbors.Length; i++)
                 {
-                    if (CombatBehavior.hexGrid.GetCell(hit.point) == currentCell.Neighbors[i])
+                    if (hexGrid.GetCell(hit.point) == currentCell.Neighbors[i])
                     {
-                        newCell = CombatBehavior.hexGrid.GetCell(hit.point);
+                        newCell = hexGrid.GetCell(hit.point);
                         break;
                     }
                 }
@@ -188,6 +206,11 @@ public class CombatBehavior : MonoBehaviour
     public void Attack(float damage, CombatBehavior unit)
     {
         unit.TakeDamage(CalculateDamage(unit, damage));
+    }
+
+    public void FocusOnMe(PlayerBehavior player)
+    {
+        player.playerCamera.Target.transform.position = this.transform.position;
     }
 
     public HexCell DestinationCell

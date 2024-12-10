@@ -12,6 +12,7 @@ public class PlayerBehavior : MonoBehaviour
     private Color color;
     private string userName;
     private CombatBehavior selectedArmy;
+    public CameraControl playerCamera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
