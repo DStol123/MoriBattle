@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         players = new PlayerBehavior[playerCount];
+        players[0].IsTurn = true;
     }
 
     public PlayerBehavior[] Players
@@ -52,7 +53,8 @@ public class GameManager : MonoBehaviour
     
     public void rollToNextPlayer()
     {
-    //Passes the turn to the next player in line
+        //Passes the turn to the next player in line
+        activePlayer.AddResources();
         if(activePlayer == players[players.Length - 1])
         {
             activePlayer.IsTurn = false;

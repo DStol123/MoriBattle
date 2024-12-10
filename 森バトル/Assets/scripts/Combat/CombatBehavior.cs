@@ -44,7 +44,7 @@ public class CombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isSelected)
+        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isSelected && owner.IsTurn)
         {
             if(ChangeCell() != null)
             {

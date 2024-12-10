@@ -6,14 +6,20 @@ using UnityEngine.EventSystems;
 public class PlayerBehavior : MonoBehaviour
 {
     private bool isTurn;
-    private Resource[] resourceTypes;
-    private float[] resourcePools;
-    private bool isAlive;
-    private Color color;
-    private string userName;
+    [SerializeField] private Resource[] resourceTypes;
+    [SerializeField] private float[] resourcePools;
+    [SerializeField] private float[] resourceIncomes;
+    [SerializeField] private bool isAlive;
+    [SerializeField] private Color color;
+    [SerializeField] private string userName;
     private CombatBehavior selectedArmy;
     public CameraControl playerCamera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
 
@@ -58,6 +64,14 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    public void AddResources()
+    {
+        for(int i = 0; i < resourcePools.Length; i++)
+        {
+            resourcePools[i] += resourceIncomes[i];
+        }
+    }
+
     public Color Color
     {
         get { return color; }
@@ -85,6 +99,12 @@ public class PlayerBehavior : MonoBehaviour
     {
         get { return resourcePools; }
         set { resourcePools = value; }
+    }
+
+    public float[] ResourceIncomes
+    {
+        get { return resourceIncomes; }
+        set { resourceIncomes = value; }
     }
 
     public bool IsAlive
