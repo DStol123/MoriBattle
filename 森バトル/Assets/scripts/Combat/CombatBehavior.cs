@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class CombatBehavior : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private bool isAlive;
     [SerializeField] private float startingHp;
     [SerializeField] private float maxHp;
     [SerializeField] private float currentHp;
@@ -28,11 +29,6 @@ public class CombatBehavior : MonoBehaviour
 
     public static HexGrid hexGrid;
 
-    public bool IsSelected
-    {
-        get { return isSelected; }
-        set { isSelected = value; }
-    }
     void Start()
     {
         currentCell = InitialCell();
@@ -182,7 +178,7 @@ public class CombatBehavior : MonoBehaviour
         CurrentHp -= amount; // Decrease CurrentHp
         if (CurrentHp <= 0)
         {
-            Debug.Log("The Character was dead!"); //message
+            isAlive = false;
         }
     }
 
@@ -214,40 +210,43 @@ public class CombatBehavior : MonoBehaviour
     {
         player.playerCamera.Target.transform.position = this.transform.position;
     }
-
     public HexCell DestinationCell
     {
         get { return destinationCell; }
         set { destinationCell = value; }
     }
-
     public PlayerBehavior Owner
     {
         get { return owner; }
         set { owner = value; }
     }
-
     public float MaxHp
     {
         get => maxHp; // setting maxHp with get comma
         set => maxHp = Mathf.Max(1, value); // set as not to reach zero
     }
-
     public float CurrentHp
     {
         get => currentHp;
         set => currentHp = Mathf.Clamp(value, 0, MaxHp); // from 0 to MaxHp
     }
-
     public float MaxMovementPoints
     {
         get => maxMovementPoints;
         set => maxMovementPoints = Mathf.Max(0, value); // not to reach minus
     }
-
     public float CurrentMovementPoints
     {
         get => currentMovementPoints;
         set => currentMovementPoints = Mathf.Clamp(value, 0, MaxMovementPoints); // from 0 to MaxMovementPoints
+    }
+    public bool IsAlive
+    {
+        get { return isAlive; }
+    }
+    public bool IsSelected
+    {
+        get { return isSelected; }
+        set { isSelected = value; }
     }
 }

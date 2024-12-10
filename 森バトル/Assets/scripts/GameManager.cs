@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
     private PlayerBehavior[] players;
 
     [SerializeField]
@@ -34,7 +35,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        players = new PlayerBehavior[playerCount];
         players[0].IsTurn = true;
     }
 
