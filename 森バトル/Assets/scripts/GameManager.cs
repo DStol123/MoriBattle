@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     private float forestMovementPenalty;
     [SerializeField]
     private float heightMovementPenalty;
+    public HexGrid hexGrid;
 
     public ResourceBehavior ironPrefab;
     public ResourceBehavior copperPrefab;

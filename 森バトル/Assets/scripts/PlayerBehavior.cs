@@ -13,12 +13,15 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private Color color;
     [SerializeField] private string userName;
     private CombatBehavior selectedArmy;
+    private TrainingGroundsBehavior selectedTrainingGrounds;
     public CameraControl playerCamera;
+    private GameObject[] selectedObjects;
+    [SerializeField] private GameObject[] possibleArmies;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
     {
-        
+
     }
     void Start()
     {
@@ -29,19 +32,49 @@ public class PlayerBehavior : MonoBehaviour
     void Update()
     {
         HandleInput();
+        
+        if(Input.GetKeyDown(KeyCode.Return) && selectedTrainingGrounds != null)
+        {
+            selectedTrainingGrounds.makeArmy(0);
+        }
+        
     }
 
-    public void SelectArmy(CombatBehavior army)
+    public void Select(CombatBehavior army)
     {
-        if(army.Owner == this)
+        if (army.Owner == this)
         {
-            if(selectedArmy != null)
+            if (selectedArmy != null)
             {
                 selectedArmy.IsSelected = false;
+            }
+            if (selectedTrainingGrounds != null)
+            {
+                selectedTrainingGrounds.Building.IsSelected = false;
+                selectedTrainingGrounds = null;
             }
             selectedArmy = army;
             selectedArmy.IsSelected = true;
         }
+    }
+
+    public void Select(TrainingGroundsBehavior building)
+    {
+        if (building.Building.Owner == this)
+        {
+            if (selectedTrainingGrounds != null)
+            {
+                selectedTrainingGrounds.Building.IsSelected = false;
+            }
+            if (selectedArmy != null)
+            {
+                selectedArmy.IsSelected = false;
+                selectedArmy = null;
+            }
+            selectedTrainingGrounds = building;
+            selectedTrainingGrounds.Building.IsSelected = true;
+        }
+        Debug.Log("Selected Training Grounds");
     }
 
     public void HandleInput()
@@ -52,13 +85,18 @@ public class PlayerBehavior : MonoBehaviour
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if(Physics.Raycast(inputRay, out hit))
+            if (Physics.Raycast(inputRay, out hit))
             {
                 Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
                 Debug.Log("CombatBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
+                Debug.Log("TrainingGroundsBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
                 if (hit.collider.GetComponent<CombatBehavior>() != null)
                 {
-                    SelectArmy(hit.collider.GameObject().GetComponent<CombatBehavior>());
+                    Select(hit.collider.GameObject().GetComponent<CombatBehavior>());
+                }
+                if (hit.collider.GetComponent<TrainingGroundsBehavior>() != null)
+                {
+                    Select(hit.collider.GameObject().GetComponent<TrainingGroundsBehavior>());
                 }
             }
         }
@@ -66,7 +104,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public void AddResources()
     {
-        for(int i = 0; i < resourcePools.Length; i++)
+        for (int i = 0; i < resourcePools.Length; i++)
         {
             resourcePools[i] += resourceIncomes[i];
         }
@@ -112,5 +150,14 @@ public class PlayerBehavior : MonoBehaviour
         get { return isAlive; }
         set { isAlive = value; }
     }
-
+    public TrainingGroundsBehavior SelectedTrainingGrounds
+    {
+        get { return selectedTrainingGrounds; }
+        set { selectedTrainingGrounds = value; }
+    }
+    public GameObject[] PossibleArmies
+    {
+        get { return possibleArmies; }
+        set { possibleArmies = value; }
+    }
 }

@@ -36,7 +36,7 @@ public class HexGrid : MonoBehaviour
 
         CreateChunks();
         CreateCells();
-        CombatBehavior.hexGrid = this;
+        gameManager.hexGrid = this;
     }
 
 
@@ -171,5 +171,4 @@ public class HexGrid : MonoBehaviour
         int index = coordinates.X + coordinates.Z * cellCountX + coordinates.Z / 2;
         return cells[index];
     }
-
 }

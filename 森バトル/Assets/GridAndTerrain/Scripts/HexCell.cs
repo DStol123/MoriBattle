@@ -13,6 +13,7 @@ public class HexCell : MonoBehaviour
     public CombatBehavior occupyingArmy;
     public ResourceBehavior occupyingResource;
     public ResourceBehavior occupyingForest;
+    public Building occupyingBuilding;
 
     public Color stone;
     public Color grass;
