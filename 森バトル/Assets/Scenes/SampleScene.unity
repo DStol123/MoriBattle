@@ -1863,6 +1863,7 @@ MonoBehaviour:
   minZ: -89
   minZoomDistance: 20
   maxZoomDistance: 500
+  startZoom: 10
   boostMultiplier: 3
   zoomSpeedFactor: 0.1
 --- !u!114 &963194230
