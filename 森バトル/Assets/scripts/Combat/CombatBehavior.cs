@@ -43,13 +43,12 @@ public class CombatBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isSelected && owner.IsTurn)
+        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && isSelected && owner.IsTurn && ChangeCell() != null)
         {
-            if(ChangeCell() != null)
-            {
-                HexCell cell2 = ChangeCell();
-                MoveToCell(cell2);
-            }
+
+            HexCell cell2 = ChangeCell();
+            MoveToCell(cell2);
+
         }
     }
 
@@ -130,7 +129,7 @@ public class CombatBehavior : MonoBehaviour
 
     public void MoveToCell(HexCell cell)
     {
-        if (currentCell == null || calculatePointCost(cell) <= currentMovementPoints)
+        if ((currentCell == null || calculatePointCost(cell) <= currentMovementPoints) && cell.occupyingArmy == null)
         {
             if (currentCell != null)
             {

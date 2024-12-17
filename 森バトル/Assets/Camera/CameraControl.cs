@@ -27,7 +27,6 @@ public class CameraControl : MonoBehaviour
     {
         target = new GameObject("CameraTarget");//　Making target Object
         cam = GetComponent<Camera>();
-        targetOffset = cam.transform.position - target.transform.position;
         targetOffset = new Vector3(0.577f, 0.577f, 0.577f) * startZoom;
     }
 
