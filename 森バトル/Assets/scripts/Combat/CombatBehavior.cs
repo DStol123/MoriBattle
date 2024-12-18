@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 
 public class CombatBehavior : MonoBehaviour
 {
+    [SerializeField] private GameObject thisGameObject;
+
     [SerializeField] private GameManager gameManager;
     [SerializeField] private PlayerBehavior owner;
 
@@ -71,7 +73,12 @@ public class CombatBehavior : MonoBehaviour
 
     private HexCell InitialCell()
     {
-        Vector3 initialPosition = new Vector3(HexMetrics.outerRadius * gameManager.hexGrid.cellCountX / 10f , 0f, HexMetrics.outerRadius * gameManager.hexGrid.cellCountZ / 2f);
+        float sector = 10f;
+        if(owner == null)
+        {
+            sector = 9f;
+        }
+        Vector3 initialPosition = new Vector3(HexMetrics.outerRadius * gameManager.hexGrid.cellCountX / sector , 0f, HexMetrics.outerRadius * gameManager.hexGrid.cellCountZ / 2f);
         HexCell initialCell = gameManager.hexGrid.GetCell(initialPosition);
         if(initialCell.occupyingArmy != null)
         {
@@ -197,7 +204,7 @@ public class CombatBehavior : MonoBehaviour
         CurrentHp -= amount; // Decrease CurrentHp
         if (CurrentHp <= 0)
         {
-            isAlive = false;
+            Destroy(thisGameObject);
         }
     }
 
@@ -286,4 +293,4 @@ public class CombatBehavior : MonoBehaviour
         set { baseDamage = value; }
     }
 }
-}
+

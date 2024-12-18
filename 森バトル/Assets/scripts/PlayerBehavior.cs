@@ -119,10 +119,11 @@ public class PlayerBehavior : MonoBehaviour
                     {
                         CombatBehavior target = hit.collider.GetComponent<CombatBehavior>();
                         selectedArmy.Attack(selectedArmy.BaseDamage, target);
+                        selectedArmy.AttackMode = false;
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.A) && selectedArmy != null)
+            if (Input.GetKeyDown(KeyCode.Q) && selectedArmy != null)
             {
                 selectedArmy.AttackMode = true;
             }
