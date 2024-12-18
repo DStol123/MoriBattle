@@ -7,12 +7,20 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private PlayerBehavior owner;
 
     [SerializeField] private bool isAlive;
+
     [SerializeField] private bool isSelected; //セレクトされてる
     [SerializeField] private bool isStartingArmy;
+    [SerializeField] private bool attackMode;
+
+    [SerializeField] private bool isRanged;
+    [SerializeField] private int range;
 
     [SerializeField] private float startingHp;
     [SerializeField] private float maxHp;
     [SerializeField] private float currentHp;
+
+    [SerializeField] private float baseDamage;
+
     [SerializeField] private float maxMovementPoints;
     [SerializeField] private float startingMovementPoints;
     [SerializeField] private float currentMovementPoints;
@@ -20,11 +28,20 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private float armyHeight; //This will be used to keep the model above the ground
     [SerializeField] private float forwardOffset;
     [SerializeField] private float lateralOffset;//This will be used to keep the model in the center of its cell
+
     [SerializeField] private float forestAttackPenalty;
     [SerializeField] private float heightAttackPenalty;
     [SerializeField] private float forestDefenceBoost;
     [SerializeField] private float heightDefenceBoost;
+
     [SerializeField] private float morale;
+    [SerializeField] private float maxMorale;
+
+    [SerializeField] private float discipline;
+    [SerializeField] private float maxDiscipline;
+
+    [SerializeField] private float armor;
+    [SerializeField] private float maxArmor;
 
     public HexCell currentCell;
     private HexCell destinationCell;
@@ -249,6 +266,24 @@ public class CombatBehavior : MonoBehaviour
     public bool IsSelected
     {
         get { return isSelected; }
-        set { isSelected = value; }
+        set
+        {
+            isSelected = value;
+            if (value == false)
+            {
+                attackMode = false;
+            }
+        }
     }
+    public bool AttackMode
+    {
+        get { return attackMode; }
+        set { attackMode = value; }
+    }
+    public float BaseDamage
+    {
+        get { return baseDamage; }
+        set { baseDamage = value; }
+    }
+}
 }

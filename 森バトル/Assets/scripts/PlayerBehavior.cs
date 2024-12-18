@@ -79,25 +79,52 @@ public class PlayerBehavior : MonoBehaviour
 
     public void HandleInput()
     {
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if(!EventSystem.current.IsPointerOverGameObject())
         {
-            Debug.Log("Ray cast");
-            Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(inputRay, out hit))
+            if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
-                Debug.Log("CombatBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
-                Debug.Log("TrainingGroundsBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
-                if (hit.collider.GetComponent<CombatBehavior>() != null)
+                Debug.Log("Ray cast");
+                Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(inputRay, out hit))
                 {
-                    Select(hit.collider.GameObject().GetComponent<CombatBehavior>());
+                    Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+                    Debug.Log("CombatBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
+                    Debug.Log("TrainingGroundsBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
+                    if (hit.collider.GetComponent<CombatBehavior>() != null)
+                    {
+                        Select(hit.collider.GameObject().GetComponent<CombatBehavior>());
+                    }
+                    if (hit.collider.GetComponent<TrainingGroundsBehavior>() != null)
+                    {
+                        Select(hit.collider.GameObject().GetComponent<TrainingGroundsBehavior>());
+                    }
                 }
-                if (hit.collider.GetComponent<TrainingGroundsBehavior>() != null)
+            }
+            if (Input.GetMouseButtonDown(1) && selectedArmy != null && selectedArmy.AttackMode)
+            {
+                Debug.Log("Ray cast");
+                Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(inputRay, out hit))
                 {
-                    Select(hit.collider.GameObject().GetComponent<TrainingGroundsBehavior>());
+                    Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+                    Debug.Log("CombatBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
+                    Debug.Log("TrainingGroundsBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
+                    if (hit.collider.GetComponent<CombatBehavior>() != null
+                        && hit.collider.GetComponent<CombatBehavior>()
+                        .currentCell.CheckIfNeighbor(selectedArmy.currentCell))
+                    {
+                        CombatBehavior target = hit.collider.GetComponent<CombatBehavior>();
+                        selectedArmy.Attack(selectedArmy.BaseDamage, target);
+                    }
                 }
+            }
+            if (Input.GetKeyDown(KeyCode.A) && selectedArmy != null)
+            {
+                selectedArmy.AttackMode = true;
             }
         }
     }

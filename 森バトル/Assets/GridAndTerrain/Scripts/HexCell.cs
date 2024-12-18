@@ -116,6 +116,19 @@ public class HexCell : MonoBehaviour
         neighbors[(int)direction] = cell;
         cell.neighbors[(int)direction.Opposite()] = this;
     }
+    public bool CheckIfNeighbor(HexCell otherCell)
+    {
+        bool rBool = false;
+        for (int i = 0; i < neighbors.Length; i++)
+        {
+            if (neighbors[i] == otherCell)
+            {
+                rBool = true;
+                break;
+            }
+        }
+        return rBool;
+    }
 
     void Refresh()
     {
