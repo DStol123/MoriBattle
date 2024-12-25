@@ -17,6 +17,8 @@ public class MovementBehavior : MonoBehaviour
     [SerializeField] private float forwardOffset;
     [SerializeField] private float lateralOffset;//This will be used to keep the model in the center of its cell
 
+    [SerializeField] private bool moveMode;
+
     public HexCell currentCell;
     private HexCell destinationCell;
     void Start()
@@ -33,7 +35,13 @@ public class MovementBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && combat.IsSelected && owner.IsTurn && ChangeCell() != null)
+        if (
+            moveMode &&
+            Input.GetMouseButtonDown(1) &&
+            !EventSystem.current.IsPointerOverGameObject() &&
+            combat.IsSelected &&
+            owner.IsTurn && ChangeCell() != null
+            )
         {
 
             HexCell cell2 = ChangeCell();
@@ -99,14 +107,21 @@ public class MovementBehavior : MonoBehaviour
     private float calculatePointCost(HexCell nextCell)
     {
         float pointCost = 1f;
+        if (Mathf.Abs(nextCell.Elevation - currentCell.Elevation) >= 0.009f)
+        {
+            pointCost = 100f;
+            Debug.Log(pointCost);
+            return pointCost;
+        }  
         if (nextCell.occupyingForest != null)
         {
             pointCost *= gameManager.ForestMovementPenalty;
         }
-        if (nextCell.Elevation - currentCell.Elevation >= 0.05f)
+        if (nextCell.Elevation - currentCell.Elevation >= 0.005f)
         {
-            pointCost *= gameManager.HeightMovementPenalty * (1f + nextCell.Elevation - currentCell.Elevation);
+            pointCost *= gameManager.HeightMovementPenalty * (1f + (nextCell.Elevation - currentCell.Elevation) * 10f);
         }
+        Debug.Log(pointCost);
         return pointCost;
     }
 
@@ -184,5 +199,10 @@ public class MovementBehavior : MonoBehaviour
     {
         get { return owner; }
         set { owner = value; }
+    }
+    public bool MoveMode
+    {
+        get { return moveMode; }
+        set { moveMode = value; }
     }
 }

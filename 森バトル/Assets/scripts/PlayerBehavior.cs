@@ -17,11 +17,12 @@ public class PlayerBehavior : MonoBehaviour
     public CameraControl playerCamera;
     private GameObject[] selectedObjects;
     [SerializeField] private GameObject[] possibleArmies;
+    public GameObject unitUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
     {
-
+        unitUI.SetActive(false);
     }
     void Start()
     {
@@ -95,11 +96,16 @@ public class PlayerBehavior : MonoBehaviour
                     if (hit.collider.GetComponent<CombatBehavior>() != null)
                     {
                         Select(hit.collider.GameObject().GetComponent<CombatBehavior>());
+                        unitUI.SetActive(true);
                     }
                     if (hit.collider.GetComponent<TrainingGroundsBehavior>() != null)
                     {
                         Select(hit.collider.GameObject().GetComponent<TrainingGroundsBehavior>());
                     }
+                }
+                else
+                {
+                    Deselect();
                 }
             }
             if (Input.GetMouseButtonDown(1) && selectedArmy != null && selectedArmy.AttackMode)
@@ -136,6 +142,24 @@ public class PlayerBehavior : MonoBehaviour
         {
             resourcePools[i] += resourceIncomes[i];
         }
+    }
+
+    public void TurnOnAttackMode()
+    {
+        selectedArmy.AttackMode = true;
+        selectedArmy.Movement.MoveMode = false;
+    }
+    public void TurnOnMoveMode()
+    {
+        selectedArmy.AttackMode = false;
+        selectedArmy.Movement.MoveMode = true;
+    }
+    public void Deselect()
+    {
+        selectedArmy.AttackMode = false;
+        selectedArmy.Movement.MoveMode = false;
+        selectedArmy.IsSelected = false;
+        unitUI.SetActive(false);
     }
 
     public Color Color
