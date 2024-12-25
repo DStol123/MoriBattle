@@ -1374,6 +1374,7 @@ GameObject:
   - component: {fileID: 836906840}
   - component: {fileID: 836906838}
   - component: {fileID: 836906839}
+  - component: {fileID: 836906841}
   m_Layer: 0
   m_Name: ArmyGroup (1)
   m_TagString: Untagged
@@ -1415,11 +1416,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisGameObject: {fileID: 836906837}
+  movement: {fileID: 836906841}
   gameManager: {fileID: 481939009}
   owner: {fileID: 963194230}
   isAlive: 1
   isSelected: 0
-  isStartingArmy: 1
   attackMode: 0
   isRanged: 0
   range: 0
@@ -1427,12 +1428,6 @@ MonoBehaviour:
   maxHp: 100
   currentHp: 100
   baseDamage: 10
-  maxMovementPoints: 100
-  startingMovementPoints: 100
-  currentMovementPoints: 100
-  armyHeight: 3.86
-  forwardOffset: -0.1
-  lateralOffset: 2.3
   forestAttackPenalty: 1
   heightAttackPenalty: 1
   forestDefenceBoost: 1
@@ -1443,7 +1438,6 @@ MonoBehaviour:
   maxDiscipline: 0
   armor: 0
   maxArmor: 0
-  currentCell: {fileID: 0}
 --- !u!4 &836906840
 Transform:
   m_ObjectHideFlags: 0
@@ -1464,6 +1458,29 @@ Transform:
   - {fileID: 1744648837}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &836906841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836906837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dfe9daf694664de08cab2eae3a91a16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 481939009}
+  combat: {fileID: 836906839}
+  owner: {fileID: 963194230}
+  isStartingArmy: 1
+  maxMovementPoints: 3
+  startingMovementPoints: 3
+  currentMovementPoints: 3
+  armyHeight: 2.4
+  forwardOffset: 0
+  lateralOffset: 0
+  currentCell: {fileID: 0}
 --- !u!1 &841526668
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,11 +3191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisGameObject: {fileID: 1795540182}
+  movement: {fileID: 0}
   gameManager: {fileID: 481939009}
   owner: {fileID: 963194230}
   isAlive: 1
   isSelected: 0
-  isStartingArmy: 0
   attackMode: 0
   isRanged: 0
   range: 0
@@ -3186,12 +3203,6 @@ MonoBehaviour:
   maxHp: 100
   currentHp: 100
   baseDamage: 10
-  maxMovementPoints: 100
-  startingMovementPoints: 100
-  currentMovementPoints: 100
-  armyHeight: 3.86
-  forwardOffset: -0.1
-  lateralOffset: 2.3
   forestAttackPenalty: 1
   heightAttackPenalty: 1
   forestDefenceBoost: 1
@@ -3202,7 +3213,6 @@ MonoBehaviour:
   maxDiscipline: 0
   armor: 0
   maxArmor: 0
-  currentCell: {fileID: 0}
 --- !u!65 &1795540184
 BoxCollider:
   m_ObjectHideFlags: 0

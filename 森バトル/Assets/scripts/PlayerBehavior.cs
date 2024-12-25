@@ -113,9 +113,9 @@ public class PlayerBehavior : MonoBehaviour
                     Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
                     Debug.Log("CombatBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
                     Debug.Log("TrainingGroundsBehavior Found: " + hit.collider.GameObject().GetComponent<CombatBehavior>() != null);
-                    if (hit.collider.GetComponent<CombatBehavior>() != null
-                        && hit.collider.GetComponent<CombatBehavior>()
-                        .currentCell.CheckIfNeighbor(selectedArmy.currentCell))
+                    if (hit.collider.GetComponent<MovementBehavior>() != null
+                        && hit.collider.GetComponent<MovementBehavior>()
+                        .currentCell.CheckIfNeighbor(selectedArmy.Movement.currentCell))
                     {
                         CombatBehavior target = hit.collider.GetComponent<CombatBehavior>();
                         selectedArmy.Attack(selectedArmy.BaseDamage, target);

@@ -43,9 +43,10 @@ public class TrainingGroundsBehavior : MonoBehaviour
             GameObject army = Instantiate(owner.PossibleArmies[armyIndex], this.transform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
             CombatBehavior combatBehavior = army.GetComponent<CombatBehavior>();
             combatBehavior.Owner = owner;
-            combatBehavior.currentCell = cell;
+            combatBehavior.Movement.Owner = owner;
+            combatBehavior.Movement.currentCell = cell;
             cell.occupyingArmy = combatBehavior;
-            combatBehavior.MoveToCell();
+            combatBehavior.Movement.MoveToCell();
             Debug.Log("Army Placed at " + cell.coordinates);
         }
         Debug.Log("Army already at location");
