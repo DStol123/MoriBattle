@@ -144,9 +144,9 @@ public class HexMesh : MonoBehaviour
     //Adds Perlin Noise to a position
     Vector3 Perturb (Vector3 position)
     {
-        Vector4 sample = HexMetrics.SampleNoise(position);
-        position.x += (sample.x * 2f - 1f) * HexMetrics.cellPerturbStrengh;
-        position.z += (sample.z * 2f - 1f) * HexMetrics.cellPerturbStrengh;
+        float sample = HexMetrics.SampleNoise(position);
+        position.x += (sample * 2f - 1f) * HexMetrics.cellPerturbStrengh;
+        position.z += (sample * 2f - 1f) * HexMetrics.cellPerturbStrengh;
         return position;
     }
 }

@@ -70,7 +70,7 @@ public class TrainingGroundsBehavior : MonoBehaviour
         return initialCell;
     }
 
-    private void Place()
+    public void Place()
     {
         transform.position = new Vector3(cell.Position.x, cell.Position.y + heightOffset, cell.Position.z);
         transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
@@ -81,5 +81,15 @@ public class TrainingGroundsBehavior : MonoBehaviour
     {
         get { return building; }
         set { building = value; }
+    }
+    public PlayerBehavior Owner
+    {
+        get { return owner; }
+        set { owner = value; }
+    }
+    public HexCell Cell
+    {
+        get { return cell; }
+        set { cell = value; }
     }
 }

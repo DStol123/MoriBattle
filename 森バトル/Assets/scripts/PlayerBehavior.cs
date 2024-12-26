@@ -18,6 +18,7 @@ public class PlayerBehavior : MonoBehaviour
     private GameObject[] selectedObjects;
     [SerializeField] private GameObject[] possibleArmies;
     public GameObject unitUI;
+    public GameObject constructButton;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -97,6 +98,14 @@ public class PlayerBehavior : MonoBehaviour
                     {
                         Select(hit.collider.GameObject().GetComponent<CombatBehavior>());
                         unitUI.SetActive(true);
+                        if(hit.collider.GetComponent<EngineerBehavior>() != null)
+                        {
+                            constructButton.SetActive(true);
+                        }
+                        else
+                        {
+                            constructButton.SetActive(false);
+                        }
                     }
                     if (hit.collider.GetComponent<TrainingGroundsBehavior>() != null)
                     {
@@ -129,10 +138,6 @@ public class PlayerBehavior : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Q) && selectedArmy != null)
-            {
-                selectedArmy.AttackMode = true;
-            }
         }
     }
 
@@ -148,11 +153,35 @@ public class PlayerBehavior : MonoBehaviour
     {
         selectedArmy.AttackMode = true;
         selectedArmy.Movement.MoveMode = false;
+        if (selectedArmy.GetComponent<EngineerBehavior>() != null)
+        {
+            selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
+        }
     }
     public void TurnOnMoveMode()
     {
         selectedArmy.AttackMode = false;
         selectedArmy.Movement.MoveMode = true;
+        if (selectedArmy.GetComponent<EngineerBehavior>() != null)
+        {
+            selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
+        }
+    }
+    public void TurnOnPlaceMode()
+    {
+        selectedArmy.AttackMode = false;
+        selectedArmy.Movement.MoveMode = false;
+        if(selectedArmy.GetComponent<EngineerBehavior>() != null)
+        {
+            selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = true;
+        }
+    }
+    public void PlaceTrainingGround()
+    {
+        if(selectedArmy.GetComponent<EngineerBehavior>() != null)
+        {
+            selectedArmy.GetComponent<EngineerBehavior>().PlaceTrainingGrounds();
+        }
     }
     public void Deselect()
     {
@@ -161,19 +190,16 @@ public class PlayerBehavior : MonoBehaviour
         selectedArmy.IsSelected = false;
         unitUI.SetActive(false);
     }
-
     public Color Color
     {
         get { return color; }
         set { color = value; }
     }
-
     public string Username
     {
         get { return userName; }
         set { userName = value; }
     }
-
     public bool IsTurn
     {
         get { return isTurn; }
@@ -184,13 +210,11 @@ public class PlayerBehavior : MonoBehaviour
         get { return resourceTypes; }
         set { resourceTypes = value; }
     }
-
     public float[] ResourcePools
     {
         get { return resourcePools; }
         set { resourcePools = value; }
     }
-
     public float[] ResourceIncomes
     {
         get { return resourceIncomes; }

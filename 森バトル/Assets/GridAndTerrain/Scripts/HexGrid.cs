@@ -27,7 +27,6 @@ public class HexGrid : MonoBehaviour
     void Awake()
     {
         Debug.Log(cellPrefab != null ? "cellPrefab is assigned!" : "cellPrefab is null!");
-        HexMetrics.noiseSource = noiseSource; 
 
         cellCountX = chunkCountX * HexMetrics.chunkSizeX;
         cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
@@ -61,11 +60,6 @@ public class HexGrid : MonoBehaviour
                 CreateCell(x, z, i++);
             }
         }
-    }
-
-    private void OnEnable()
-    {
-        HexMetrics.noiseSource = noiseSource;
     }
 
     void CreateCell(int x, int z, int i)

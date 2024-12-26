@@ -17,10 +17,10 @@ public class HexMetrics
     public const float elevationStep = 5f;
 
     //Perlin Noise
-    public static Texture2D noiseSource;
     public const float cellPerturbStrengh = 2f;
     public const float elevationPerturbStrength = 10f;
-    public const float noiseScale = 0.0008f;
+    public const float noiseScale = 0.008f;
+
 
     //Chunk Variables
     public const int chunkSizeX = 5, chunkSizeZ = 5;
@@ -64,10 +64,8 @@ public class HexMetrics
         return corners[(int)direction + 1] * solidFactor;
     }
 
-    public static Vector4 SampleNoise(Vector3 position)
+    public static float SampleNoise(Vector3 position)
     {
-        return noiseSource.GetPixelBilinear(
-            position.x * noiseScale,
-            position.z * noiseScale);
+        return Mathf.PerlinNoise(position.x * noiseScale, position.y * noiseScale);
     }
 }
