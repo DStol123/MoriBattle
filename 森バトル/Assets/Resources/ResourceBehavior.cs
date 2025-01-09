@@ -3,7 +3,6 @@
 public class ResourceBehavior : MonoBehaviour
 {
     [SerializeField]
-    public PlayerBehavior owner; //Which player controls this resource
     public Resource resourceType;
     public HexCell cell; //Which cell/tile is this resource sitting on
     public float height; //Adjusts placement so the model isn't buried
@@ -14,7 +13,7 @@ public class ResourceBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        resourceType = new Resource(resourceName, description, owner, volume);
+        resourceType = new Resource(resourceName, description, volume);
         transform.position = new Vector3(cell.Position.x, cell.Position.y + height, cell.Position.z);
     }
 

@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 public class PlayerBehavior : MonoBehaviour
 {
     private bool isTurn;
-    [SerializeField] private Resource[] resourceTypes;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private ResourceBehavior[] resourceTypes;
     [SerializeField] private float[] resourcePools;
     [SerializeField] private float[] resourceIncomes;
     [SerializeField] private bool isAlive;
@@ -205,7 +206,7 @@ public class PlayerBehavior : MonoBehaviour
         get { return isTurn; }
         set { isTurn = value; }
     }
-    public Resource[] ResourceTypes
+    public ResourceBehavior[] ResourceTypes
     {
         get { return resourceTypes; }
         set { resourceTypes = value; }

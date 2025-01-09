@@ -11,11 +11,10 @@ public class Resource
     private float volumePerTurn; //How much income this deposit provides
 
     //Constructor
-    public Resource(string name, string description, PlayerBehavior owner, float volumePerTurn)
+    public Resource(string name, string description, float volumePerTurn)
     {
         this.name = name;
         this.description = description;
-        this.owner = owner;
         this.volumePerTurn = volumePerTurn;
     }
 
