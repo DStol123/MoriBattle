@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MovementBehavior : MonoBehaviour
 {
+    public Image mpBar;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private CombatBehavior combat;
     [SerializeField] private PlayerBehavior owner;
@@ -171,6 +173,10 @@ public class MovementBehavior : MonoBehaviour
         if (currentMovementPoints >= amount)
         {
             currentMovementPoints -= amount;
+            if(mpBar != null)
+            {
+                mpBar.fillAmount = currentMovementPoints / maxMovementPoints;
+            }
             return true;
         }
         else

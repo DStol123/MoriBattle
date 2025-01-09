@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CombatBehavior : MonoBehaviour
 {
+    public Image healthBar;
+
     [SerializeField] private GameObject thisGameObject;
     [SerializeField] private MovementBehavior movement;
 
@@ -21,7 +24,8 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private float maxHp;
     [SerializeField] private float currentHp;
 
-    [SerializeField] private float baseDamage;
+    [SerializeField] private float baseAttackDamage;
+    [SerializeField] private float baseDefenceDamage;
 
     [SerializeField] private float forestAttackPenalty;
     [SerializeField] private float heightAttackPenalty;
@@ -68,6 +72,10 @@ public class CombatBehavior : MonoBehaviour
     public void TakeDamage(float amount)
     {
         CurrentHp -= amount; // Decrease CurrentHp
+        if(healthBar != null)
+        {
+            healthBar.fillAmount = CurrentHp / maxHp;
+        }
         if (CurrentHp <= 0)
         {
             Destroy(thisGameObject);
@@ -80,7 +88,11 @@ public class CombatBehavior : MonoBehaviour
 
     public void Attack(float damage, CombatBehavior unit)
     {
+        damage = Random.Range(damage - damage * 0.1f, damage + damage * 0.1f);
+        float returnDamage = unit.BaseDefenceDamage;
+        returnDamage = Random.Range(returnDamage - returnDamage * 0.1f, returnDamage + returnDamage * 0.1f);
         unit.TakeDamage(CalculateDamage(unit, damage));
+        TakeDamage(returnDamage);
     }
 
     public void FocusOnMe(PlayerBehavior player)
@@ -124,10 +136,15 @@ public class CombatBehavior : MonoBehaviour
         get { return attackMode; }
         set { attackMode = value; }
     }
-    public float BaseDamage
+    public float BaseAttackDamage
     {
-        get { return baseDamage; }
-        set { baseDamage = value; }
+        get { return baseAttackDamage; }
+        set { baseAttackDamage = value; }
+    }
+    public float BaseDefenceDamage
+    {
+        get { return baseDefenceDamage; }
+        set { baseDefenceDamage = value; }
     }
     public MovementBehavior Movement
     {

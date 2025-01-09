@@ -20,11 +20,13 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject[] possibleArmies;
     public GameObject unitUI;
     public GameObject constructButton;
+    public GameObject trainingUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
     {
         unitUI.SetActive(false);
+        trainingUI.SetActive(false);
     }
     void Start()
     {
@@ -108,10 +110,13 @@ public class PlayerBehavior : MonoBehaviour
                             constructButton.SetActive(false);
                         }
                     }
+                    else { unitUI.SetActive(false); }
                     if (hit.collider.GetComponent<TrainingGroundsBehavior>() != null)
                     {
                         Select(hit.collider.GameObject().GetComponent<TrainingGroundsBehavior>());
+                        trainingUI.SetActive(true);
                     }
+                    else { trainingUI.SetActive(false); }
                 }
                 else
                 {
@@ -134,7 +139,7 @@ public class PlayerBehavior : MonoBehaviour
                         .currentCell.CheckIfNeighbor(selectedArmy.Movement.currentCell))
                     {
                         CombatBehavior target = hit.collider.GetComponent<CombatBehavior>();
-                        selectedArmy.Attack(selectedArmy.BaseDamage, target);
+                        selectedArmy.Attack(selectedArmy.BaseAttackDamage, target);
                         selectedArmy.AttackMode = false;
                     }
                 }
@@ -183,6 +188,10 @@ public class PlayerBehavior : MonoBehaviour
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceTrainingGrounds();
         }
+    }
+    public void TrainArmy(int index)
+    {
+        selectedTrainingGrounds.makeArmy(index);
     }
     public void Deselect()
     {

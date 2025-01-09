@@ -32,8 +32,14 @@ public class TrainingGroundsBehavior : MonoBehaviour
 
     private void OnDestroy()
     {
-        cell.occupyingBuilding = null;
-        owner.SelectedTrainingGrounds = null;
+        if(cell.occupyingBuilding!= null)
+        {
+            cell.occupyingBuilding = null;
+        }
+        if(owner.SelectedTrainingGrounds != null)
+        {
+            owner.SelectedTrainingGrounds = null;
+        }
     }
 
     public void makeArmy(int armyIndex)
