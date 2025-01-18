@@ -161,8 +161,11 @@ public class PlayerBehavior : MonoBehaviour
 
     public void TurnOnAttackMode()
     {
-        selectedArmy.AttackMode = true;
-        selectedArmy.Movement.MoveMode = false;
+        if(isTurn)
+        {
+            selectedArmy.AttackMode = true;
+            selectedArmy.Movement.MoveMode = false;
+        }
         if (selectedArmy.GetComponent<EngineerBehavior>() != null)
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
@@ -170,8 +173,11 @@ public class PlayerBehavior : MonoBehaviour
     }
     public void TurnOnMoveMode()
     {
-        selectedArmy.AttackMode = false;
-        selectedArmy.Movement.MoveMode = true;
+        if(isTurn)
+        {
+            selectedArmy.AttackMode = false;
+            selectedArmy.Movement.MoveMode = true;
+        }
         if (selectedArmy.GetComponent<EngineerBehavior>() != null)
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
@@ -179,8 +185,11 @@ public class PlayerBehavior : MonoBehaviour
     }
     public void TurnOnPlaceMode()
     {
-        selectedArmy.AttackMode = false;
-        selectedArmy.Movement.MoveMode = false;
+        if(isTurn)
+        {
+            selectedArmy.AttackMode = false;
+            selectedArmy.Movement.MoveMode = false;
+        }
         if(selectedArmy.GetComponent<EngineerBehavior>() != null)
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = true;
@@ -188,14 +197,17 @@ public class PlayerBehavior : MonoBehaviour
     }
     public void PlaceTrainingGround()
     {
-        if(selectedArmy.GetComponent<EngineerBehavior>() != null)
+        if(isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null)
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceTrainingGrounds();
         }
     }
     public void TrainArmy(int index)
     {
-        selectedTrainingGrounds.makeArmy(index);
+        if(isTurn)
+        {
+            selectedTrainingGrounds.makeArmy(index);
+        }
     }
     public void Deselect()
     {
