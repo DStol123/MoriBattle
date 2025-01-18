@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,12 +7,13 @@ public class PlayerBehavior : MonoBehaviour
 {
     private bool isTurn;
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private ResourceBehavior[] resourceTypes;
+    [SerializeField] public ResourceBehavior[] resourceTypes;
     [SerializeField] private float[] resourcePools;
-    [SerializeField] private float[] resourceIncomes;
+    [SerializeField] public float[] resourceIncomes;
     [SerializeField] private bool isAlive;
     [SerializeField] private Color color;
     [SerializeField] private string userName;
+    [SerializeField] public List<MovementBehavior> allOwnedMovementBehaviors;
     private CombatBehavior selectedArmy;
     private TrainingGroundsBehavior selectedTrainingGrounds;
     public CameraControl playerCamera;
@@ -47,6 +48,8 @@ public class PlayerBehavior : MonoBehaviour
 
     public void Select(CombatBehavior army)
     {
+        //軍をセレクトする
+        //プレーヤークラスにあるのは、他のセレクトされてるものをディセレクトするため。
         if (army.Owner == this)
         {
             if (selectedArmy != null)
@@ -65,6 +68,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public void Select(TrainingGroundsBehavior building)
     {
+        //訓練場をセレクトする
         if (building.Building.Owner == this)
         {
             if (selectedTrainingGrounds != null)
@@ -199,6 +203,19 @@ public class PlayerBehavior : MonoBehaviour
         selectedArmy.Movement.MoveMode = false;
         selectedArmy.IsSelected = false;
         unitUI.SetActive(false);
+    }
+    public void RefreshArmies()
+    {
+        //ターンが終わるとこのメソッドが発動する。このプレーヤーの軍の全部はMPをＭａｘに戻す。
+        if (allOwnedMovementBehaviors[0] != null)
+        {
+            for (int i = 0; i < allOwnedMovementBehaviors.Count; i++)
+            {
+                MovementBehavior currentArmy = allOwnedMovementBehaviors[i];
+                currentArmy.UseMovementPoints(-1f * (currentArmy.MaxMovementPoints - currentArmy.CurrentMovementPoints));
+            }
+        }
+        
     }
     public Color Color
     {

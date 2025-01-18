@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         players[0].IsTurn = true;
+        activePlayer = players[0];
     }
 
     public PlayerBehavior[] Players
@@ -56,21 +57,27 @@ public class GameManager : MonoBehaviour
     {
         //Passes the turn to the next player in line
         activePlayer.AddResources();
-        if(activePlayer == players[players.Length - 1])
+        activePlayer.RefreshArmies();
+        if(players.Length != 1)
         {
-            activePlayer.IsTurn = false;
-            activePlayer = players[0];
-            activePlayer.IsTurn = true;
-        }
-        else
-        {
-            for(int i = 0; i > players.Length; i++)
+            if (activePlayer == players[players.Length - 1])
             {
-                if (players[i] == activePlayer) {
-                    activePlayer.IsTurn = false;
-                    activePlayer = players[i + 1];
-                    activePlayer.IsTurn = true;
-                    break; }
+                activePlayer.IsTurn = false;
+                activePlayer = players[0];
+                activePlayer.IsTurn = true;
+            }
+            else
+            {
+                for (int i = 0; i > players.Length; i++)
+                {
+                    if (players[i] == activePlayer)
+                    {
+                        activePlayer.IsTurn = false;
+                        activePlayer = players[i + 1];
+                        activePlayer.IsTurn = true;
+                        break;
+                    }
+                }
             }
         }
     }

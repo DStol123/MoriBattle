@@ -25,6 +25,8 @@ public class MovementBehavior : MonoBehaviour
     private HexCell destinationCell;
     void Start()
     {
+        owner.allOwnedMovementBehaviors.Add(this);
+        Debug.Log(owner.allOwnedMovementBehaviors);
         if (isStartingArmy)
         {
             currentCell = InitialCell();
@@ -32,6 +34,11 @@ public class MovementBehavior : MonoBehaviour
             owner.playerCamera.Target.transform.position = transform.position;
             owner.playerCamera.FollowTarget();
         }
+    }
+
+    private void OnDestroy()
+    {
+        owner.allOwnedMovementBehaviors.Remove(this);
     }
 
     // Update is called once per frame
@@ -170,6 +177,7 @@ public class MovementBehavior : MonoBehaviour
 
     public bool UseMovementPoints(float amount)
     {
+        Debug.Log("Used " + amount + " MP");
         if (currentMovementPoints >= amount)
         {
             currentMovementPoints -= amount;

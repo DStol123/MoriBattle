@@ -22,4 +22,10 @@ public class ResourceBehavior : MonoBehaviour
     {
 
     }
+
+    public float Volume
+    {
+        get { return volume; }
+        set { volume = value; }
+    }
 }
