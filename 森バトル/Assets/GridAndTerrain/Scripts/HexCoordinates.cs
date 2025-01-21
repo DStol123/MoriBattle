@@ -7,7 +7,6 @@ public struct HexCoordinates
 {
     [SerializeField]
     private int x, z;
-
     public int X { get { return x; } }
     public int Y { get { return -X - Z; } }
     public int Z { get { return z; } }
@@ -16,12 +15,10 @@ public struct HexCoordinates
         this.x = x;
         this.z = z;
     }
-
     public static HexCoordinates FromOffsetCoordinates (int x, int z)
     {
         return new HexCoordinates(x - z / 2, z);
     }
-
     public override string ToString()
     {
         return "(" + X.ToString() + ", " + Y.ToString() + ", " + Z.ToString() + ")";

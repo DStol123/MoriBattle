@@ -15,6 +15,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private bool isAlive;
     [SerializeField] private Color color;
     [SerializeField] private string userName;
+    int[] previousResourcePools;
+
     [SerializeField] public List<MovementBehavior> allOwnedMovementBehaviors;
     private CombatBehavior selectedArmy;
     private TrainingGroundsBehavior selectedTrainingGrounds;
@@ -24,39 +26,41 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject unitUI;
     public GameObject constructButton;
     public GameObject trainingUI;
+    public GameObject constructionMenu;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     private void Awake()
     {
+        constructionMenu.SetActive(false);
         unitUI.SetActive(false);
         trainingUI.SetActive(false);
     }
     void Start()
     {
+        previousResourcePools = new int[4] { 0, 0, 0, 0 };
         updateResourceCounters();
     }
-
     // Update is called once per frame
     void Update()
-    {
+    {  
+        if(resourcePools != previousResourcePools)
+        {
+            Debug.Log($"Resource Pools updated: Wood: {resourcePools[0]} Stone: {resourcePools[1]} Copper: {resourcePools[2]} Iron: {resourcePools[3]}");
+        }
         HandleInput();
-        
         if(Input.GetKeyDown(KeyCode.Return) && selectedTrainingGrounds != null)
         {
             selectedTrainingGrounds.makeArmy(0);
         }
-        
+        previousResourcePools = resourcePools;
     }
-
     public void updateResourceCounters()
     {
         resourceCounters.text = "木材: " + resourcePools[0] + " +" + resourceIncomes[0] +
-            "  石: " + resourcePools[1] + " +" + resourceIncomes[1] +
+        "  石: " + resourcePools[1] + " +" + resourceIncomes[1] +
             "  銅: " + resourcePools[2] + " +" + resourceIncomes[2] +
             "  鉄: " + resourcePools[3] + " +" + resourceIncomes[3];
     }
-
     public void Select(CombatBehavior army)
     {
         //軍をセレクトする
@@ -76,7 +80,6 @@ public class PlayerBehavior : MonoBehaviour
             selectedArmy.IsSelected = true;
         }
     }
-
     public void Select(TrainingGroundsBehavior building)
     {
         //訓練場をセレクトする
@@ -96,7 +99,6 @@ public class PlayerBehavior : MonoBehaviour
         }
         Debug.Log("Selected Training Grounds");
     }
-
     public void HandleInput()
     {
         if(!EventSystem.current.IsPointerOverGameObject())
@@ -161,15 +163,14 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
     }
-
     public void AddResources()
     {
         for (int i = 0; i < resourcePools.Length; i++)
         {
             resourcePools[i] += resourceIncomes[i];
         }
+        updateResourceCounters();
     }
-
     public void TurnOnAttackMode()
     {
         if(isTurn)
@@ -205,12 +206,20 @@ public class PlayerBehavior : MonoBehaviour
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = true;
         }
+        constructionMenu.SetActive(true);
     }
     public void PlaceTrainingGround()
     {
         if(isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null)
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceTrainingGrounds();
+        }
+    }
+    public void PlaceResourceExtraction()
+    {
+        if (isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null)
+        {
+            selectedArmy.GetComponent<EngineerBehavior>().PlaceResourceExtractor();
         }
     }
     public void TrainArmy(int index)
@@ -225,6 +234,7 @@ public class PlayerBehavior : MonoBehaviour
         selectedArmy.AttackMode = false;
         selectedArmy.Movement.MoveMode = false;
         selectedArmy.IsSelected = false;
+        constructionMenu.SetActive(false);
         unitUI.SetActive(false);
     }
     public void RefreshArmies()

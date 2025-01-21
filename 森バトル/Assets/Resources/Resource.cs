@@ -17,7 +17,6 @@ public class Resource
         this.description = description;
         this.volumePerTurn = volumePerTurn;
     }
-
     public PlayerBehavior Owner
     {
         get { return owner; }
@@ -33,13 +32,11 @@ public class Resource
             }
         }
     }
-
     public string Name
     {
         get { return name; }
         set { name = value; }
     }
-
     public string Description
     { 
         get { return description; }

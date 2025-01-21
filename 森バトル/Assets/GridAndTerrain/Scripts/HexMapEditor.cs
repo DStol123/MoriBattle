@@ -10,12 +10,10 @@ public class HexMapEditor : MonoBehaviour
     public HexGrid hexGrid;
     [SerializeField]private bool touchEnabled;
     private Color activeColor;
-
     void Awake()
     {
         SelectColor(0);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -24,7 +22,6 @@ public class HexMapEditor : MonoBehaviour
             HandleInput();
         }
     }
-
     //Edits cell selection according to where the mouse clicks.
     void HandleInput()
     {
@@ -35,25 +32,21 @@ public class HexMapEditor : MonoBehaviour
             EditCell(hexGrid.GetCell(hit.point));
         }
     }
-
     int activeElevation;
     //Changes the height of a cell to the input value.
     public void SetElevation(float elevation)
     {
         activeElevation = (int)elevation;
     }
-
     //Changes the cell's color and elevation to selected values.
     void EditCell(HexCell cell)
     {
         cell.Color = activeColor;
         cell.Elevation = activeElevation;
     }
-
     //Changes active color brush to the input value.
     public void SelectColor (int index)
     {
         activeColor = colors[index];
     }
-
 }

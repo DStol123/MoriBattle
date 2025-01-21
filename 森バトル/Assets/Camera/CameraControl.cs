@@ -29,7 +29,6 @@ public class CameraControl : MonoBehaviour
         cam = GetComponent<Camera>();
         targetOffset = new Vector3(0.577f, 0.577f, 0.577f) * startZoom;
     }
-
     void Update()
     {
         StabilizeCamera();
@@ -47,13 +46,11 @@ public class CameraControl : MonoBehaviour
         
         targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
     }
-
     private void StabilizeCamera()
     {
         stabilizer.transform.position = this.transform.position;
         stabilizer.transform.rotation = Quaternion.Euler(new Vector3(0f, this.transform.rotation.eulerAngles.y, 0f));
     }
-
     private void GetBoost()
     {
         if (!Input.GetKey(KeyCode.LeftShift))
@@ -62,7 +59,6 @@ public class CameraControl : MonoBehaviour
         }
         else { boostFactor = boostMultiplier; }
     }
-
     // WASD key
     bool TargetMovement()
     {
@@ -94,7 +90,6 @@ public class CameraControl : MonoBehaviour
         }
         else { return true; }
     }
-
     // Camera will look around the empty target
     void CameraRotation()
     {
@@ -123,14 +118,12 @@ public class CameraControl : MonoBehaviour
             }
         }
     }
-
     // Target Empty Object
     public void FollowTarget()
     {
         cam.transform.position = target.transform.position + targetOffset;
         cam.transform.LookAt(target.transform);
     }
-
     // target position
     void ApplyPositionLimits(Transform targetTransform)
     {
@@ -142,7 +135,6 @@ public class CameraControl : MonoBehaviour
 
         targetTransform.position = position;
     }
-
     public GameObject Target
     {
         get { return target; }

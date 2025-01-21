@@ -10,7 +10,6 @@ public class HexMesh : MonoBehaviour
     MeshCollider meshCollider;
     List<Color> colors;
     public const float elevationStep = 5f;
-
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = hexMesh = new Mesh();
@@ -20,7 +19,6 @@ public class HexMesh : MonoBehaviour
         triangles = new List<int>();
         colors = new List<Color>();
     }
-
     void AddQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
     {
         int vertexIndex = vertices.Count;
@@ -35,7 +33,6 @@ public class HexMesh : MonoBehaviour
         triangles.Add(vertexIndex + 2);
         triangles.Add(vertexIndex + 3);
     }
-
     void AddQuadColor(Color c1, Color c2, Color c3, Color c4)
     {
         colors.Add(c1);
@@ -43,7 +40,6 @@ public class HexMesh : MonoBehaviour
         colors.Add(c3);
         colors.Add(c4);
     }
-
     void AddQuadColor (Color c1, Color c2)
     {
         colors.Add(c1);
@@ -51,7 +47,6 @@ public class HexMesh : MonoBehaviour
         colors.Add(c2);
         colors.Add(c2);
     }
-
     void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3)
     {
         int vertexIndex = vertices.Count;
@@ -62,21 +57,18 @@ public class HexMesh : MonoBehaviour
         triangles.Add(vertexIndex + 1);
         triangles.Add(vertexIndex + 2);
     }
-
     void AddTriangleColor(Color color)
     {
         colors.Add(color);
         colors.Add(color);
         colors.Add(color);
     }
-
     void AddTriangleColor(Color c1, Color c2, Color c3)
     {
         colors.Add(c1);
         colors.Add(c2);
         colors.Add(c3);
     }
-
     public void Triangulate(HexCell[] cells)
     {
         hexMesh.Clear();
@@ -93,7 +85,6 @@ public class HexMesh : MonoBehaviour
         hexMesh.RecalculateNormals();
         meshCollider.sharedMesh = hexMesh;
     }
-
     void Triangulate(HexCell cell)
     {
         for(HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
@@ -101,7 +92,6 @@ public class HexMesh : MonoBehaviour
             Triangulate(d, cell);
         }
     }
-
     void Triangulate(HexDirection direction, HexCell cell)
     {
         Vector3 center = cell.Position;
@@ -140,7 +130,6 @@ public class HexMesh : MonoBehaviour
             AddTriangleColor(cell.Color, neighbor.Color, nextNeighbor.Color);
         }
     }
-
     //Adds Perlin Noise to a position
     Vector3 Perturb (Vector3 position)
     {

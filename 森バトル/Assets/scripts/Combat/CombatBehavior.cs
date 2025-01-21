@@ -41,23 +41,6 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private float armor;
     [SerializeField] private float maxArmor;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    private void Attack(CombatBehavior target, int damage)
-    {
-        if(target.Owner != this.Owner)
-        {
-            target.TakeDamage(damage);
-        }
-    }
     public float CalculateDamage(CombatBehavior target, float baseDamage)
     {
         if(target.movement.currentCell.occupyingForest != null)
@@ -68,7 +51,6 @@ public class CombatBehavior : MonoBehaviour
             / (target.heightDefenceBoost * heightAttackPenalty);
         return baseDamage;
     }
-
     public void TakeDamage(float amount)
     {
         CurrentHp -= amount; // Decrease CurrentHp
@@ -81,25 +63,24 @@ public class CombatBehavior : MonoBehaviour
             Destroy(thisGameObject);
         }
     }
-    public void Heal(float amount)
-    {
-        CurrentHp += amount;
-    }
-
     public void Attack(float damage, CombatBehavior unit)
     {
+        HexCell targetCell = unit.movement.currentCell;
         damage = Random.Range(damage - damage * 0.1f, damage + damage * 0.1f);
         float returnDamage = unit.BaseDefenceDamage;
         returnDamage = Random.Range(returnDamage - returnDamage * 0.1f, returnDamage + returnDamage * 0.1f);
         unit.TakeDamage(CalculateDamage(unit, damage));
         TakeDamage(returnDamage);
-    }
+        if(unit == null)
+        {
+            movement.MoveToCell(targetCell);
+        }
 
+    }
     public void FocusOnMe(PlayerBehavior player)
     {
         player.playerCamera.Target.transform.position = this.transform.position;
-    }
-    
+    }    
     public PlayerBehavior Owner
     {
         get { return owner; }
@@ -150,6 +131,11 @@ public class CombatBehavior : MonoBehaviour
     {
         get { return movement; }
         set { movement = value; }
+    }
+    public GameManager GameManager
+    {
+        get { return gameManager; }
+        set { gameManager = value; }
     }
 }
 

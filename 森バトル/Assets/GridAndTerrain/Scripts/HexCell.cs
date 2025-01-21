@@ -26,7 +26,6 @@ public class HexCell : MonoBehaviour
 
     [SerializeField]
     HexCell[] neighbors;
-
     public Color Color
     {
         get
@@ -43,7 +42,6 @@ public class HexCell : MonoBehaviour
             Refresh();
         }
     }
-
     private void Start()
     {
         color = grass;
@@ -62,12 +60,8 @@ public class HexCell : MonoBehaviour
         }
         Refresh();
     }
-
-
     int elevation = int.MinValue;
-
     public RectTransform uiRect;
-
     public int Elevation
     {
         get
@@ -95,14 +89,10 @@ public class HexCell : MonoBehaviour
             Refresh();
         }
     }
-
     public Vector3 Position
     {
         get { return transform.localPosition; }
     }
-
-    
-
     public HexCell GetNeighbor(HexDirection direction)
     {
         return neighbors[(int)direction];
@@ -125,7 +115,6 @@ public class HexCell : MonoBehaviour
         }
         return rBool;
     }
-
     void Refresh()
     {
         if(chunk)
@@ -133,7 +122,6 @@ public class HexCell : MonoBehaviour
             chunk.Refresh();
         }
     }
-
     public HexCell[] Neighbors
     {
         get { return neighbors; }

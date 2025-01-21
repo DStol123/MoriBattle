@@ -4,7 +4,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerBehavior[] players;
-
+    [SerializeField]
+    private int turnCounter = 1;
     [SerializeField]
     private float ironDensity;
     [SerializeField]
@@ -39,20 +40,17 @@ public class GameManager : MonoBehaviour
         players[0].IsTurn = true;
         activePlayer = players[0];
     }
-
     public PlayerBehavior[] Players
     {
         get { return players; }
     }
-
     private PlayerBehavior activePlayer;
 
     public PlayerBehavior ActivePlayer
     {
         get{ return activePlayer; }
         set{ activePlayer = value; }
-    }
-    
+    }  
     public void rollToNextPlayer()
     {
         //Passes the turn to the next player in line
@@ -80,8 +78,11 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        if(activePlayer == players[0])
+        {
+            turnCounter++;
+        }
     }
-
     public float IronDensity
     {
         get { return ironDensity; }

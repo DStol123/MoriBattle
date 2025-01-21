@@ -21,10 +21,8 @@ public class HexMetrics
     public const float elevationPerturbStrength = 10f;
     public const float noiseScale = 0.008f;
 
-
     //Chunk Variables
-    public const int chunkSizeX = 5, chunkSizeZ = 5;
-    
+    public const int chunkSizeX = 5, chunkSizeZ = 5;   
 
     //List of relative coordinates for the corners of each hexagon.
     public static Vector3[] corners =
@@ -37,33 +35,27 @@ public class HexMetrics
         new Vector3(-innerRadius, 0f, 0.5f * outerRadius),
         new Vector3(0f, 0f, outerRadius)
     };
-
     //Returns the coordinates of 
     public static Vector3 GetBridge(HexDirection direction)
     {
         return (corners[(int)direction] + corners[(int)direction + 1]) * blendFactor;
     }
-
     public static Vector3 GetFirstCorner(HexDirection direction)
     {
         return corners[(int)direction];
     }
-
     public static Vector3 GetSecondCorner(HexDirection direction)
     {
         return corners[(int)direction + 1];
     }
-
     public static Vector3 GetFirstSolidCorner(HexDirection direction)
     {
         return corners[(int)direction] * solidFactor;
     }
-
     public static Vector3 GetSecondSolidCorner(HexDirection direction)
     {
         return corners[(int)direction + 1] * solidFactor;
     }
-
     public static float SampleNoise(Vector3 position)
     {
         return Mathf.PerlinNoise(position.x * noiseScale, position.y * noiseScale);

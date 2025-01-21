@@ -12,16 +12,28 @@ public class TrainingGroundsBehavior : MonoBehaviour
     [SerializeField] private float heightOffset;
     [SerializeField] private float lateralOffset;
     [SerializeField] private float forwardOffset;
+
+    [SerializeField] private int woodCost;
+    [SerializeField] private int stoneCost;
+    [SerializeField] private int copperCost;
+    [SerializeField] private int ironCost;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (isStartingBuilding)
+        if(isStartingBuilding)
         {
             cell = InitialCell();
         }
+        else if(!isStartingBuilding)
+        {
+            owner.ResourcePools[0] -= woodCost;
+            owner.ResourcePools[1] -= stoneCost;
+            owner.ResourcePools[2] -= copperCost;
+            owner.ResourcePools[3] -= ironCost;
+        }
+        Place();
         building = new Building(bName, description, owner, cell);
         cell.occupyingBuilding = building;
-        Place();
     }
 
     // Update is called once per frame
@@ -51,6 +63,8 @@ public class TrainingGroundsBehavior : MonoBehaviour
             combatBehavior.Owner = owner;
             combatBehavior.Movement.Owner = owner;
             combatBehavior.Movement.currentCell = cell;
+            combatBehavior.Movement.GameManager = gameManager;
+            combatBehavior.GameManager = gameManager;
             cell.occupyingArmy = combatBehavior;
             combatBehavior.Movement.MoveToCell();
             Debug.Log("Army Placed at " + cell.coordinates);
@@ -97,5 +111,10 @@ public class TrainingGroundsBehavior : MonoBehaviour
     {
         get { return cell; }
         set { cell = value; }
+    }
+    public GameManager GameManager
+    {
+        get { return gameManager; }
+        set { gameManager = value; }
     }
 }

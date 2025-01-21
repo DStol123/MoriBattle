@@ -37,8 +37,6 @@ public class HexGrid : MonoBehaviour
         CreateCells();
         gameManager.hexGrid = this;
     }
-
-
     void CreateChunks()
     {
         chunks = new HexGridChunk[chunkCountX * chunkCountZ];
@@ -50,7 +48,6 @@ public class HexGrid : MonoBehaviour
                 chunk.transform.SetParent(transform);
             }
     }
-
     void CreateCells()
     {
         for (int z = 0, i = 0; z < cellCountZ; z++)
@@ -61,18 +58,14 @@ public class HexGrid : MonoBehaviour
             }
         }
     }
-
     void CreateCell(int x, int z, int i)
     {
-        Debug.Log("Creating cell at index: " + i);
         Vector3 position;
         position.x = (x + z * 0.5f - z/2) * (HexMetrics.innerRadius * 2f);
         position.y = 0f;
         position.z = z * (HexMetrics.outerRadius * 1.5f);
 
-        Debug.Log(cellPrefab != null ? "cellPrefab is assigned!" : "cellPrefab is null!");
         HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab);
-        Debug.Log($"Cell instantiated at index {i}, position {position}");
         cell.transform.localPosition = position;
         cell.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
         cell.Color = defaultColor;
@@ -144,7 +137,6 @@ public class HexGrid : MonoBehaviour
         }
 
     }
-
     void AddCellToChunk(int x, int z, HexCell cell)
     {
         int chunkX = x / HexMetrics.chunkSizeX;
@@ -154,9 +146,7 @@ public class HexGrid : MonoBehaviour
         int localX = x - chunkX * HexMetrics.chunkSizeX;
         int localZ = z - chunkZ * HexMetrics.chunkSizeZ;
         chunk.AddCell(localX + localZ * HexMetrics.chunkSizeX, cell);
-    }
-
-        
+    }       
     //Returns a specific cell based on the the input coordinates.
     public HexCell GetCell(Vector3 position)
     {

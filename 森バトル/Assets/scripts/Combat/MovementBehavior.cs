@@ -21,10 +21,22 @@ public class MovementBehavior : MonoBehaviour
 
     [SerializeField] private bool moveMode;
 
+    [SerializeField] private int woodCost;
+    [SerializeField] private int stoneCost;
+    [SerializeField] private int copperCost;
+    [SerializeField] private int ironCost;
+
     public HexCell currentCell;
     private HexCell destinationCell;
     void Start()
     {
+        if(!isStartingArmy)
+        {
+            owner.ResourcePools[0] -= woodCost;
+            owner.ResourcePools[1] -= stoneCost;
+            owner.ResourcePools[2] -= copperCost;
+            owner.ResourcePools[3] -= ironCost;
+        }
         owner.allOwnedMovementBehaviors.Add(this);
         Debug.Log(owner.allOwnedMovementBehaviors);
         if (isStartingArmy)
@@ -35,12 +47,10 @@ public class MovementBehavior : MonoBehaviour
             owner.playerCamera.FollowTarget();
         }
     }
-
     private void OnDestroy()
     {
         owner.allOwnedMovementBehaviors.Remove(this);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -55,10 +65,8 @@ public class MovementBehavior : MonoBehaviour
 
             HexCell cell2 = ChangeCell();
             MoveToCell(cell2);
-
         }
     }
-
     private HexCell InitialCell()
     {
         float sector = 10f;
@@ -81,7 +89,6 @@ public class MovementBehavior : MonoBehaviour
         }
         return initialCell;
     }
-
     private HexCell ChangeCell()
     {
         HexCell newCell = null;
@@ -108,7 +115,6 @@ public class MovementBehavior : MonoBehaviour
         }
         return newCell;
     }
-
     private float calculatePointCost(HexCell nextCell)
     {
         float pointCost = 1f;
@@ -128,19 +134,16 @@ public class MovementBehavior : MonoBehaviour
         }
         return pointCost;
     }
-
     public void MoveToCell()
     {
         transform.position = new Vector3(currentCell.Position.x, currentCell.Position.y + armyHeight, currentCell.Position.z);
         transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
         currentCell.occupyingArmy = combat;
     }
-
     private void SelectDestination(Vector3 position)
     {
         destinationCell = gameManager.hexGrid.GetCell(position);
     }
-
     public void MoveToCell(HexCell cell)
     {
         if ((currentCell == null || calculatePointCost(cell) <= currentMovementPoints) && cell.occupyingArmy == null)
@@ -159,7 +162,6 @@ public class MovementBehavior : MonoBehaviour
             cell.occupyingArmy = combat;
         }
     }
-
     public void RotateArmy(HexCell hexCell)
     {
         int sides = 0;
@@ -169,7 +171,6 @@ public class MovementBehavior : MonoBehaviour
         }
         transform.rotation = Quaternion.Euler(new Vector3(0f, sides * 60f + 90f, 0f));
     }
-
     public bool UseMovementPoints(float amount)
     {
         Debug.Log("Used " + amount + " MP");
@@ -187,12 +188,6 @@ public class MovementBehavior : MonoBehaviour
             Debug.Log("No points to move the Characters");
             return false;
         }
-    }
-
-    public HexCell DestinationCell
-    {
-        get { return destinationCell; }
-        set { destinationCell = value; }
     }
     public float MaxMovementPoints
     {
@@ -213,5 +208,10 @@ public class MovementBehavior : MonoBehaviour
     {
         get { return moveMode; }
         set { moveMode = value; }
+    }
+    public GameManager GameManager
+    {
+        get { return gameManager; }
+        set { gameManager = value; }
     }
 }
