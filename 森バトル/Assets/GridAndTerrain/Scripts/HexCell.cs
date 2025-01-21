@@ -63,10 +63,6 @@ public class HexCell : MonoBehaviour
         Refresh();
     }
 
-    void OnDestroy()
-    {
-        Debug.Log("cellPrefab has been destroyed!");
-    }
 
     int elevation = int.MinValue;
 

@@ -2,14 +2,16 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class PlayerBehavior : MonoBehaviour
 {
     private bool isTurn;
     [SerializeField] private GameManager gameManager;
     [SerializeField] public ResourceBehavior[] resourceTypes;
-    [SerializeField] private float[] resourcePools;
-    [SerializeField] public float[] resourceIncomes;
+    [SerializeField] private int[] resourcePools;
+    [SerializeField] public int[] resourceIncomes;
+    public TextMeshProUGUI resourceCounters;
     [SerializeField] private bool isAlive;
     [SerializeField] private Color color;
     [SerializeField] private string userName;
@@ -22,6 +24,7 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject unitUI;
     public GameObject constructButton;
     public GameObject trainingUI;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -31,7 +34,7 @@ public class PlayerBehavior : MonoBehaviour
     }
     void Start()
     {
-
+        updateResourceCounters();
     }
 
     // Update is called once per frame
@@ -44,6 +47,14 @@ public class PlayerBehavior : MonoBehaviour
             selectedTrainingGrounds.makeArmy(0);
         }
         
+    }
+
+    public void updateResourceCounters()
+    {
+        resourceCounters.text = "木材: " + resourcePools[0] + " +" + resourceIncomes[0] +
+            "  石: " + resourcePools[1] + " +" + resourceIncomes[1] +
+            "  銅: " + resourcePools[2] + " +" + resourceIncomes[2] +
+            "  鉄: " + resourcePools[3] + " +" + resourceIncomes[3];
     }
 
     public void Select(CombatBehavior army)
@@ -249,12 +260,12 @@ public class PlayerBehavior : MonoBehaviour
         get { return resourceTypes; }
         set { resourceTypes = value; }
     }
-    public float[] ResourcePools
+    public int[] ResourcePools
     {
         get { return resourcePools; }
         set { resourcePools = value; }
     }
-    public float[] ResourceIncomes
+    public int[] ResourceIncomes
     {
         get { return resourceIncomes; }
         set { resourceIncomes = value; }

@@ -8,6 +8,7 @@ public class ResourceExtractionBehavior : MonoBehaviour
     void Start()
     {
         AddResourceToIncome();
+        owner.updateResourceCounters();
     }
 
     // Update is called once per frame

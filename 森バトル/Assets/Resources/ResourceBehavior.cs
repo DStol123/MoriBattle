@@ -9,7 +9,7 @@ public class ResourceBehavior : MonoBehaviour
     public string resourceName;
     public string description;
     [SerializeField]
-    private float volume; //How many units per turn does this deposit give
+    private int volume; //How many units per turn does this deposit give
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,7 +23,7 @@ public class ResourceBehavior : MonoBehaviour
 
     }
 
-    public float Volume
+    public int Volume
     {
         get { return volume; }
         set { volume = value; }

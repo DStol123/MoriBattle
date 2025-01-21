@@ -8,10 +8,10 @@ public class Resource
     private string description; //For in game tooltip over deposits
     private PlayerBehavior owner; //To decide who gets the resource income from a deposit
 
-    private float volumePerTurn; //How much income this deposit provides
+    private int volumePerTurn; //How much income this deposit provides
 
     //Constructor
-    public Resource(string name, string description, float volumePerTurn)
+    public Resource(string name, string description, int volumePerTurn)
     {
         this.name = name;
         this.description = description;
@@ -44,23 +44,5 @@ public class Resource
     { 
         get { return description; }
         set {  description = value; }
-    }
-
-    public float VolumePerTurn
-    {
-        get { return volumePerTurn; }
-        set { volumePerTurn = value; }
-    }
-
-    //Adds this resource's income to the player's collection of resource incomes
-    public void AddResourceToPool()
-    {
-        for (int i = 0; i < owner.ResourcePools.Length; i++)
-        {
-            if (owner.ResourceTypes[i].name == name)
-            {
-                owner.ResourceIncomes[i] += volumePerTurn;
-            }
-        }
     }
 }

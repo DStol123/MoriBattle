@@ -106,10 +106,6 @@ public class MovementBehavior : MonoBehaviour
             }
 
         }
-        if (newCell == null)
-        {
-            Debug.Log("Not a neighbor.");
-        }
         return newCell;
     }
 
@@ -130,7 +126,6 @@ public class MovementBehavior : MonoBehaviour
         {
             pointCost *= gameManager.HeightMovementPenalty * (1f + (nextCell.Elevation - currentCell.Elevation) * 10f);
         }
-        Debug.Log(pointCost);
         return pointCost;
     }
 
