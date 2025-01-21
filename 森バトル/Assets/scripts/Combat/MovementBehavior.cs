@@ -140,10 +140,6 @@ public class MovementBehavior : MonoBehaviour
         transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
         currentCell.occupyingArmy = combat;
     }
-    private void SelectDestination(Vector3 position)
-    {
-        destinationCell = gameManager.hexGrid.GetCell(position);
-    }
     public void MoveToCell(HexCell cell)
     {
         if ((currentCell == null || calculatePointCost(cell) <= currentMovementPoints) && cell.occupyingArmy == null)
@@ -213,5 +209,25 @@ public class MovementBehavior : MonoBehaviour
     {
         get { return gameManager; }
         set { gameManager = value; }
+    }
+    public int WoodCost
+    {
+        get { return woodCost; }
+        set { woodCost = value; }
+    }
+    public int StoneCost
+    {
+        get { return stoneCost; }
+        set { stoneCost = value; }
+    }
+    public int CopperCost
+    {
+        get { return copperCost; }
+        set { copperCost = value; }
+    }
+    public int IronCost
+    {
+        get { return ironCost; }
+        set { ironCost = value; }
     }
 }

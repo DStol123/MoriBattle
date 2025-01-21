@@ -2836,9 +2836,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 640776659}
   combat: {fileID: 640776658}
-  trainingGround: {fileID: 0}
-  mine: {fileID: 5890907646051342523, guid: 99a021c50f521c4429e3ef0ea68b514a, type: 3}
-  lumberMill: {fileID: 4863397267175200828, guid: a9c84e3ad6adce54ebff828a16bf6088, type: 3}
   placeMode: 0
 --- !u!114 &640776658
 MonoBehaviour:
@@ -4643,12 +4640,15 @@ MonoBehaviour:
   allOwnedMovementBehaviors: []
   playerCamera: {fileID: 963194229}
   possibleArmies:
-  - {fileID: 640776655}
-  - {fileID: 0}
+  - {fileID: 7107864278807605260, guid: 0201813607c35684ba41b3b665472d74, type: 3}
+  - {fileID: 7927786367433936196, guid: 8697dd9f3b4ef744b94e8da22072bf9d, type: 3}
   unitUI: {fileID: 504199643}
   constructButton: {fileID: 908346529}
   trainingUI: {fileID: 2029653944}
   constructionMenu: {fileID: 504275142}
+  trainingGround: {fileID: 6925679994626452869, guid: fd418033d4735524eb7767e05b64364f, type: 3}
+  mine: {fileID: 5890907646051342523, guid: 99a021c50f521c4429e3ef0ea68b514a, type: 3}
+  lumberMill: {fileID: 4863397267175200828, guid: a9c84e3ad6adce54ebff828a16bf6088, type: 3}
 --- !u!1 &965247239
 GameObject:
   m_ObjectHideFlags: 0

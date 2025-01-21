@@ -107,4 +107,24 @@ public class ResourceExtractionBehavior : MonoBehaviour
         get { return cell; }
         set { cell = value; }
     }
+    public int WoodCost
+    {
+        get { return woodCost; }
+        set { woodCost = value; }
+    }
+    public int StoneCost
+    {
+        get { return stoneCost; }
+        set { stoneCost = value; }
+    }
+    public int CopperCost
+    {
+        get { return copperCost; }
+        set { copperCost = value; }
+    }
+    public int IronCost
+    {
+        get { return ironCost; }
+        set { ironCost = value; }
+    }
 }

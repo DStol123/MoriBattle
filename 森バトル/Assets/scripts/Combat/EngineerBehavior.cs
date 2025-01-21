@@ -5,9 +5,7 @@ public class EngineerBehavior : MonoBehaviour
     [SerializeField] private MovementBehavior movement;
     [SerializeField] private CombatBehavior combat;
 
-    [SerializeField] private GameObject trainingGround;
-    [SerializeField] private GameObject mine;
-    [SerializeField] private GameObject lumberMill;
+    
 
     [SerializeField] private bool placeMode;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,7 +14,7 @@ public class EngineerBehavior : MonoBehaviour
         Debug.Log("Attempting to place training grounds");
         if(movement.currentCell.occupyingBuilding == null && placeMode)
         {
-            GameObject buildingA = Instantiate(trainingGround, this.transform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
+            GameObject buildingA = Instantiate(movement.Owner.trainingGround, this.transform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
             TrainingGroundsBehavior trainingGroundsBehavior = buildingA.GetComponent<TrainingGroundsBehavior>();
             trainingGroundsBehavior.Owner = combat.Owner;
             trainingGroundsBehavior.Cell = movement.currentCell;
@@ -30,18 +28,18 @@ public class EngineerBehavior : MonoBehaviour
         Debug.Log("Attempting to place resource extraction");
         if (movement.currentCell.occupyingBuilding == null && placeMode)
         {
-            if(movement.currentCell.occupyingForest != null)
+            if(movement.currentCell.occupyingForest != null && movement.Owner.Affordable(movement.Owner.lumberMill))
             {
-                GameObject buildingA = Instantiate(lumberMill, this.transform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
+                GameObject buildingA = Instantiate(movement.Owner.lumberMill, this.transform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
                 ResourceExtractionBehavior resourceExtractionBehavior = buildingA.GetComponent<ResourceExtractionBehavior>();
                 resourceExtractionBehavior.Owner = combat.Owner;
                 resourceExtractionBehavior.Cell = movement.currentCell;
                 movement.currentCell.occupyingBuilding = resourceExtractionBehavior.Building;
                 resourceExtractionBehavior.Place();
             }
-            else if(movement.currentCell.occupyingResource.resourceName != null)
+            else if(movement.currentCell.occupyingResource.resourceName != null && movement.Owner.Affordable(movement.Owner.mine))
             {
-                GameObject buildingA = Instantiate(mine, this.transform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
+                GameObject buildingA = Instantiate(movement.Owner.mine, this.transform.position, Quaternion.Euler(new Vector3(0f, 0f, 0f)));
                 ResourceExtractionBehavior resourceExtractionBehavior = buildingA.GetComponent<ResourceExtractionBehavior>();
                 resourceExtractionBehavior.Owner = combat.Owner;
                 resourceExtractionBehavior.Cell = movement.currentCell;

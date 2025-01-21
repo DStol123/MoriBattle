@@ -117,4 +117,25 @@ public class TrainingGroundsBehavior : MonoBehaviour
         get { return gameManager; }
         set { gameManager = value; }
     }
+    public int WoodCost
+    {
+        get { return woodCost; }
+        set { woodCost = value; }
+    }
+    public int StoneCost
+    {
+        get { return stoneCost; }
+        set { stoneCost = value; }
+    }
+    public int CopperCost
+    {
+        get { return copperCost; }
+        set { copperCost = value; }
+    }
+        public int IronCost
+    {
+        get { return ironCost; }
+        set { ironCost = value; }
+    }
 }
+

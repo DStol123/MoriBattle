@@ -27,7 +27,11 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject constructButton;
     public GameObject trainingUI;
     public GameObject constructionMenu;
-    
+
+    public GameObject trainingGround;
+    public GameObject mine;
+    public GameObject lumberMill;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -210,10 +214,12 @@ public class PlayerBehavior : MonoBehaviour
     }
     public void PlaceTrainingGround()
     {
-        if(isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null)
+        TrainingGroundsBehavior behavior = trainingGround.GetComponent<TrainingGroundsBehavior>();
+        if(isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null && Affordable(trainingGround))
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceTrainingGrounds();
         }
+        constructionMenu.SetActive(false);
     }
     public void PlaceResourceExtraction()
     {
@@ -221,10 +227,11 @@ public class PlayerBehavior : MonoBehaviour
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceResourceExtractor();
         }
+        constructionMenu.SetActive(false);
     }
     public void TrainArmy(int index)
     {
-        if(isTurn)
+        if(isTurn && Affordable(possibleArmies[index]))
         {
             selectedTrainingGrounds.makeArmy(index);
         }
@@ -248,7 +255,46 @@ public class PlayerBehavior : MonoBehaviour
                 currentArmy.UseMovementPoints(-1f * (currentArmy.MaxMovementPoints - currentArmy.CurrentMovementPoints));
             }
         }
-        
+    }
+    public bool Affordable(GameObject item)
+    {
+        if(item.GetComponent<TrainingGroundsBehavior>() != null)
+        {
+            TrainingGroundsBehavior trainingGround = item.GetComponent<TrainingGroundsBehavior>();
+            if(trainingGround.WoodCost <= resourcePools[0] &&
+                trainingGround.StoneCost <= resourcePools[1] &&
+                trainingGround.CopperCost <= resourcePools[2] &&
+                trainingGround.IronCost <= resourcePools[3])
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        else if(item.GetComponent<ResourceExtractionBehavior>() != null)
+        {
+            ResourceExtractionBehavior resourceExtractor = item.GetComponent<ResourceExtractionBehavior>();
+            if(resourceExtractor.WoodCost <= resourcePools[0] &&
+                resourceExtractor.StoneCost <= resourcePools[1] &&
+                resourceExtractor.CopperCost <= resourcePools[2] &&
+                resourceExtractor.IronCost <= resourcePools[3])
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        else if(item.GetComponent<MovementBehavior>() != null)
+        {
+            MovementBehavior army = item.GetComponent <MovementBehavior>();
+            if(army.WoodCost <= resourcePools[0] &&
+                army.StoneCost <= resourcePools[1] &&
+                army.CopperCost <= resourcePools[2] &&
+                army.IronCost <= resourcePools[3])
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        else { return false; }
     }
     public Color Color
     {
