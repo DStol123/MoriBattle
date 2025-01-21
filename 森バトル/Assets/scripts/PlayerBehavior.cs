@@ -229,6 +229,14 @@ public class PlayerBehavior : MonoBehaviour
         }
         constructionMenu.SetActive(false);
     }
+    public void Chop()
+    {
+        if(isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null)
+        {
+            selectedArmy.GetComponent<EngineerBehavior>().Chop();
+        }
+        constructionMenu.SetActive(false);
+    }
     public void TrainArmy(int index)
     {
         if(isTurn && Affordable(possibleArmies[index]))

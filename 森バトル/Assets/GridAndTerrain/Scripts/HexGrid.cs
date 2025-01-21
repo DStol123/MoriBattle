@@ -114,25 +114,25 @@ public class HexGrid : MonoBehaviour
         if(ironAdder < gameManager.IronDensity && cell.occupyingResource == null)
         {
             ResourceBehavior iron = Instantiate(gameManager.ironPrefab);
-            cell.occupyingResource = gameManager.ironPrefab;
+            cell.occupyingResource = iron;
             iron.cell = cell;
         }
         if(copperAdder < gameManager.CopperDensity && cell.occupyingResource == null)
         {
             ResourceBehavior copper = Instantiate(gameManager.copperPrefab);
-            cell.occupyingResource = gameManager.copperPrefab;
+            cell.occupyingResource = copper;
             copper.cell = cell;
         }
         if(rockAdder < gameManager.RockDensity && cell.occupyingResource == null)
         {
             ResourceBehavior stone = Instantiate(gameManager.stonePrefab);
-            cell.occupyingResource = gameManager.stonePrefab;
+            cell.occupyingResource = stone;
             stone.cell = cell;
         }
         if (forestAdder < gameManager.ForestDensity && cell.occupyingForest == null && cell.occupyingResource == null)
         {
             ResourceBehavior forest = Instantiate(gameManager.forestPrefab);
-            cell.occupyingForest = gameManager.forestPrefab;
+            cell.occupyingForest = forest;
             forest.cell = cell;
         }
 
