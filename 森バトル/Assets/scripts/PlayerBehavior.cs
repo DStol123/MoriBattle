@@ -199,25 +199,39 @@ public class PlayerBehavior : MonoBehaviour
             selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
         }
     }
-    public void TurnOnPlaceMode()
+    public void TogglePlaceMode()
     {
         if(isTurn)
         {
             selectedArmy.AttackMode = false;
             selectedArmy.Movement.MoveMode = false;
+            if (selectedArmy.GetComponent<EngineerBehavior>() != null)
+            {
+                EngineerBehavior engineer = selectedArmy.GetComponent<EngineerBehavior>();
+                if(engineer.PlaceMode)
+                {
+                    engineer.PlaceMode = false;
+                    constructionMenu.SetActive(false);
+                }
+                else
+                {
+                    engineer.PlaceMode = true;
+                    constructionMenu.SetActive(true);
+                }
+            }
+            
         }
-        if(selectedArmy.GetComponent<EngineerBehavior>() != null)
-        {
-            selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = true;
-        }
-        constructionMenu.SetActive(true);
     }
     public void PlaceTrainingGround()
     {
         TrainingGroundsBehavior behavior = trainingGround.GetComponent<TrainingGroundsBehavior>();
-        if(isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null && Affordable(trainingGround))
+        if(isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null)
         {
-            selectedArmy.GetComponent<EngineerBehavior>().PlaceTrainingGrounds();
+            if(Affordable(trainingGround))
+            {
+                selectedArmy.GetComponent<EngineerBehavior>().PlaceTrainingGrounds();
+            }
+            selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
         }
         constructionMenu.SetActive(false);
     }
@@ -226,6 +240,7 @@ public class PlayerBehavior : MonoBehaviour
         if (isTurn && selectedArmy.GetComponent<EngineerBehavior>() != null)
         {
             selectedArmy.GetComponent<EngineerBehavior>().PlaceResourceExtractor();
+            selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
         }
         constructionMenu.SetActive(false);
     }

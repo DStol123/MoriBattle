@@ -1697,7 +1697,7 @@ MonoBehaviour:
   rockDensity: 0.08
   forestMovementPenalty: 1.5
   heightMovementPenalty: 1.5
-  chopYield: 0
+  chopYield: 20
   seedX: 0
   seedY: 0
   seedZ: 0
@@ -4353,7 +4353,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 963194230}
         m_TargetAssemblyTypeName: PlayerBehavior, Assembly-CSharp
-        m_MethodName: TurnOnPlaceMode
+        m_MethodName: TogglePlaceMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

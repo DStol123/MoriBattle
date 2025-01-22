@@ -19,7 +19,7 @@ public class HexMesh : MonoBehaviour
         vertices = new List<Vector3>();
         triangles = new List<int>();
         colors = new List<Color>();
-        newPerturbStrength = Random.Range(HexMetrics.cellPerturbStrengh - HexMetrics.cellPerturbStrengh * 0.05f, HexMetrics.cellPerturbStrengh + HexMetrics.cellPerturbStrengh * 0.08f);
+        newPerturbStrength = Random.Range(HexMetrics.cellPerturbStrengh - HexMetrics.cellPerturbStrengh * 0.05f, HexMetrics.cellPerturbStrengh + HexMetrics.cellPerturbStrengh * 0.1f);
     }
     void AddQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
     {
