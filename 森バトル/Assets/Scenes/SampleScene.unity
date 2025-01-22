@@ -1701,7 +1701,7 @@ MonoBehaviour:
   seedX: 0
   seedY: 0
   seedZ: 0
-  hexGrid: {fileID: 0}
+  hexGrid: {fileID: 154126095}
   ironPrefab: {fileID: 8944455798993363734, guid: a9482bb20432e2f4a9782facfb6124b3, type: 3}
   copperPrefab: {fileID: 5458606483173116138, guid: 562a0f9389e1d5b4aba51e8f202f33c5, type: 3}
   forestPrefab: {fileID: 1909263327706896495, guid: b0377576310543a44bdddb354285dfac, type: 3}
@@ -3361,7 +3361,7 @@ Transform:
   m_GameObject: {fileID: 764452213}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -6, z: 0}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6430,7 +6430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6045609608286380076, guid: 178a51af93ef35b479e5b23fedaf2867, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 6045609608286380076, guid: 178a51af93ef35b479e5b23fedaf2867, type: 3}
       propertyPath: m_LocalPosition.y

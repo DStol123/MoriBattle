@@ -45,6 +45,10 @@ public class MovementBehavior : MonoBehaviour
         if (isStartingArmy)
         {
             currentCell = InitialCell();
+            if(currentCell.occupyingForest != null)
+            {
+                currentCell.occupyingForest.opacityModifier.SetOpacity(false);
+            }
             MoveToCell();
             owner.playerCamera.Target.transform.position = transform.position;
             owner.playerCamera.FollowTarget();
@@ -154,11 +158,19 @@ public class MovementBehavior : MonoBehaviour
         {
             if (currentCell != null)
             {
+                if(currentCell.occupyingForest != null)
+                {
+                    currentCell.occupyingForest.opacityModifier.SetOpacity(true);
+                }
                 currentCell.occupyingArmy = null;
                 float moveCost = calculatePointCost(cell);
                 RotateArmy(cell);
                 Debug.Log(moveCost);
                 UseMovementPoints(moveCost);
+            }
+            if(cell.occupyingForest != null)
+            {
+                cell.occupyingForest.opacityModifier.SetOpacity(false);
             }
             transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
             transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;

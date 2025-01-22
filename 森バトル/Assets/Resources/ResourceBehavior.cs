@@ -9,6 +9,7 @@ public class ResourceBehavior : MonoBehaviour
     public string description;
     [SerializeField]
     private int volume; //How many units per turn does this deposit give
+    public OpacityModifier opacityModifier;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
