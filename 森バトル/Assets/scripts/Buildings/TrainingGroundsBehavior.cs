@@ -17,12 +17,23 @@ public class TrainingGroundsBehavior : MonoBehaviour
     [SerializeField] private int stoneCost;
     [SerializeField] private int copperCost;
     [SerializeField] private int ironCost;
+
+    [SerializeField] private int sightRange;
+    public FogOfWarManager fogOfWarManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if(isStartingBuilding)
         {
             cell = InitialCell();
+            fogOfWarManager.gameManager = gameManager;
+            fogOfWarManager.cells = gameManager.hexGrid.cells;
+            Place();
+            fogOfWarManager.ClearFogOfWar();
+            if(cell.occupyingForest != null)
+            {
+                Destroy(cell.occupyingForest.gameObject);
+            }
         }
         else if(!isStartingBuilding)
         {
@@ -31,7 +42,6 @@ public class TrainingGroundsBehavior : MonoBehaviour
             owner.ResourcePools[2] -= copperCost;
             owner.ResourcePools[3] -= ironCost;
         }
-        Place();
         building = new Building(bName, description, owner, cell);
         cell.occupyingBuilding = building;
     }
@@ -65,7 +75,11 @@ public class TrainingGroundsBehavior : MonoBehaviour
             combatBehavior.Movement.currentCell = cell;
             combatBehavior.Movement.GameManager = gameManager;
             combatBehavior.GameManager = gameManager;
-            cell.occupyingArmy = combatBehavior;
+            combatBehavior.Movement.fogOfWarManager.currentCell = cell;
+            combatBehavior.Movement.fogOfWarManager.gameManager = gameManager;
+            combatBehavior.Movement.fogOfWarManager.owner = owner;
+            combatBehavior.Movement.fogOfWarManager.ClearFogOfWar();
+            cell.occupyingArmy = combatBehavior.Movement;
             combatBehavior.Movement.MoveToCell();
             Debug.Log("Army Placed at " + cell.coordinates);
         }
@@ -95,6 +109,7 @@ public class TrainingGroundsBehavior : MonoBehaviour
         transform.position = new Vector3(cell.Position.x, cell.Position.y + heightOffset, cell.Position.z);
         transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
         cell.occupyingBuilding = building;
+        fogOfWarManager.currentCell = cell;
     }
 
     public Building Building

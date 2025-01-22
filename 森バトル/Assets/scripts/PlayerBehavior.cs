@@ -18,6 +18,7 @@ public class PlayerBehavior : MonoBehaviour
     int[] previousResourcePools;
 
     [SerializeField] public List<MovementBehavior> allOwnedMovementBehaviors;
+    [SerializeField] public List<FogOfWarManager> allFogOfWarManagers;
     private CombatBehavior selectedArmy;
     private TrainingGroundsBehavior selectedTrainingGrounds;
     public CameraControl playerCamera;
@@ -41,7 +42,6 @@ public class PlayerBehavior : MonoBehaviour
     }
     void Start()
     {
-        previousResourcePools = new int[4] { 0, 0, 0, 0 };
         updateResourceCounters();
     }
     // Update is called once per frame
@@ -303,6 +303,17 @@ public class PlayerBehavior : MonoBehaviour
             else { return false; }
         }
         else { return false; }
+    }
+    public void ClearFogOfWar()
+    {
+        for(int i = 0; i < gameManager.hexGrid.cells.Length; i++)
+        {
+            gameManager.hexGrid.cells[i].fog.SetActive(true);
+        }
+        for(int i = 0; i < allFogOfWarManagers.Count; i++)
+        {
+            allFogOfWarManagers[i].ClearFogOfWar();
+        }
     }
     public Color Color
     {

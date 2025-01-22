@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HexCell : MonoBehaviour
@@ -10,7 +11,7 @@ public class HexCell : MonoBehaviour
 
     public GameManager gameManager;
 
-    public CombatBehavior occupyingArmy;
+    public MovementBehavior occupyingArmy;
     public ResourceBehavior occupyingResource;
     public ResourceBehavior occupyingForest;
     public Building occupyingBuilding;
@@ -18,6 +19,8 @@ public class HexCell : MonoBehaviour
     public Color stone;
     public Color grass;
     public Color dirt;
+
+    public GameObject fog;
 
     public HexMapEditor hexMapEditor;
     //public BuildingBehavior occupiedByBuilding;
@@ -58,6 +61,7 @@ public class HexCell : MonoBehaviour
                 color = stone;
             }
         }
+        fog.transform.position = new Vector3(fog.transform.position.x, 0f, fog.transform.position.z);
         Refresh();
     }
     int elevation = int.MinValue;
@@ -78,10 +82,9 @@ public class HexCell : MonoBehaviour
             Vector3 position = transform.localPosition;
             position.y = value * HexMetrics.elevationStep;
             position.y += (
-                HexMetrics.SampleNoise(position) * 2f - 1f) *
+                HexMetrics.SampleNoise(new Vector3(position.x + gameManager.seedX, position.y + gameManager.seedY, position.z + gameManager.seedZ)) * 2f - 1f) *
                 HexMetrics.elevationPerturbStrength;
             transform.localPosition = position;
-
             Vector3 uiPosition = uiRect.localPosition;
             uiPosition.z = -position.y;
             uiRect.localPosition = uiPosition;
@@ -114,6 +117,14 @@ public class HexCell : MonoBehaviour
             }
         }
         return rBool;
+    }
+    public int Distance(HexCell otherCell)
+    {
+        int xDistance = Mathf.Abs(otherCell.coordinates.X - coordinates.X);
+        int yDistance = Mathf.Abs(otherCell.coordinates.Y - coordinates.Y);
+        int zDistance = Mathf.Abs(otherCell.coordinates.Z - coordinates.Z);
+        return Mathf.Max(xDistance, yDistance, zDistance);
+
     }
     void Refresh()
     {

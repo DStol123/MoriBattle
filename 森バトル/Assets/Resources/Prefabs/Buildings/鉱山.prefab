@@ -71,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6da09756e18527643b4f41c233a09aa8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4418935873103803335}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6da09756e18527643b4f41c233a09aa8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9157312462959550349}
   m_SourcePrefab: {fileID: 100100000, guid: 6da09756e18527643b4f41c233a09aa8, type: 3}
 --- !u!1 &5890907646051342523 stripped
 GameObject:
@@ -101,3 +104,19 @@ MonoBehaviour:
   stoneCost: 3
   copperCost: 0
   ironCost: 0
+--- !u!114 &9157312462959550349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890907646051342523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38e90bd2b3001e24985f36c07239023d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  currentCell: {fileID: 0}
+  sightRange: 3
+  owner: {fileID: 0}

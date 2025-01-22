@@ -16,6 +16,7 @@ public class ResourceExtractionBehavior : MonoBehaviour
     [SerializeField] int stoneCost;
     [SerializeField] int copperCost;
     [SerializeField] int ironCost;
+    public FogOfWarManager fogOfWarManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

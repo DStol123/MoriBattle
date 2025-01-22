@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 1078726099647493615}
   - component: {fileID: 3895410058522429087}
   - component: {fileID: 8484292563956109687}
+  - component: {fileID: -9152809347888479965}
   m_Layer: 0
   m_Name: Basic Army
   m_TagString: Untagged
@@ -591,6 +592,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   combat: {fileID: 3895410058522429087}
   owner: {fileID: 0}
+  fogOfWarManager: {fileID: 0}
   isStartingArmy: 0
   maxMovementPoints: 3
   startingMovementPoints: 3
@@ -603,7 +605,24 @@ MonoBehaviour:
   stoneCost: 10
   copperCost: 0
   ironCost: 0
+  sightRange: 0
   currentCell: {fileID: 0}
+--- !u!114 &-9152809347888479965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7107864278807605260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38e90bd2b3001e24985f36c07239023d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  currentCell: {fileID: 0}
+  sightRange: 4
+  owner: {fileID: 0}
 --- !u!1001 &1873513510040292915
 PrefabInstance:
   m_ObjectHideFlags: 0

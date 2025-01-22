@@ -14,7 +14,7 @@ public class HexGrid : MonoBehaviour
     public HexGridChunk chunkPrefab;
     HexGridChunk[] chunks;
 
-    HexCell[] cells;
+    public HexCell[] cells;
 
     public Text cellLabelPrefab;
 
@@ -32,6 +32,9 @@ public class HexGrid : MonoBehaviour
         cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
 
         cells = new HexCell[cellCountZ * cellCountX];
+        gameManager.seedX = Random.Range(-100000f, 100000f);
+        gameManager.seedY = Random.Range(-100000f, 100000f);
+        gameManager.seedZ = Random.Range(-100000f, 100000f);
 
         CreateChunks();
         CreateCells();

@@ -10,6 +10,7 @@ public class HexMesh : MonoBehaviour
     MeshCollider meshCollider;
     List<Color> colors;
     public const float elevationStep = 5f;
+    private float newPerturbStrength;
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = hexMesh = new Mesh();
@@ -18,6 +19,7 @@ public class HexMesh : MonoBehaviour
         vertices = new List<Vector3>();
         triangles = new List<int>();
         colors = new List<Color>();
+        newPerturbStrength = Random.Range(HexMetrics.cellPerturbStrengh - HexMetrics.cellPerturbStrengh * 0.05f, HexMetrics.cellPerturbStrengh + HexMetrics.cellPerturbStrengh * 0.08f);
     }
     void AddQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
     {
@@ -134,8 +136,8 @@ public class HexMesh : MonoBehaviour
     Vector3 Perturb (Vector3 position)
     {
         float sample = HexMetrics.SampleNoise(position);
-        position.x += (sample * 2f - 1f) * HexMetrics.cellPerturbStrengh;
-        position.z += (sample * 2f - 1f) * HexMetrics.cellPerturbStrengh;
+        position.x += (sample * 2f - 1f) * newPerturbStrength;
+        position.z += (sample * 2f - 1f) * newPerturbStrength;
         return position;
     }
 }

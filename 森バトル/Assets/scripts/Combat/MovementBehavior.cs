@@ -8,6 +8,7 @@ public class MovementBehavior : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private CombatBehavior combat;
     [SerializeField] private PlayerBehavior owner;
+    public FogOfWarManager fogOfWarManager;
 
     [SerializeField] private bool isStartingArmy;
 
@@ -26,8 +27,10 @@ public class MovementBehavior : MonoBehaviour
     [SerializeField] private int copperCost;
     [SerializeField] private int ironCost;
 
+    [SerializeField] private int sightRange;
+
     public HexCell currentCell;
-    private HexCell destinationCell;
+
     void Start()
     {
         if(!isStartingArmy)
@@ -45,7 +48,12 @@ public class MovementBehavior : MonoBehaviour
             MoveToCell();
             owner.playerCamera.Target.transform.position = transform.position;
             owner.playerCamera.FollowTarget();
+            fogOfWarManager.cells = gameManager.hexGrid.cells;
+            fogOfWarManager.ClearFogOfWar();
         }
+        fogOfWarManager.currentCell = currentCell;
+        fogOfWarManager.gameManager = gameManager;
+        fogOfWarManager.ClearFogOfWar();
     }
     private void OnDestroy()
     {
@@ -138,7 +146,7 @@ public class MovementBehavior : MonoBehaviour
     {
         transform.position = new Vector3(currentCell.Position.x, currentCell.Position.y + armyHeight, currentCell.Position.z);
         transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
-        currentCell.occupyingArmy = combat;
+        currentCell.occupyingArmy = this;
     }
     public void MoveToCell(HexCell cell)
     {
@@ -155,7 +163,9 @@ public class MovementBehavior : MonoBehaviour
             transform.position = new Vector3(cell.Position.x, cell.Position.y + armyHeight, cell.Position.z);
             transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
             currentCell = cell;
-            cell.occupyingArmy = combat;
+            fogOfWarManager.currentCell = currentCell;
+            owner.ClearFogOfWar();
+            cell.occupyingArmy = this;
         }
     }
     public void RotateArmy(HexCell hexCell)
