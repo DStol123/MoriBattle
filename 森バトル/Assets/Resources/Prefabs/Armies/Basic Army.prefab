@@ -592,7 +592,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   combat: {fileID: 3895410058522429087}
   owner: {fileID: 0}
-  fogOfWarManager: {fileID: 0}
+  fogOfWarManager: {fileID: -9152809347888479965}
   isStartingArmy: 0
   maxMovementPoints: 3
   startingMovementPoints: 3
@@ -623,6 +623,7 @@ MonoBehaviour:
   currentCell: {fileID: 0}
   sightRange: 4
   owner: {fileID: 0}
+  cells: []
 --- !u!1001 &1873513510040292915
 PrefabInstance:
   m_ObjectHideFlags: 0
