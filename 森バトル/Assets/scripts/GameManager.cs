@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float heightMovementPenalty;
     public int chopYield;
+    public HexCell startingCell;
+    public float waterLevel;
+    private GameObject water;
+
 
     public float seedX;
     public float seedY;
@@ -45,6 +49,10 @@ public class GameManager : MonoBehaviour
     {
         players[0].IsTurn = true;
         activePlayer = players[0];
+    }
+    private void Start()
+    {
+        water.transform.position = new Vector3(0f, waterLevel, 0f);
     }
     public PlayerBehavior[] Players
     {

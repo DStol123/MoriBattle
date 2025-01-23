@@ -115,7 +115,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 1579, y: 760}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8972661929989832097
@@ -593,6 +593,7 @@ MonoBehaviour:
   combat: {fileID: 3895410058522429087}
   owner: {fileID: 0}
   fogOfWarManager: {fileID: -9152809347888479965}
+  engineerBehavior: {fileID: 0}
   isStartingArmy: 0
   maxMovementPoints: 3
   startingMovementPoints: 3
@@ -624,6 +625,7 @@ MonoBehaviour:
   sightRange: 4
   owner: {fileID: 0}
   cells: []
+  startingCell: {fileID: 0}
 --- !u!1001 &1873513510040292915
 PrefabInstance:
   m_ObjectHideFlags: 0

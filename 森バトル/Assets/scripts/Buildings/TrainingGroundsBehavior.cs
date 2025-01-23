@@ -78,6 +78,8 @@ public class TrainingGroundsBehavior : MonoBehaviour
             combatBehavior.Movement.fogOfWarManager.currentCell = cell;
             combatBehavior.Movement.fogOfWarManager.gameManager = gameManager;
             combatBehavior.Movement.fogOfWarManager.owner = owner;
+            combatBehavior.Movement.fogOfWarManager.startingCell = gameManager.startingCell;
+            combatBehavior.Movement.fogOfWarManager.Initialize();
             combatBehavior.Movement.fogOfWarManager.ClearFogOfWar();
             cell.occupyingArmy = combatBehavior.Movement;
             combatBehavior.Movement.MoveToCell();
@@ -90,11 +92,11 @@ public class TrainingGroundsBehavior : MonoBehaviour
     {
         Vector3 initialPosition = new Vector3(HexMetrics.outerRadius * gameManager.hexGrid.cellCountX / 8.5f, 0f, HexMetrics.outerRadius * gameManager.hexGrid.cellCountZ / 1.5f);
         HexCell initialCell = gameManager.hexGrid.GetCell(initialPosition);
-        if (initialCell.occupyingArmy != null)
+        if (initialCell.rocky)
         {
             for (int i = 0; i < initialCell.Neighbors.Length; i++)
             {
-                if (initialCell.Neighbors[i].occupyingArmy == null)
+                if (!initialCell.Neighbors[i].rocky)
                 {
                     initialCell = initialCell.Neighbors[i];
                     break;

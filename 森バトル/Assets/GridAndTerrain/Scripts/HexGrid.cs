@@ -119,18 +119,21 @@ public class HexGrid : MonoBehaviour
             ResourceBehavior iron = Instantiate(gameManager.ironPrefab);
             cell.occupyingResource = iron;
             iron.cell = cell;
+            cell.rocky = true;
         }
         if(copperAdder < gameManager.CopperDensity && cell.occupyingResource == null)
         {
             ResourceBehavior copper = Instantiate(gameManager.copperPrefab);
             cell.occupyingResource = copper;
             copper.cell = cell;
+            cell.rocky = true;
         }
         if(rockAdder < gameManager.RockDensity && cell.occupyingResource == null)
         {
             ResourceBehavior stone = Instantiate(gameManager.stonePrefab);
             cell.occupyingResource = stone;
             stone.cell = cell;
+            cell.rocky = true;
         }
         if (forestAdder < gameManager.ForestDensity && cell.occupyingForest == null && cell.occupyingResource == null)
         {

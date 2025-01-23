@@ -85,10 +85,16 @@ public class ResourceExtractionBehavior : MonoBehaviour
     }
     public void Place()
     {
-        if(cell != null)
+        if (cell != null)
         {
-            transform.position = new Vector3(cell.Position.x, cell.Position.y + heightOffset, cell.Position.z);
-            transform.position += transform.forward * forwardOffset + transform.right * lateralOffset;
+            if (cell.occupyingResource.mineAttacher != null)
+            {
+                cell.occupyingResource.mineAttacher.Attach(this.gameObject);
+            }
+            else
+            {
+                transform.position = new Vector3(cell.Position.x + forwardOffset, cell.Position.y + heightOffset, cell.Position.z + lateralOffset);
+            }
             cell.occupyingBuilding = building;
         }
     }

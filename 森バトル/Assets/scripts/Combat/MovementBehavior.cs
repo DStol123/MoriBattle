@@ -9,6 +9,7 @@ public class MovementBehavior : MonoBehaviour
     [SerializeField] private CombatBehavior combat;
     [SerializeField] private PlayerBehavior owner;
     public FogOfWarManager fogOfWarManager;
+    [SerializeField] private EngineerBehavior engineerBehavior;
 
     [SerializeField] private bool isStartingArmy;
 
@@ -67,11 +68,12 @@ public class MovementBehavior : MonoBehaviour
     void Update()
     {
         if (
+            owner.IsTurn && 
             moveMode &&
             Input.GetMouseButtonDown(1) &&
             !EventSystem.current.IsPointerOverGameObject() &&
             combat.IsSelected &&
-            owner.IsTurn && ChangeCell() != null
+            owner.IsTurn && ChangeCell() != null 
             )
         {
 
@@ -88,11 +90,11 @@ public class MovementBehavior : MonoBehaviour
         }
         Vector3 initialPosition = new Vector3(HexMetrics.outerRadius * gameManager.hexGrid.cellCountX / sector, 0f, HexMetrics.outerRadius * gameManager.hexGrid.cellCountZ / 2f);
         HexCell initialCell = gameManager.hexGrid.GetCell(initialPosition);
-        if (initialCell.occupyingArmy != null)
+        if (initialCell.occupyingArmy != null || (engineerBehavior == null && initialCell.rocky))
         {
             for (int i = 0; i < initialCell.Neighbors.Length; i++)
             {
-                if (initialCell.Neighbors[i].occupyingArmy == null)
+                if (initialCell.Neighbors[i].occupyingArmy == null && !(engineerBehavior == null && initialCell.Neighbors[i].rocky))
                 {
                     initialCell = initialCell.Neighbors[i];
                     break;
@@ -154,7 +156,8 @@ public class MovementBehavior : MonoBehaviour
     }
     public void MoveToCell(HexCell cell)
     {
-        if ((currentCell == null || calculatePointCost(cell) <= currentMovementPoints) && cell.occupyingArmy == null)
+        if ((currentCell == null || calculatePointCost(cell) <= currentMovementPoints) && cell.occupyingArmy == null &&
+            !(engineerBehavior == null && cell.rocky) && !cell.impassable)
         {
             if (currentCell != null)
             {

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class FogOfWarManager : MonoBehaviour
@@ -7,11 +8,14 @@ public class FogOfWarManager : MonoBehaviour
     [SerializeField] private int sightRange;
     public PlayerBehavior owner;
     public HexCell[] cells;
+    public HexCell startingCell;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cells = gameManager.hexGrid.cells;
-        owner.allFogOfWarManagers.Add(this);
+        if(owner!=null)
+        {
+            Initialize();
+        }
     }
     private void OnDestroy()
     {
@@ -39,5 +43,10 @@ public class FogOfWarManager : MonoBehaviour
         {
             cells[i].fog.SetActive(true);
         }
+    }
+    public void Initialize()
+    {
+        owner.allFogOfWarManagers.Add(this);
+        cells = gameManager.hexGrid.cells.Append(startingCell).ToArray();
     }
 }

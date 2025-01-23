@@ -15,6 +15,8 @@ public class HexCell : MonoBehaviour
     public ResourceBehavior occupyingResource;
     public ResourceBehavior occupyingForest;
     public Building occupyingBuilding;
+    public bool impassable;
+    public bool rocky;
 
     public Color stone;
     public Color grass;
