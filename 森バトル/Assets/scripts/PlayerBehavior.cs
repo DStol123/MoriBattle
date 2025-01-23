@@ -330,6 +330,13 @@ public class PlayerBehavior : MonoBehaviour
             allFogOfWarManagers[i].ClearFogOfWar();
         }
     }
+    public void RevealMap()
+    {
+        for(int i = 0; i < gameManager.hexGrid.cells.Length; i++)
+        {
+            gameManager.hexGrid.cells[i].fog.SetActive(false);
+        }
+    }
     public Color Color
     {
         get { return color; }

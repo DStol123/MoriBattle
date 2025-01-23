@@ -18,6 +18,9 @@ public class CameraControl : MonoBehaviour
     private float boostFactor;
     [SerializeField] private float boostMultiplier;
     [SerializeField] private float zoomSpeedFactor; //For speeding up the camera move speed when zoomed out.
+    [SerializeField] private HexGrid hexGrid;
+    private HexCell targetCell;
+    private HexCell cameraCell;
 
     private Camera cam;
     private GameObject target; // Empty Object
@@ -36,14 +39,10 @@ public class CameraControl : MonoBehaviour
         CameraRotation();
         TargetMovement();
         CameraZoom();
-        if (target.transform.position.y != 0f)
-        {
-            target.transform.position = new Vector3(target.transform.position.x, 0f, target.transform.position.z);
-        }
         ApplyPositionLimits(target.transform);
-        ApplyPositionLimits(this.transform);// Limiting of Camera
         FollowTarget();
-        
+        ApplyPositionLimits(this.transform);
+
         targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
     }
     private void StabilizeCamera()
@@ -60,7 +59,7 @@ public class CameraControl : MonoBehaviour
         else { boostFactor = boostMultiplier; }
     }
     // WASD key
-    bool TargetMovement()
+    void TargetMovement()
     {
         Vector3 moveDirection = Vector3.zero;
 
@@ -83,12 +82,13 @@ public class CameraControl : MonoBehaviour
         {
             moveDirection += stabilizer.transform.right;
         }
-        target.transform.position += moveDirection * moveSpeed * boostFactor * targetOffset.magnitude * zoomSpeedFactor;
-        if (moveDirection == Vector3.zero)
+        targetCell = hexGrid.GetCell(target.transform.position);
+        if(targetCell != null)
         {
-            return false;
+            float cellHeight = targetCell.gameObject.transform.position.y;
+            target.transform.position = Vector3.Lerp(target.transform.position, new Vector3(target.transform.position.x, cellHeight, target.transform.position.z), 0.01f * Mathf.Abs(cellHeight - target.transform.position.y));
         }
-        else { return true; }
+        target.transform.position += moveDirection * moveSpeed * boostFactor * targetOffset.magnitude * zoomSpeedFactor;
     }
     // Camera will look around the empty target
     void CameraRotation()
@@ -129,9 +129,18 @@ public class CameraControl : MonoBehaviour
     {
         Vector3 position = targetTransform.position;
 
-        position.y = Mathf.Clamp(position.y, minY, maxY);
         position.x = Mathf.Clamp(position.x, minX, maxX);
         position.z = Mathf.Clamp(position.z, minZ, maxZ);
+        if(targetTransform == this.transform)
+        {
+            targetCell = hexGrid.GetCell(this.transform.position);
+            float cellHeight = targetCell.gameObject.transform.position.y + 10f;
+            if (targetCell != null)
+            {
+                Debug.Log(cellHeight);
+                position.y = Mathf.Clamp(position.y, cellHeight, maxY);
+            }
+        }
 
         targetTransform.position = position;
     }

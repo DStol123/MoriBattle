@@ -149,7 +149,7 @@ public class HexMesh : MonoBehaviour
     //Adds Perlin Noise to a position
     Vector3 Perturb (Vector3 position)
     {
-        float sample = HexMetrics.SampleNoise(position);
+        float sample = HexMetrics.SampleNoise(position, HexMetrics.noiseScale);
         position.x += (sample * 2f - 1f) * newPerturbStrength;
         position.z += (sample * 2f - 1f) * newPerturbStrength;
         return position;

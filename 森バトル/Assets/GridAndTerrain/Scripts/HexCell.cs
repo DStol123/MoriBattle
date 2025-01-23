@@ -82,10 +82,19 @@ public class HexCell : MonoBehaviour
             }
             elevation = value;
             Vector3 position = transform.localPosition;
+            Vector3 alpha = new Vector3(position.x + gameManager.seedX, position.y + gameManager.seedY, position.z + gameManager.seedZ);
             position.y = value * HexMetrics.elevationStep;
-            position.y += (
-                HexMetrics.SampleNoise(new Vector3(position.x + gameManager.seedX, position.y + gameManager.seedY, position.z + gameManager.seedZ)) * 2f - 1f) *
-                HexMetrics.elevationPerturbStrength;
+            position.y += ((
+                (
+                HexMetrics.SampleNoise(alpha, HexMetrics.noiseScale) * 2f - 1f) *
+                HexMetrics.elevationPerturbStrength) +
+                (
+                (HexMetrics.SampleNoise(alpha * 0.5f, HexMetrics.noiseScale) * 2f - 1f) *
+                HexMetrics.elevationPerturbStrength * 3f) +
+                (
+                (HexMetrics.SampleNoise(alpha * 0.25f, HexMetrics.noiseScale) * 2f - 1f) *
+                HexMetrics.elevationPerturbStrength * 5f)
+                );
             transform.localPosition = position;
             Vector3 uiPosition = uiRect.localPosition;
             uiPosition.z = -position.y;

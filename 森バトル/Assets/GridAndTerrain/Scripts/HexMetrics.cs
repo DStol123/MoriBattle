@@ -56,8 +56,8 @@ public class HexMetrics
     {
         return corners[(int)direction + 1] * solidFactor;
     }
-    public static float SampleNoise(Vector3 position)
+    public static float SampleNoise(Vector3 position, float noiseScale)
     {
-        return Mathf.PerlinNoise(position.x * noiseScale, position.y * noiseScale);
+        return Mathf.PerlinNoise(position.x * noiseScale, position.z * noiseScale);
     }
 }
