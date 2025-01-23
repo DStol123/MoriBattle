@@ -129,7 +129,7 @@ public class MovementBehavior : MonoBehaviour
         }
         return newCell;
     }
-    private float calculatePointCost(HexCell nextCell)
+    public float CalculatePointCost(HexCell nextCell)
     {
         float pointCost = 1f;
         if (Mathf.Abs(nextCell.Elevation - currentCell.Elevation) >= 0.009f)
@@ -156,7 +156,7 @@ public class MovementBehavior : MonoBehaviour
     }
     public void MoveToCell(HexCell cell)
     {
-        if ((currentCell == null || calculatePointCost(cell) <= currentMovementPoints) && cell.occupyingArmy == null &&
+        if ((currentCell == null || CalculatePointCost(cell) <= currentMovementPoints) && cell.occupyingArmy == null &&
             !(engineerBehavior == null && cell.rocky) && !cell.impassable)
         {
             if (currentCell != null)
@@ -166,7 +166,7 @@ public class MovementBehavior : MonoBehaviour
                     currentCell.occupyingForest.opacityModifier.SetOpacity(true);
                 }
                 currentCell.occupyingArmy = null;
-                float moveCost = calculatePointCost(cell);
+                float moveCost = CalculatePointCost(cell);
                 RotateArmy(cell);
                 Debug.Log(moveCost);
                 UseMovementPoints(moveCost);

@@ -19,6 +19,7 @@ public class HexMesh : MonoBehaviour
         vertices = new List<Vector3>();
         triangles = new List<int>();
         colors = new List<Color>();
+        DisableReflections();
         newPerturbStrength = Random.Range(HexMetrics.cellPerturbStrengh - HexMetrics.cellPerturbStrengh * 0.05f, HexMetrics.cellPerturbStrengh + HexMetrics.cellPerturbStrengh * 0.1f);
     }
     void AddQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
@@ -130,6 +131,19 @@ public class HexMesh : MonoBehaviour
             v5.y = nextNeighbor.Position.y;
             AddTriangle(v2, v4, v5);
             AddTriangleColor(cell.Color, neighbor.Color, nextNeighbor.Color);
+        }
+    }
+    void DisableReflections()
+    {
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            Material material = renderer.material;
+            if (material != null)
+            {
+                material.SetFloat("_Metallic", 0f); // Set metallic to 0
+                material.SetFloat("_Glossiness", 0f); // Set smoothness to 0
+            }
         }
     }
     //Adds Perlin Noise to a position

@@ -66,16 +66,19 @@ public class CombatBehavior : MonoBehaviour
     public void Attack(float damage, CombatBehavior unit)
     {
         HexCell targetCell = unit.movement.currentCell;
-        damage = Random.Range(damage - damage * 0.1f, damage + damage * 0.1f);
-        float returnDamage = unit.BaseDefenceDamage;
-        returnDamage = Random.Range(returnDamage - returnDamage * 0.1f, returnDamage + returnDamage * 0.1f);
-        unit.TakeDamage(CalculateDamage(unit, damage));
-        TakeDamage(returnDamage);
-        if(unit == null)
+        if (movement.CurrentMovementPoints >= movement.CalculatePointCost(targetCell))
         {
-            movement.MoveToCell(targetCell);
+            damage = Random.Range(damage - damage * 0.1f, damage + damage * 0.1f);
+            float returnDamage = unit.BaseDefenceDamage;
+            returnDamage = Random.Range(returnDamage - returnDamage * 0.1f, returnDamage + returnDamage * 0.1f);
+            unit.TakeDamage(CalculateDamage(unit, damage));
+            TakeDamage(returnDamage);
+            if (unit.currentHp <= 0f)
+            {
+                movement.MoveToCell(targetCell);
+            }
+            movement.UseMovementPoints(movement.CurrentMovementPoints);
         }
-
     }
     public void FocusOnMe(PlayerBehavior player)
     {

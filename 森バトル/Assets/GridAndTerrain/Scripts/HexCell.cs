@@ -90,7 +90,10 @@ public class HexCell : MonoBehaviour
             Vector3 uiPosition = uiRect.localPosition;
             uiPosition.z = -position.y;
             uiRect.localPosition = uiPosition;
-
+            if(position.y < gameManager.waterLevel)
+            {
+                impassable = true;
+            }
             Refresh();
         }
     }

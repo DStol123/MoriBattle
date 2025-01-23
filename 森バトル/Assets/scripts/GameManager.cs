@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public int chopYield;
     public HexCell startingCell;
     public float waterLevel;
-    private GameObject water;
+    [SerializeField] private GameObject water;
 
 
     public float seedX;

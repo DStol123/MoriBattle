@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 2b824ef253e8e81409fe2068d9faa27c, type: 3}
+  m_Texture: {fileID: 2800000, guid: c020b0df7d209c64f9e3f9e27e5232bb, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -340,6 +340,7 @@ GameObject:
   - component: {fileID: 6212293947275518531}
   - component: {fileID: 8111061243522659010}
   - component: {fileID: 2137395845540728104}
+  - component: {fileID: 8588425712536357689}
   m_Layer: 0
   m_Name: Engineers
   m_TagString: Untagged
@@ -490,6 +491,18 @@ MonoBehaviour:
   owner: {fileID: 0}
   cells: []
   startingCell: {fileID: 0}
+--- !u!114 &8588425712536357689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927786367433936196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79ce96b748c3f6428dfd37108a2fcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &601196325442977044
 PrefabInstance:
   m_ObjectHideFlags: 0
