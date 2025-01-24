@@ -82,13 +82,13 @@ public class CameraControl : MonoBehaviour
         {
             moveDirection += stabilizer.transform.right;
         }
+        target.transform.position += moveDirection * moveSpeed * boostFactor * targetOffset.magnitude * zoomSpeedFactor;
         targetCell = hexGrid.GetCell(target.transform.position);
         if(targetCell != null)
         {
             float cellHeight = targetCell.gameObject.transform.position.y;
             target.transform.position = Vector3.Lerp(target.transform.position, new Vector3(target.transform.position.x, cellHeight, target.transform.position.z), 0.01f * Mathf.Abs(cellHeight - target.transform.position.y));
-        }
-        target.transform.position += moveDirection * moveSpeed * boostFactor * targetOffset.magnitude * zoomSpeedFactor;
+        }  
     }
     // Camera will look around the empty target
     void CameraRotation()
@@ -134,9 +134,10 @@ public class CameraControl : MonoBehaviour
         if(targetTransform == this.transform)
         {
             targetCell = hexGrid.GetCell(this.transform.position);
-            float cellHeight = targetCell.gameObject.transform.position.y + 10f;
+            
             if (targetCell != null)
             {
+                float cellHeight = targetCell.gameObject.transform.position.y + 10f;
                 Debug.Log(cellHeight);
                 position.y = Mathf.Clamp(position.y, cellHeight, maxY);
             }

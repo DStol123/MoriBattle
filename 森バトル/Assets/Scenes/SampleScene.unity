@@ -1845,7 +1845,7 @@ MonoBehaviour:
   heightMovementPenalty: 1.5
   chopYield: 20
   startingCell: {fileID: 1660400813}
-  waterLevel: -50
+  waterLevel: -45
   water: {fileID: 764452213}
   seedX: 0
   seedY: 0
@@ -6423,7 +6423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1806670774977713293, guid: 7db4339c31bd39747a5e92b2a0c3195c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.684972
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 1806670774977713293, guid: 7db4339c31bd39747a5e92b2a0c3195c, type: 3}
       propertyPath: m_LocalScale.z
@@ -6435,7 +6435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1806670774977713293, guid: 7db4339c31bd39747a5e92b2a0c3195c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -30.67
+      value: -26.2
       objectReference: {fileID: 0}
     - target: {fileID: 1806670774977713293, guid: 7db4339c31bd39747a5e92b2a0c3195c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6840,11 +6840,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6045609608286380076, guid: 178a51af93ef35b479e5b23fedaf2867, type: 3}
       propertyPath: m_LocalScale.y
-      value: 21.455025
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6045609608286380076, guid: 178a51af93ef35b479e5b23fedaf2867, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: -37.5
       objectReference: {fileID: 0}
     - target: {fileID: 8097967782048518014, guid: 178a51af93ef35b479e5b23fedaf2867, type: 3}
       propertyPath: m_CastShadows
@@ -7754,7 +7754,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1802538992
 MonoBehaviour:
   m_ObjectHideFlags: 0

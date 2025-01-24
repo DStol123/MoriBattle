@@ -63,7 +63,7 @@ public class HexCell : MonoBehaviour
                 color = stone;
             }
         }
-        fog.transform.position = new Vector3(fog.transform.position.x, 0f, fog.transform.position.z);
+        fog.transform.position = transform.position;
         Refresh();
     }
     int elevation = int.MinValue;
@@ -90,10 +90,10 @@ public class HexCell : MonoBehaviour
                 HexMetrics.elevationPerturbStrength) +
                 (
                 (HexMetrics.SampleNoise(alpha * 0.5f, HexMetrics.noiseScale) * 2f - 1f) *
-                HexMetrics.elevationPerturbStrength * 3f) +
+                HexMetrics.elevationPerturbStrength * 1.5f) +
                 (
                 (HexMetrics.SampleNoise(alpha * 0.25f, HexMetrics.noiseScale) * 2f - 1f) *
-                HexMetrics.elevationPerturbStrength * 5f)
+                HexMetrics.elevationPerturbStrength * 2f)
                 );
             transform.localPosition = position;
             Vector3 uiPosition = uiRect.localPosition;

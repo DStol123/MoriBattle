@@ -114,28 +114,28 @@ public class HexGrid : MonoBehaviour
         float forestAdder = Random.Range(0f, 1f);
         float rockAdder = Random.Range(0f, 1f);
 
-        if(ironAdder < gameManager.IronDensity && cell.occupyingResource == null)
+        if(ironAdder < gameManager.IronDensity && cell.occupyingResource == null && cell.gameObject.transform.position.y > gameManager.waterLevel)
         {
             ResourceBehavior iron = Instantiate(gameManager.ironPrefab);
             cell.occupyingResource = iron;
             iron.cell = cell;
             cell.rocky = true;
         }
-        if(copperAdder < gameManager.CopperDensity && cell.occupyingResource == null)
+        if(copperAdder < gameManager.CopperDensity && cell.occupyingResource == null && cell.gameObject.transform.position.y > gameManager.waterLevel)
         {
             ResourceBehavior copper = Instantiate(gameManager.copperPrefab);
             cell.occupyingResource = copper;
             copper.cell = cell;
             cell.rocky = true;
         }
-        if(rockAdder < gameManager.RockDensity && cell.occupyingResource == null)
+        if(rockAdder < gameManager.RockDensity && cell.occupyingResource == null && cell.gameObject.transform.position.y > gameManager.waterLevel)
         {
             ResourceBehavior stone = Instantiate(gameManager.stonePrefab);
             cell.occupyingResource = stone;
             stone.cell = cell;
             cell.rocky = true;
         }
-        if (forestAdder < gameManager.ForestDensity && cell.occupyingForest == null && cell.occupyingResource == null)
+        if (forestAdder < gameManager.ForestDensity && cell.occupyingForest == null && cell.occupyingResource == null && cell.gameObject.transform.position.y > gameManager.waterLevel)
         {
             ResourceBehavior forest = Instantiate(gameManager.forestPrefab);
             cell.occupyingForest = forest;
