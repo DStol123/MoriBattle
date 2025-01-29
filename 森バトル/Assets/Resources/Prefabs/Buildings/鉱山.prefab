@@ -100,8 +100,8 @@ MonoBehaviour:
   lateralOffset: 0
   resource: {fileID: 0}
   cell: {fileID: 0}
-  woodCost: 5
-  stoneCost: 3
+  woodCost: 6
+  stoneCost: 2
   copperCost: 0
   ironCost: 0
   fogOfWarManager: {fileID: 0}

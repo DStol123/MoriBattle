@@ -519,7 +519,7 @@ MonoBehaviour:
   woodCost: 100
   stoneCost: 50
   copperCost: 20
-  ironCost: 0
+  ironCost: 10
   sightRange: 0
   fogOfWarManager: {fileID: 3916639370079071792}
 --- !u!114 &3916639370079071792
@@ -538,6 +538,8 @@ MonoBehaviour:
   currentCell: {fileID: 0}
   sightRange: 6
   owner: {fileID: 0}
+  cells: []
+  startingCell: {fileID: 0}
 --- !u!1 &7563592932592417582
 GameObject:
   m_ObjectHideFlags: 0

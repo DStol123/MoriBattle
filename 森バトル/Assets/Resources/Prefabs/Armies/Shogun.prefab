@@ -440,7 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   currentCell: {fileID: 0}
-  sightRange: 4
+  sightRange: 5
   owner: {fileID: 0}
   cells: []
   startingCell: {fileID: 0}
