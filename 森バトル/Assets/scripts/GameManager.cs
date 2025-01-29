@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerBehavior[] players;
+    private int alivePlayers;
     [SerializeField]
     private int turnCounter = 1;
     [SerializeField]
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        alivePlayers = players.Length;
         water.transform.position = new Vector3(0f, waterLevel, 0f);
     }
     public PlayerBehavior[] Players
@@ -96,6 +98,10 @@ public class GameManager : MonoBehaviour
         {
             turnCounter++;
         }
+    }
+    public void EndGame()
+    {
+
     }
     public float IronDensity
     {
@@ -144,5 +150,10 @@ public class GameManager : MonoBehaviour
     public float HeightMovementPenalty
     {
         get {return heightMovementPenalty; }
+    }
+    public int AlivePlayers
+    {
+        get { return alivePlayers; }
+        set { alivePlayers = value; }
     }
 }

@@ -553,6 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1149030534038447933}
+  leader: 0
   thisGameObject: {fileID: 7107864278807605260}
   movement: {fileID: 8484292563956109687}
   gameManager: {fileID: 0}
@@ -567,10 +568,10 @@ MonoBehaviour:
   currentHp: 30
   baseAttackDamage: 10
   baseDefenceDamage: 10
-  forestAttackPenalty: 1
-  heightAttackPenalty: 1
-  forestDefenceBoost: 1
-  heightDefenceBoost: 1
+  forestAttackPenalty: 1.2
+  heightAttackPenalty: 1.5
+  forestDefenceBoost: 1.3
+  heightDefenceBoost: 1.5
   morale: 0
   maxMorale: 0
   discipline: 0

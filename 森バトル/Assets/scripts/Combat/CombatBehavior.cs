@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class CombatBehavior : MonoBehaviour
 {
     public Image healthBar;
+    [SerializeField] private bool leader;
 
     [SerializeField] private GameObject thisGameObject;
     [SerializeField] private MovementBehavior movement;
@@ -41,14 +42,30 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField] private float armor;
     [SerializeField] private float maxArmor;
 
-    public float CalculateDamage(CombatBehavior target, float baseDamage)
+    public float CalculateAttackDamage(CombatBehavior target, float baseDamage)
     {
         if(target.movement.currentCell.occupyingForest != null)
         {
             baseDamage /= target.forestDefenceBoost * forestAttackPenalty;
         }
-        baseDamage *= (1 + (target.movement.currentCell.Elevation - movement.currentCell.Elevation))
-            / (target.heightDefenceBoost * heightAttackPenalty);
+        float elevationDifference = target.movement.currentCell.Elevation - movement.currentCell.Elevation;
+        if(elevationDifference > 0)
+        {
+            baseDamage /= (1 + elevationDifference) / (target.heightDefenceBoost * heightAttackPenalty);
+        }
+        return baseDamage;
+    }
+    public float CalculateDefenceDamage(CombatBehavior target, float baseDamage)
+    {
+        if(movement.currentCell.occupyingForest != null)
+        {
+            baseDamage *= forestDefenceBoost * target.forestAttackPenalty;
+        }
+        float elevationDifference = movement.currentCell.Elevation - target.movement.currentCell.Elevation;
+        if(elevationDifference > 0)
+        {
+            baseDamage *= (1 + elevationDifference) * heightDefenceBoost * target.heightAttackPenalty;
+        }
         return baseDamage;
     }
     public void TakeDamage(float amount)
@@ -63,6 +80,18 @@ public class CombatBehavior : MonoBehaviour
             Destroy(thisGameObject);
         }
     }
+    private void OnDestroy()
+    {
+        if(leader)
+        {
+            owner.IsAlive = false;
+            gameManager.AlivePlayers--;
+            if(gameManager.AlivePlayers == 1)
+            {
+                gameManager.EndGame();
+            }
+        }
+    }
     public void Attack(float damage, CombatBehavior unit)
     {
         HexCell targetCell = unit.movement.currentCell;
@@ -71,9 +100,9 @@ public class CombatBehavior : MonoBehaviour
             damage = Random.Range(damage - damage * 0.1f, damage + damage * 0.1f);
             float returnDamage = unit.BaseDefenceDamage;
             returnDamage = Random.Range(returnDamage - returnDamage * 0.1f, returnDamage + returnDamage * 0.1f);
-            unit.TakeDamage(CalculateDamage(unit, damage));
-            TakeDamage(returnDamage);
-            if (unit.currentHp <= 0f)
+            unit.TakeDamage(CalculateAttackDamage(unit, damage));
+            TakeDamage(CalculateDefenceDamage(this, unit.baseDefenceDamage));
+            if (unit.currentHp <= 0f && !targetCell.impassable)
             {
                 movement.MoveToCell(targetCell);
             }
@@ -139,6 +168,10 @@ public class CombatBehavior : MonoBehaviour
     {
         get { return gameManager; }
         set { gameManager = value; }
+    }
+    public bool Leader
+    {
+        get { return leader; }
     }
 }
 

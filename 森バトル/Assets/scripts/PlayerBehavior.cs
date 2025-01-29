@@ -367,7 +367,6 @@ public class PlayerBehavior : MonoBehaviour
         get { return resourceIncomes; }
         set { resourceIncomes = value; }
     }
-
     public bool IsAlive
     {
         get { return isAlive; }

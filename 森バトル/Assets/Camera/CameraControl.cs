@@ -21,6 +21,7 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private HexGrid hexGrid;
     private HexCell targetCell;
     private HexCell cameraCell;
+    [SerializeField] PlayerBehavior owner;
 
     private Camera cam;
     private GameObject target; // Empty Object
@@ -34,16 +35,19 @@ public class CameraControl : MonoBehaviour
     }
     void Update()
     {
-        StabilizeCamera();
-        GetBoost();
-        CameraRotation();
-        TargetMovement();
-        CameraZoom();
-        ApplyPositionLimits(target.transform);
-        FollowTarget();
-        ApplyPositionLimits(this.transform);
+        if(owner.IsTurn)
+        {
+            StabilizeCamera();
+            GetBoost();
+            CameraRotation();
+            TargetMovement();
+            CameraZoom();
+            ApplyPositionLimits(target.transform);
+            FollowTarget();
+            ApplyPositionLimits(this.transform);
 
-        targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
+            targetOffset = Vector3.ClampMagnitude(targetOffset, maxZoomDistance);
+        }
     }
     private void StabilizeCamera()
     {
