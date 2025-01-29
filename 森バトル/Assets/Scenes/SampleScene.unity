@@ -1105,7 +1105,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239508689}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.25}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1118,7 +1118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -9.78, y: 15}
+  m_AnchoredPosition: {x: -8.41, y: 15}
   m_SizeDelta: {x: 1579, y: 760}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &239508691
@@ -3062,6 +3062,7 @@ MonoBehaviour:
   copperCost: 0
   ironCost: 0
   sightRange: 0
+  UI: {fileID: 1949086605}
   currentCell: {fileID: 0}
 --- !u!4 &640776660
 Transform:
@@ -4124,6 +4125,7 @@ MonoBehaviour:
   copperCost: 0
   ironCost: 0
   sightRange: 0
+  UI: {fileID: 1744648836}
   currentCell: {fileID: 0}
 --- !u!114 &836906842
 MonoBehaviour:
@@ -4834,12 +4836,17 @@ MonoBehaviour:
   - {fileID: 28348347770029326, guid: 1e6f494c84fefaa45ab79b1bb21cc295, type: 3}
   - {fileID: 5458606483173116138, guid: 562a0f9389e1d5b4aba51e8f202f33c5, type: 3}
   - {fileID: 8944455798993363734, guid: a9482bb20432e2f4a9782facfb6124b3, type: 3}
-  resourcePools: 140000000a0000000000000000000000
+  resourcePools: 280000001e0000001400000000000000
   resourceIncomes: 00000000000000000000000000000000
   resourceCounters: {fileID: 1957952817}
   isAlive: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   userName: 
+  canvases:
+  - {fileID: 504199643}
+  - {fileID: 2029653944}
+  - {fileID: 782777044}
+  - {fileID: 1802538991}
   allOwnedMovementBehaviors: []
   allFogOfWarManagers: []
   playerCamera: {fileID: 963194229}
@@ -5555,6 +5562,7 @@ MonoBehaviour:
   copperCost: 0
   ironCost: 0
   sightRange: 0
+  UI: {fileID: 239508689}
   currentCell: {fileID: 0}
 --- !u!114 &1125938452
 MonoBehaviour:
@@ -9735,6 +9743,14 @@ PrefabInstance:
     - target: {fileID: 3305832870795228896, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665444575624676499, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665444575624676499, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 4530559433192323446, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
       propertyPath: owner

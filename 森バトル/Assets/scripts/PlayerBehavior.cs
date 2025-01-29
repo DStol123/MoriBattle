@@ -16,6 +16,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private Color color;
     [SerializeField] private string userName;
     int[] previousResourcePools;
+    public List<GameObject> canvases;
+    private bool UIdisabled;
 
     [SerializeField] public List<MovementBehavior> allOwnedMovementBehaviors;
     [SerializeField] public List<FogOfWarManager> allFogOfWarManagers;
@@ -55,6 +57,10 @@ public class PlayerBehavior : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Return) && selectedTrainingGrounds != null)
         {
             selectedTrainingGrounds.makeArmy(0);
+        }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleGUI();
         }
         previousResourcePools = resourcePools;
     }
@@ -335,6 +341,28 @@ public class PlayerBehavior : MonoBehaviour
         for(int i = 0; i < gameManager.hexGrid.cells.Length; i++)
         {
             gameManager.hexGrid.cells[i].fog.SetActive(false);
+        }
+    }
+    public void ToggleGUI()
+    {
+        if (UIdisabled)
+        {
+            UIdisabled = false;
+        }
+        else { UIdisabled = true; }
+        if(UIdisabled)
+        {
+            for (int i = 0; i < canvases.Count; i++)
+            {
+                canvases[i].SetActive(false);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < canvases.Count; i++)
+            {
+                canvases[i].SetActive(true);
+            }
         }
     }
     public Color Color

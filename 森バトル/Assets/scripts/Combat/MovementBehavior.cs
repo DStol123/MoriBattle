@@ -29,6 +29,7 @@ public class MovementBehavior : MonoBehaviour
     [SerializeField] private int ironCost;
 
     [SerializeField] private int sightRange;
+    public GameObject UI;
 
     public HexCell currentCell;
 
@@ -59,9 +60,11 @@ public class MovementBehavior : MonoBehaviour
         fogOfWarManager.currentCell = currentCell;
         fogOfWarManager.gameManager = gameManager;
         fogOfWarManager.ClearFogOfWar();
+        owner.canvases.Add(UI);
     }
     private void OnDestroy()
     {
+        owner.canvases.Remove(UI);
         owner.allOwnedMovementBehaviors.Remove(this);
     }
     // Update is called once per frame

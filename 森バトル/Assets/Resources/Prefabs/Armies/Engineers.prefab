@@ -399,6 +399,7 @@ MonoBehaviour:
   copperCost: 10
   ironCost: 0
   sightRange: 0
+  UI: {fileID: 4645835347623283892}
   currentCell: {fileID: 0}
 --- !u!114 &7893193751465235313
 MonoBehaviour:
@@ -413,6 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
+  leader: 0
   thisGameObject: {fileID: 7927786367433936196}
   movement: {fileID: 5122360644006022614}
   gameManager: {fileID: 0}

@@ -425,6 +425,7 @@ MonoBehaviour:
   copperCost: 0
   ironCost: 0
   sightRange: 0
+  UI: {fileID: 8967283032475793302}
   currentCell: {fileID: 0}
 --- !u!114 &654803087932419306
 MonoBehaviour:
