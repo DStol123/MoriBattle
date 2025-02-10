@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TrainingGroundsBehavior : MonoBehaviour
@@ -44,6 +45,7 @@ public class TrainingGroundsBehavior : MonoBehaviour
         }
         building = new Building(bName, description, owner, cell);
         cell.occupyingBuilding = building;
+        fogOfWarManager.ClearFogOfWar();
     }
 
     // Update is called once per frame
@@ -90,7 +92,12 @@ public class TrainingGroundsBehavior : MonoBehaviour
 
     private HexCell InitialCell()
     {
-        Vector3 initialPosition = new Vector3(HexMetrics.outerRadius * gameManager.hexGrid.cellCountX / 8.5f, 0f, HexMetrics.outerRadius * gameManager.hexGrid.cellCountZ / 1.5f);
+        float sector = Array.IndexOf(gameManager.Players, owner) * 10f - 9f;
+        if (owner == null)
+        {
+            sector = 9f;
+        }
+        Vector3 initialPosition = new Vector3(HexMetrics.outerRadius * gameManager.hexGrid.cellCountX / sector, 0f, HexMetrics.outerRadius * gameManager.hexGrid.cellCountZ / 2f);
         HexCell initialCell = gameManager.hexGrid.GetCell(initialPosition);
         if (initialCell.rocky)
         {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -89,7 +90,7 @@ public class MovementBehavior : MonoBehaviour
     }
     private HexCell InitialCell()
     {
-        float sector = 10f;
+        float sector = Array.IndexOf(gameManager.Players, owner) * 10f - 9f;
         if (owner == null)
         {
             sector = 9f;
