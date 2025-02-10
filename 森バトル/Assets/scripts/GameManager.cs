@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     private PlayerBehavior[] players;
     private int alivePlayers;
     [SerializeField]
+    private PlayerBehavior activePlayer;
+    [SerializeField]
     private int turnCounter = 1;
     [SerializeField]
     private float ironDensity;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         players[0].IsTurn = true;
+        SwitchCamera();
         activePlayer = players[0];
     }
     private void Start()
@@ -60,8 +63,6 @@ public class GameManager : MonoBehaviour
     {
         get { return players; }
     }
-    private PlayerBehavior activePlayer;
-
     public PlayerBehavior ActivePlayer
     {
         get{ return activePlayer; }
@@ -70,22 +71,28 @@ public class GameManager : MonoBehaviour
     public void rollToNextPlayer()
     {
         //Passes the turn to the next player in line
+        Debug.Log("Rolling to next player. Current Active Player: " + activePlayer);
+        Debug.Log("Adding Resource to Pools");
         activePlayer.AddResources();
+        Debug.Log("Resting armies");
         activePlayer.RefreshArmies();
         if(players.Length != 1)
         {
+            Debug.Log("Number of players is more than 1");
             if (activePlayer == players[players.Length - 1])
             {
+                Debug.Log("Active player is last");
                 activePlayer.IsTurn = false;
                 activePlayer = players[0];
                 activePlayer.IsTurn = true;
             }
             else
             {
-                for (int i = 0; i > players.Length; i++)
+                for (int i = 0; i < players.Length; i++)
                 {
                     if (players[i] == activePlayer)
                     {
+                        Debug.Log("Player is " + i + " in list of players");
                         activePlayer.IsTurn = false;
                         activePlayer = players[i + 1];
                         activePlayer.IsTurn = true;
@@ -97,6 +104,23 @@ public class GameManager : MonoBehaviour
         if(activePlayer == players[0])
         {
             turnCounter++;
+        }
+        Debug.Log("New Active Player: " + activePlayer);
+        SwitchCamera();
+        Debug.Log("Camera Switched");
+    }
+    public void SwitchCamera()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].IsTurn)
+            {
+                players[i].gameCamera.SetActive(true);
+            }
+            else
+            {
+                players[i].gameCamera.SetActive(false);
+            }
         }
     }
     public void EndGame()

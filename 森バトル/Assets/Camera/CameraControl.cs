@@ -142,7 +142,6 @@ public class CameraControl : MonoBehaviour
             if (targetCell != null)
             {
                 float cellHeight = targetCell.gameObject.transform.position.y + 10f;
-                Debug.Log(cellHeight);
                 position.y = Mathf.Clamp(position.y, cellHeight, maxY);
             }
         }

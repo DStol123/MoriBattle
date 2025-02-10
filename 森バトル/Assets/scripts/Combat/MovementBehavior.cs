@@ -11,6 +11,8 @@ public class MovementBehavior : MonoBehaviour
     public FogOfWarManager fogOfWarManager;
     [SerializeField] private EngineerBehavior engineerBehavior;
 
+    public UnitUI unitUI;
+
     [SerializeField] private bool isStartingArmy;
 
     [SerializeField] private float maxMovementPoints;
@@ -61,6 +63,7 @@ public class MovementBehavior : MonoBehaviour
         fogOfWarManager.gameManager = gameManager;
         fogOfWarManager.ClearFogOfWar();
         owner.canvases.Add(UI);
+        unitUI.gameManager = gameManager;
     }
     private void OnDestroy()
     {

@@ -6,7 +6,7 @@ using TMPro;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    private bool isTurn;
+    [SerializeField] private bool isTurn;
     [SerializeField] private GameManager gameManager;
     [SerializeField] public ResourceBehavior[] resourceTypes;
     [SerializeField] private int[] resourcePools;
@@ -18,6 +18,7 @@ public class PlayerBehavior : MonoBehaviour
     int[] previousResourcePools;
     public List<GameObject> canvases;
     private bool UIdisabled;
+    public GameObject gameCamera;
 
     [SerializeField] public List<MovementBehavior> allOwnedMovementBehaviors;
     [SerializeField] public List<FogOfWarManager> allFogOfWarManagers;
