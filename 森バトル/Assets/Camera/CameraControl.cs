@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private GameObject stabilizer;
     [SerializeField] private float moveSpeed;    // Horizontal Moving Speed of Camera
     [SerializeField] private float rotationSpeed;  // Vertical Moving Speed of Camera
@@ -35,7 +36,7 @@ public class CameraControl : MonoBehaviour
     }
     void Update()
     {
-        if(owner.IsTurn)
+        if(owner.IsTurn && !gameManager.paused)
         {
             StabilizeCamera();
             GetBoost();

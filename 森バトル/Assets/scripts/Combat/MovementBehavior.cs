@@ -11,6 +11,7 @@ public class MovementBehavior : MonoBehaviour
     [SerializeField] private PlayerBehavior owner;
     public FogOfWarManager fogOfWarManager;
     [SerializeField] private EngineerBehavior engineerBehavior;
+    public AudioSource audioSource;
 
     public UnitUI unitUI;
 
@@ -83,7 +84,6 @@ public class MovementBehavior : MonoBehaviour
             owner.IsTurn && ChangeCell() != null 
             )
         {
-
             HexCell cell2 = ChangeCell();
             MoveToCell(cell2);
         }
@@ -188,6 +188,7 @@ public class MovementBehavior : MonoBehaviour
             fogOfWarManager.currentCell = currentCell;
             owner.ClearFogOfWar();
             cell.occupyingArmy = this;
+            PlayFootSteps();
         }
     }
     public void RotateArmy(HexCell hexCell)
@@ -216,6 +217,14 @@ public class MovementBehavior : MonoBehaviour
             Debug.Log("No points to move the Characters");
             return false;
         }
+    }
+    public void PlayFootSteps()
+    {
+        audioSource.volume = gameManager.gameSound.seVolume;
+        audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        int seIndex = UnityEngine.Random.Range(9, 10);
+        audioSource.clip = gameManager.gameSound.soundEffects[seIndex];
+        audioSource.Play();
     }
     public float MaxMovementPoints
     {

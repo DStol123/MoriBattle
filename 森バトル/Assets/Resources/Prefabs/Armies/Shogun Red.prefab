@@ -413,6 +413,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   fogOfWarManager: {fileID: 654803087932419306}
   engineerBehavior: {fileID: 0}
+  audioSource: {fileID: -7902038378226197513}
   unitUI: {fileID: 0}
   isStartingArmy: 1
   maxMovementPoints: 3
@@ -738,7 +739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79ce96b748c3f6428dfd37108a2fcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 0}
   gameManager: {fileID: 0}
 --- !u!1001 &3625437142088832458
 PrefabInstance:

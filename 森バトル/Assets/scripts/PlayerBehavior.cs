@@ -22,7 +22,7 @@ public class PlayerBehavior : MonoBehaviour
 
     [SerializeField] public List<MovementBehavior> allOwnedMovementBehaviors;
     [SerializeField] public List<FogOfWarManager> allFogOfWarManagers;
-    private CombatBehavior selectedArmy;
+    [SerializeField] private CombatBehavior selectedArmy;
     private TrainingGroundsBehavior selectedTrainingGrounds;
     public CameraControl playerCamera;
     private GameObject[] selectedObjects;
@@ -49,19 +49,22 @@ public class PlayerBehavior : MonoBehaviour
     }
     // Update is called once per frame
     void Update()
-    {  
-        if(resourcePools != previousResourcePools)
+    {
+        if(!gameManager.paused)
         {
-            Debug.Log($"Resource Pools updated: Wood: {resourcePools[0]} Stone: {resourcePools[1]} Copper: {resourcePools[2]} Iron: {resourcePools[3]}");
-        }
-        HandleInput();
-        if(Input.GetKeyDown(KeyCode.Return) && selectedTrainingGrounds != null)
-        {
-            selectedTrainingGrounds.makeArmy(0);
-        }
-        if(Input.GetKeyDown(KeyCode.Tab))
-        {
-            ToggleGUI();
+            if (resourcePools != previousResourcePools)
+            {
+                Debug.Log($"Resource Pools updated: Wood: {resourcePools[0]} Stone: {resourcePools[1]} Copper: {resourcePools[2]} Iron: {resourcePools[3]}");
+            }
+            HandleInput();
+            if (Input.GetKeyDown(KeyCode.Return) && selectedTrainingGrounds != null)
+            {
+                selectedTrainingGrounds.makeArmy(0);
+            }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                ToggleGUI();
+            }
         }
         previousResourcePools = resourcePools;
     }
@@ -210,6 +213,8 @@ public class PlayerBehavior : MonoBehaviour
     }
     public void TurnOnMoveMode()
     {
+        Debug.Log("Is turn: " + isTurn);
+        Debug.Log("Selected Army: " + selectedArmy);
         if(isTurn)
         {
             selectedArmy.AttackMode = false;

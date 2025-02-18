@@ -107,6 +107,7 @@ public class CombatBehavior : MonoBehaviour
                 movement.MoveToCell(targetCell);
             }
             movement.UseMovementPoints(movement.CurrentMovementPoints);
+            PlayAttackingNoise();
         }
     }
     public void Attack(ResourceExtractionBehavior target)
@@ -114,6 +115,7 @@ public class CombatBehavior : MonoBehaviour
         if(target.Owner != owner)
         {
             Destroy(target.gameObject);
+            PlayAttackingNoise();
         }
     }
     public void Attack(TrainingGroundsBehavior target)
@@ -121,7 +123,15 @@ public class CombatBehavior : MonoBehaviour
         if (target.Owner != owner)
         {
             Destroy(target.gameObject);
+            PlayAttackingNoise();
         }
+    }
+    private void PlayAttackingNoise()
+    {
+        movement.audioSource.pitch = Random.Range(0.9f, 1.05f);
+        movement.audioSource.volume = movement.GameManager.gameSound.seVolume;
+        movement.audioSource.clip = movement.GameManager.gameSound.soundEffects[Random.Range(14, 16)];
+        movement.audioSource.Play();
     }
     public void FocusOnMe(PlayerBehavior player)
     {

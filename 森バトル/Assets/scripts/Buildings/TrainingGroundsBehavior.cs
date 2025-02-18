@@ -14,6 +14,8 @@ public class TrainingGroundsBehavior : MonoBehaviour
     [SerializeField] private float lateralOffset;
     [SerializeField] private float forwardOffset;
 
+    public AudioSource audioSource;
+
     [SerializeField] private int woodCost;
     [SerializeField] private int stoneCost;
     [SerializeField] private int copperCost;
@@ -86,6 +88,7 @@ public class TrainingGroundsBehavior : MonoBehaviour
             cell.occupyingArmy = combatBehavior.Movement;
             combatBehavior.Movement.MoveToCell();
             Debug.Log("Army Placed at " + cell.coordinates);
+            PlayConstructionSound();
         }
         Debug.Log("Army already at location");
     }
@@ -112,7 +115,13 @@ public class TrainingGroundsBehavior : MonoBehaviour
         }
         return initialCell;
     }
-
+    private void PlayConstructionSound()
+    {
+        audioSource.clip = gameManager.gameSound.soundEffects[UnityEngine.Random.Range(0, 1)];
+        audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        audioSource.volume = gameManager.gameSound.seVolume;
+        audioSource.Play();
+    }
     public void Place()
     {
         transform.position = new Vector3(cell.Position.x, cell.Position.y + heightOffset, cell.Position.z);

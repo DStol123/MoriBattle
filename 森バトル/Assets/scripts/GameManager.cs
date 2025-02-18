@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public bool paused;
+
     [SerializeField]
     private PlayerBehavior[] players;
     private int alivePlayers;
@@ -34,7 +36,9 @@ public class GameManager : MonoBehaviour
     public int chopYield;
     public HexCell startingCell;
     public float waterLevel;
+    public GameSoundManager gameSound;
     [SerializeField] private GameObject water;
+    [SerializeField] private GameObject pauseMenu;
 
 
     public float seedX;
@@ -50,15 +54,47 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        players[0].IsTurn = true;
-        SwitchCamera();
-        activePlayer = players[0];
+        
     }
     private void Start()
     {
+        players[0].IsTurn = true;
+        SwitchCamera();
+        activePlayer = players[0];
         alivePlayers = players.Length;
         water.transform.position = new Vector3(0f, waterLevel, 0f);
         activePlayer.ClearFogOfWar();
+        pauseMenu.SetActive(false);
+        paused = false;
+    }
+    private void Update()
+    {
+        if(activePlayer != null)
+        {
+            transform.position = activePlayer.transform.position;
+            if(!activePlayer.IsTurn)
+            {
+                activePlayer.IsTurn = true;
+                Debug.Log("Set Active Player's Turn Status");
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(paused)
+            {
+                pauseMenu.SetActive(false);
+                paused = false;
+            }
+            else
+            {
+                pauseMenu.SetActive(true);
+                paused = true;
+            }
+        }
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
     public PlayerBehavior[] Players
     {
@@ -107,6 +143,8 @@ public class GameManager : MonoBehaviour
             turnCounter++;
         }
         Debug.Log("New Active Player: " + activePlayer);
+        activePlayer.IsTurn = true;
+        activePlayer.ClearFogOfWar();
         SwitchCamera();
         Debug.Log("Camera Switched");
     }

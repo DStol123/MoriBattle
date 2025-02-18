@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 4992725247011218073}
   - component: {fileID: 2283389616651866479}
   - component: {fileID: 2328903846831947148}
+  - component: {fileID: 562985565966687738}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -251,6 +252,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &562985565966687738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4645835347623283892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79ce96b748c3f6428dfd37108a2fcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
 --- !u!1 &4929107477802695453
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +354,6 @@ GameObject:
   - component: {fileID: 6212293947275518531}
   - component: {fileID: 8111061243522659010}
   - component: {fileID: 2137395845540728104}
-  - component: {fileID: 8588425712536357689}
   - component: {fileID: 8425815867672166795}
   m_Layer: 0
   m_Name: Engineers Red
@@ -387,6 +400,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   fogOfWarManager: {fileID: 2137395845540728104}
   engineerBehavior: {fileID: 6212293947275518531}
+  audioSource: {fileID: 8425815867672166795}
   unitUI: {fileID: 0}
   isStartingArmy: 0
   maxMovementPoints: 3
@@ -495,20 +509,6 @@ MonoBehaviour:
   owner: {fileID: 0}
   cells: []
   startingCell: {fileID: 0}
---- !u!114 &8588425712536357689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7927786367433936196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c79ce96b748c3f6428dfd37108a2fcf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movement: {fileID: 0}
-  gameManager: {fileID: 0}
 --- !u!82 &8425815867672166795
 AudioSource:
   m_ObjectHideFlags: 0

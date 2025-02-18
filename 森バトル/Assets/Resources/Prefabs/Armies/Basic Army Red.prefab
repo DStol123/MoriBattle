@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 8972661929989832097}
   - component: {fileID: 3683755923652800121}
   - component: {fileID: 1342279654156668987}
+  - component: {fileID: 403948868965050371}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -181,6 +182,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &403948868965050371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254989657325167454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79ce96b748c3f6428dfd37108a2fcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
 --- !u!1 &1727768673590061460
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +505,6 @@ GameObject:
   - component: {fileID: 3895410058522429087}
   - component: {fileID: 8484292563956109687}
   - component: {fileID: -9152809347888479965}
-  - component: {fileID: 1320362283963073111}
   - component: {fileID: -6478996744767955063}
   m_Layer: 0
   m_Name: Basic Army Red
@@ -597,6 +610,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   fogOfWarManager: {fileID: -9152809347888479965}
   engineerBehavior: {fileID: 0}
+  audioSource: {fileID: -6478996744767955063}
   unitUI: {fileID: 0}
   isStartingArmy: 0
   maxMovementPoints: 3
@@ -631,20 +645,6 @@ MonoBehaviour:
   owner: {fileID: 0}
   cells: []
   startingCell: {fileID: 0}
---- !u!114 &1320362283963073111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7107864278807605260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c79ce96b748c3f6428dfd37108a2fcf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movement: {fileID: 0}
-  gameManager: {fileID: 0}
 --- !u!82 &-6478996744767955063
 AudioSource:
   m_ObjectHideFlags: 0
