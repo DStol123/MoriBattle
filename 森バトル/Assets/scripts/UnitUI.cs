@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class UnitUI : MonoBehaviour
 {
-    public MovementBehavior movement;
     public GameManager gameManager;
     private GameObject mainCamera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -10,7 +9,7 @@ public class UnitUI : MonoBehaviour
     {
         if(gameManager == null)
         {
-            gameManager = movement.GameManager;
+            gameManager = FindFirstObjectByType<GameManager>();
         }
         mainCamera = gameManager.ActivePlayer.gameCamera;
     }
