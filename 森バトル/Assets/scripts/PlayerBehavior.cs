@@ -170,6 +170,20 @@ public class PlayerBehavior : MonoBehaviour
                         selectedArmy.Attack(selectedArmy.BaseAttackDamage, target);
                         selectedArmy.AttackMode = false;
                     }
+                    if(hit.collider.GetComponent<TrainingGroundsBehavior>() != null
+                        && hit.collider.GetComponent<TrainingGroundsBehavior>()
+                        .cell.CheckIfNeighbor(selectedArmy.Movement.currentCell))
+                    {
+                        selectedArmy.Attack(hit.collider.GetComponent<TrainingGroundsBehavior>());
+                        selectedArmy.AttackMode = false;
+                    }
+                    if (hit.collider.GetComponent<ResourceExtractionBehavior>() != null
+                        && hit.collider.GetComponent<ResourceExtractionBehavior>()
+                        .cell.CheckIfNeighbor(selectedArmy.Movement.currentCell))
+                    {
+                        selectedArmy.Attack(hit.collider.GetComponent<ResourceExtractionBehavior>());
+                        selectedArmy.AttackMode = false;
+                    }
                 }
             }
         }

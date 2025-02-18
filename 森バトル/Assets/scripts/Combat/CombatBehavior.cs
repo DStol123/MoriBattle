@@ -109,6 +109,20 @@ public class CombatBehavior : MonoBehaviour
             movement.UseMovementPoints(movement.CurrentMovementPoints);
         }
     }
+    public void Attack(ResourceExtractionBehavior target)
+    {
+        if(target.Owner != owner)
+        {
+            Destroy(target.gameObject);
+        }
+    }
+    public void Attack(TrainingGroundsBehavior target)
+    {
+        if (target.Owner != owner)
+        {
+            Destroy(target.gameObject);
+        }
+    }
     public void FocusOnMe(PlayerBehavior player)
     {
         player.playerCamera.Target.transform.position = this.transform.position;

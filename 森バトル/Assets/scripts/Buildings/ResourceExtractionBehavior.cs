@@ -11,7 +11,7 @@ public class ResourceExtractionBehavior : MonoBehaviour
     [SerializeField] private float lateralOffset;
     private Building building;
     [SerializeField] ResourceBehavior resource;
-    [SerializeField] HexCell cell;
+    public HexCell cell;
     [SerializeField] int woodCost;
     [SerializeField] int stoneCost;
     [SerializeField] int copperCost;

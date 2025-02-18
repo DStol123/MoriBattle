@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     {
         alivePlayers = players.Length;
         water.transform.position = new Vector3(0f, waterLevel, 0f);
+        activePlayer.ClearFogOfWar();
     }
     public PlayerBehavior[] Players
     {
