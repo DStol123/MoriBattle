@@ -90,7 +90,7 @@ public class MovementBehavior : MonoBehaviour
     }
     private HexCell InitialCell()
     {
-        float sector = Array.IndexOf(gameManager.Players, owner) * 10f - 9f;
+        float sector = Array.IndexOf(gameManager.Players, owner) * 30f - 20f;
         if (owner == null)
         {
             sector = 9f;

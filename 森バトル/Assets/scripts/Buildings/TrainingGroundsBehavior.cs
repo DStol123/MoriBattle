@@ -7,7 +7,7 @@ public class TrainingGroundsBehavior : MonoBehaviour
     [SerializeField] private string description;
     [SerializeField] private PlayerBehavior owner;
     private Building building;
-    [SerializeField] private HexCell cell;
+    public HexCell cell;
     [SerializeField] private bool isStartingBuilding;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private float heightOffset;
@@ -92,7 +92,7 @@ public class TrainingGroundsBehavior : MonoBehaviour
 
     private HexCell InitialCell()
     {
-        float sector = Array.IndexOf(gameManager.Players, owner) * 10f - 9f;
+        float sector = Array.IndexOf(gameManager.Players, owner) * 30f - 17f;
         if (owner == null)
         {
             sector = 9f;
