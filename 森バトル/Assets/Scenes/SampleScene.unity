@@ -1589,7 +1589,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1428604240}
+      - m_Target: {fileID: 963194230}
         m_TargetAssemblyTypeName: PlayerBehavior, Assembly-CSharp
         m_MethodName: TrainArmy
         m_Mode: 3
@@ -6636,7 +6636,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194230}
+      - m_Target: {fileID: 1428604240}
         m_TargetAssemblyTypeName: PlayerBehavior, Assembly-CSharp
         m_MethodName: TrainArmy
         m_Mode: 3
@@ -8464,7 +8464,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1428604240}
+      - m_Target: {fileID: 963194230}
         m_TargetAssemblyTypeName: PlayerBehavior, Assembly-CSharp
         m_MethodName: TrainArmy
         m_Mode: 3
@@ -9217,7 +9217,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194230}
+      - m_Target: {fileID: 1428604240}
         m_TargetAssemblyTypeName: PlayerBehavior, Assembly-CSharp
         m_MethodName: TrainArmy
         m_Mode: 3
@@ -11006,7 +11006,7 @@ MonoBehaviour:
   userName: 
   canvases:
   - {fileID: 325887508}
-  - {fileID: 2029653944}
+  - {fileID: 1678334208}
   - {fileID: 782777044}
   - {fileID: 1802538991}
   gameCamera: {fileID: 1428604239}
