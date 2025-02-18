@@ -95,7 +95,7 @@ public class CombatBehavior : MonoBehaviour
     public void Attack(float damage, CombatBehavior unit)
     {
         HexCell targetCell = unit.movement.currentCell;
-        if (movement.CurrentMovementPoints >= movement.CalculatePointCost(targetCell))
+        if (movement.CurrentMovementPoints >= movement.CalculatePointCost(targetCell) && unit.Owner != owner)
         {
             damage = Random.Range(damage - damage * 0.1f, damage + damage * 0.1f);
             float returnDamage = unit.BaseDefenceDamage;
