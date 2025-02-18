@@ -37,15 +37,10 @@ public class MovementBehavior : MonoBehaviour
 
     public HexCell currentCell;
 
+    private bool initialized;
+
     void Start()
     {
-        if(!isStartingArmy)
-        {
-            owner.ResourcePools[0] -= woodCost;
-            owner.ResourcePools[1] -= stoneCost;
-            owner.ResourcePools[2] -= copperCost;
-            owner.ResourcePools[3] -= ironCost;
-        }
         owner.allOwnedMovementBehaviors.Add(this);
         Debug.Log(owner.allOwnedMovementBehaviors);
         if (isStartingArmy)
@@ -86,6 +81,15 @@ public class MovementBehavior : MonoBehaviour
         {
             HexCell cell2 = ChangeCell();
             MoveToCell(cell2);
+        }
+        if(!initialized && !isStartingArmy)
+        {
+            owner.ResourcePools[0] -= woodCost;
+            owner.ResourcePools[1] -= stoneCost;
+            owner.ResourcePools[2] -= copperCost;
+            owner.ResourcePools[3] -= ironCost;
+            owner.updateResourceCounters();
+            initialized = true;
         }
     }
     private HexCell InitialCell()

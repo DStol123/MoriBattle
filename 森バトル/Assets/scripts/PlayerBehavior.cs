@@ -68,6 +68,24 @@ public class PlayerBehavior : MonoBehaviour
         }
         previousResourcePools = resourcePools;
     }
+    public void turnOffUI()
+    {
+        unitUI.SetActive(false);
+        constructButton.SetActive(false);
+        trainingUI.SetActive(false);
+        constructionMenu.SetActive(false);
+        if(selectedArmy != null)
+        {
+            selectedArmy.Movement.MoveMode = false;
+            selectedArmy.AttackMode = false;
+            if (selectedArmy.GetComponent<EngineerBehavior>() != null)
+            {
+                selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
+            }
+        }
+        selectedArmy = null;
+        selectedTrainingGrounds = null;
+    }
     public void updateResourceCounters()
     {
         resourceCounters.text = "木材: " + resourcePools[0] + " +" + resourceIncomes[0] +
@@ -91,6 +109,7 @@ public class PlayerBehavior : MonoBehaviour
                 selectedTrainingGrounds = null;
             }
             selectedArmy = army;
+            constructionMenu.SetActive(false);
             selectedArmy.IsSelected = true;
         }
     }
@@ -259,7 +278,7 @@ public class PlayerBehavior : MonoBehaviour
             }
             selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
         }
-        constructionMenu.SetActive(false);
+        turnOffUI();
     }
     public void PlaceResourceExtraction()
     {
@@ -268,7 +287,7 @@ public class PlayerBehavior : MonoBehaviour
             selectedArmy.GetComponent<EngineerBehavior>().PlaceResourceExtractor();
             selectedArmy.GetComponent<EngineerBehavior>().PlaceMode = false;
         }
-        constructionMenu.SetActive(false);
+        turnOffUI();
     }
     public void Chop()
     {
@@ -276,7 +295,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             selectedArmy.GetComponent<EngineerBehavior>().Chop();
         }
-        constructionMenu.SetActive(false);
+        turnOffUI();
     }
     public void TrainArmy(int index)
     {
@@ -284,6 +303,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             selectedTrainingGrounds.makeArmy(index);
         }
+        turnOffUI();
     }
     public void Deselect()
     {

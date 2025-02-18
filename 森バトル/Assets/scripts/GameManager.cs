@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
         activePlayer.AddResources();
         Debug.Log("Resting armies");
         activePlayer.RefreshArmies();
+        activePlayer.turnOffUI();
         if(players.Length != 1)
         {
             Debug.Log("Number of players is more than 1");
@@ -145,6 +146,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("New Active Player: " + activePlayer);
         activePlayer.IsTurn = true;
         activePlayer.ClearFogOfWar();
+        activePlayer.updateResourceCounters();
         SwitchCamera();
         Debug.Log("Camera Switched");
     }
