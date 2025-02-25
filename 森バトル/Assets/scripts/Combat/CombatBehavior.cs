@@ -198,4 +198,3 @@ public class CombatBehavior : MonoBehaviour
         get { return leader; }
     }
 }
-

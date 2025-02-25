@@ -95,7 +95,6 @@ public class ResourceExtractionBehavior : MonoBehaviour
             }
         }
     }
-
     public PlayerBehavior Owner
     {
         get { return owner; }

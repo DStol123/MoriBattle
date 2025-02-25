@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,23 +13,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int turnCounter = 1;
     [SerializeField]
-    private float ironDensity;
+    public float ironDensity;
     [SerializeField]
-    private float copperDensity;
+    public float copperDensity;
     [SerializeField]
-    private float forestDensity;
+    public float forestDensity;
     [SerializeField]
     private int playerCount;
     [SerializeField]
-    private int maxIronPerChunk;
+    public int maxIronPerChunk;
     [SerializeField]
-    private int maxCopperPerChunk;
+    public int maxCopperPerChunk;
     [SerializeField]
-    private float dirtDensity;
+    public float dirtDensity;
     [SerializeField]
-    private float stoneDensity; //For painting the map
+    public float stoneDensity; //For painting the map
     [SerializeField]
-    private float rockDensity; //For distributing resources
+    public float rockDensity; //For distributing resources
     [SerializeField]
     private float forestMovementPenalty;
     [SerializeField]
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     public GameSoundManager gameSound;
     [SerializeField] private GameObject water;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject EndGameScreen;
 
 
     public float seedX;
@@ -54,18 +56,22 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        
+        DontDestroyOnLoad(this.gameObject);
     }
     private void Start()
     {
-        players[0].IsTurn = true;
-        SwitchCamera();
-        activePlayer = players[0];
-        alivePlayers = players.Length;
-        water.transform.position = new Vector3(0f, waterLevel, 0f);
-        activePlayer.ClearFogOfWar();
-        pauseMenu.SetActive(false);
-        paused = false;
+        if (players[0] != null)
+        {
+            players[0].IsTurn = true;
+            SwitchCamera();
+            activePlayer = players[0];
+            alivePlayers = players.Length;
+            water.transform.position = new Vector3(0f, waterLevel, 0f);
+            activePlayer.ClearFogOfWar();
+            pauseMenu.SetActive(false);
+            EndGameScreen.SetActive(false);
+            paused = false;
+        }
     }
     private void Update()
     {
@@ -78,7 +84,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Set Active Player's Turn Status");
             }
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(players[0] != null && Input.GetKeyDown(KeyCode.Escape))
         {
             if(paused)
             {
@@ -166,7 +172,7 @@ public class GameManager : MonoBehaviour
     }
     public void EndGame()
     {
-
+        EndGameScreen.SetActive(true);
     }
     public float IronDensity
     {

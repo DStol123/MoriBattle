@@ -686,7 +686,7 @@ MonoBehaviour:
   description: 
   heightOffset: 0
   forwardOffset: 0
-  lateralOffset: 3
+  lateralOffset: -1
   resource: {fileID: 0}
   cell: {fileID: 0}
   woodCost: 6

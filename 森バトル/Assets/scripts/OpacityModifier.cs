@@ -15,7 +15,6 @@ public class OpacityModifier : MonoBehaviour
     {
         
     }
-
     public void SetOpacity(bool opacity)
     {
         if(opacity)

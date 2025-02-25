@@ -16,6 +16,7 @@ public class GameSoundManager : MonoBehaviour
     void Start()
     {
         InvokeRepeating("AttemptToPlayNewTrack", 0f, 5f);
+        seVolume = 1f;
     }
 
     // Update is called once per frame
@@ -39,6 +40,7 @@ public class GameSoundManager : MonoBehaviour
         {
             newTrack = Random.Range(0, music.Length - 1);
         }
+        previouslyPlayedTrack = newTrack;
         return newTrack;
     }
     private void AttemptToPlayNewTrack()
@@ -48,11 +50,12 @@ public class GameSoundManager : MonoBehaviour
             int rand = Random.Range(1, 8);
             if(rand == 1)
             {
-                audioSource.clip = music[PickTrack()];
+                int newTrack = PickTrack();
+                audioSource.clip = music[newTrack];
                 audioSource.Play();
                 musicPlaying = true;
                 musicStartTime = Time.time;
-                musicEndTime = musicStartTime + music[PickTrack()].length;
+                musicEndTime = musicStartTime + music[newTrack].length;
             }
         }
     }

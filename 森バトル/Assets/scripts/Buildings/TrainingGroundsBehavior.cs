@@ -171,4 +171,3 @@ public class TrainingGroundsBehavior : MonoBehaviour
         set { ironCost = value; }
     }
 }
-

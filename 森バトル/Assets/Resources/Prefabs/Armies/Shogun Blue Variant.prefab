@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7902038378226197513, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 382721318313831805, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
       propertyPath: maxHp
       value: 300
@@ -27,6 +31,10 @@ PrefabInstance:
     - target: {fileID: 382721318313831805, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
       propertyPath: heightAttackPenalty
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 654803087932419306, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3305832870795228896, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -84,6 +92,18 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1432371718745160868}
+    - target: {fileID: 4530559433192323446, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
+      propertyPath: maxMovementPoints
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530559433192323446, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
+      propertyPath: currentMovementPoints
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530559433192323446, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
+      propertyPath: startingMovementPoints
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5309379245539425573, guid: 875fa5cbef14d1044a5ba22064bf5e1b, type: 3}
       propertyPath: m_Name
       value: Shogun Blue Variant

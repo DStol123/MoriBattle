@@ -331,9 +331,9 @@ MonoBehaviour:
   audioSource: {fileID: 4520751080162512089}
   unitUI: {fileID: 0}
   isStartingArmy: 1
-  maxMovementPoints: 3
-  startingMovementPoints: 3
-  currentMovementPoints: 3
+  maxMovementPoints: 5
+  startingMovementPoints: 5
+  currentMovementPoints: 5
   armyHeight: -5.45
   forwardOffset: 0
   lateralOffset: 6
@@ -433,7 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   currentCell: {fileID: 0}
-  sightRange: 4
+  sightRange: 5
   owner: {fileID: 0}
   cells: []
   startingCell: {fileID: 0}
@@ -494,7 +494,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
